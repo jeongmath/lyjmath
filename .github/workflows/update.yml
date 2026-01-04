@@ -3,7 +3,7 @@ name: Update Lessonlink Data
 on:
   schedule:
     - cron: '0 * * * *' # 매 시간 실행
-  workflow_dispatch:
+  workflow_dispatch: # 수동 실행 가능
 
 jobs:
   build:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 히스토리 수정을 위해 전체 기록을 가져옵니다.
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -21,11 +23,32 @@ jobs:
         run: npm install axios
 
       - name: Run update script
-        run: node js/update_lessonlink.js  # 변경된 파일명 실행
+        run: node js/update_lessonlink.js 
 
       - name: Commit and push if changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 1. 파일 추가 (실제 업데이트되는 파일명으로 확인하세요. 예: lessonlink.json 또는 js/lessonlink.js)
           git add lessonlink.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update lessonlink data" && git push)
+          
+          # 2. 변경사항이 있는지 확인
+          if ! git diff --cached --quiet; then
+            # 3. 마지막 커밋 메시지 가져오기
+            LAST_MSG=$(git log -1 --pretty=%B)
+            
+            # 4. 마지막 커밋이 자동 업데이트였다면 덮어쓰기(--amend), 아니면 새로 생성
+            if [ "$LAST_MSG" = "Update lessonlink data" ]; then
+              echo "Amending existing commit to keep history clean..."
+              git commit --amend --no-edit
+            else
+              echo "Creating new commit for data update..."
+              git commit -m "Update lessonlink data"
+            fi
+            
+            # 5. 강제 푸시 (기존 기록을 덮어써서 커밋 목록을 1개로 유지)
+            git push --force
+          else
+            echo "No changes detected. Skipping update."
+          fi
