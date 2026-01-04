@@ -1,0 +1,618 @@
+{
+  "chapters": [
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "lessons": [
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": "50"
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": ""
+        },
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "XYlgigEIfGo",
+          "time": "50"
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리 ",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리 ",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고1] 공통수학",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "VGnmdiX83mg",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고2] 대수",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고2] 미적분1",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고3] 미적분2",
+      "unit": "벡터",
+      "chapter": "제7강 위치벡터",
+      "lessons": [
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "VGnmdiX83mg",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고3] 기하",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[고3] 수능기출",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[Tip] 공부법",
+      "unit": "공부하는 법",
+      "chapter": "제1강 혼자 공부할 때",
+      "lessons": [
+        {
+          "lesson": "오답노트",
+          "pdf": "",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[Tip] 동기 부여",
+      "unit": "공부하는 법",
+      "chapter": "제2강 시험시간에",
+      "lessons": [
+        {
+          "lesson": "풀이 순서",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[실전] 모의고사",
+      "unit": "",
+      "chapter": "",
+      "lessons": [
+        {
+          "lesson": "",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "lessons": [
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": "50"
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": ""
+        },
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "XYlgigEIfGo",
+          "time": "50"
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리 ",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        },
+        {
+          "lesson": "[숙달] 동류항은 계수끼리 ",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "VGnmdiX83mg",
+          "time": ""
+        },
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        },
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "MhDjvKObcco",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "벡터",
+      "chapter": "제7강 위치벡터",
+      "lessons": [
+        {
+          "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "VGnmdiX83mg",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그함수",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그방정",
+      "chapter": "제5강 거듭제곱근",
+      "lessons": [
+        {
+          "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "공부하는 법",
+      "chapter": "제1강 혼자 공부할 때",
+      "lessons": [
+        {
+          "lesson": "오답노트",
+          "pdf": "",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중3]",
+      "unit": "공부하는 법",
+      "chapter": "제2강 시험시간에",
+      "lessons": [
+        {
+          "lesson": "풀이 순서",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    }
+  ],
+  "allLessons": [
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": "50"
+    },
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": "50"
+    },
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리 ",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리 ",
+      "pdf": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[고1] 공통수학",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "VGnmdiX83mg",
+      "time": ""
+    },
+    {
+      "grade": "[고2] 대수",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[고2] 미적분1",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": ""
+    },
+    {
+      "grade": "[고3] 미적분2",
+      "unit": "벡터",
+      "chapter": "제7강 위치벡터",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "VGnmdiX83mg",
+      "time": ""
+    },
+    {
+      "grade": "[고3] 기하",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[고3] 수능기출",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[Tip] 공부법",
+      "unit": "공부하는 법",
+      "chapter": "제1강 혼자 공부할 때",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "오답노트",
+      "pdf": "",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[Tip] 동기 부여",
+      "unit": "공부하는 법",
+      "chapter": "제2강 시험시간에",
+      "listid": "",
+      "lesson": "풀이 순서",
+      "pdf": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[실전] 모의고사",
+      "unit": "",
+      "chapter": "",
+      "listid": "",
+      "lesson": "",
+      "pdf": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": "50"
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": "50"
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리 ",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "방정식",
+      "chapter": "제1강 등식의 성질",
+      "listid": "",
+      "lesson": "[숙달] 동류항은 계수끼리 ",
+      "pdf": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "VGnmdiX83mg",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "MhDjvKObcco",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "벡터",
+      "chapter": "제7강 위치벡터",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[숙달] 동류항은 계수끼리  (Q10~Q12)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "VGnmdiX83mg",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그함수",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "지수와 로그방정",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[이해] 동류항은 계수끼리 (Q1~Q3)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "공부하는 법",
+      "chapter": "제1강 혼자 공부할 때",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "오답노트",
+      "pdf": "",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[중3]",
+      "unit": "공부하는 법",
+      "chapter": "제2강 시험시간에",
+      "listid": "",
+      "lesson": "풀이 순서",
+      "pdf": "",
+      "videoid": "",
+      "time": ""
+    }
+  ]
+}

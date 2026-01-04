@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYJ MATH - 정수학</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+        /* 레이아웃 떨림 방지 */
+        html {
+            overflow-y: scroll;
+        }
+
+        /* --- 상단 탭 메뉴 스타일 --- */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 10px;
+            max-width: 1024px;
+            margin: 0 auto 30px auto;
+            padding: 0;
+            padding-bottom: 30px;
+        }
+        main.container {
+            padding-top: 50px !important;
+        }
+        .tab-link {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 9px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .tab-link:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+        .tab-link.active {
+            color: #fff;
+            background-color: var(--main-navy, #1e3a8a);
+            border-color: transparent;
+        }
+        .tab-content { display: none; text-align: left; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ======================================================= */
+        /* [개선] 탭 콘텐츠 디자인 통일화 (V5)                   */
+        /* ======================================================= */
+        :root {
+            --theme-color-main: #1e3a8a;
+            --text-color-primary: #1e293b;
+            --text-color-secondary: #475569;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+
+        .custom-tab-content { font-family: 'Noto Sans KR', sans-serif; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        /* --- [핵심] 새로운 통합 카드 스타일 --- */
+        .pillar-card, .course-card, .contact-card, .arm-card, .accordion-item {
+            background: var(--card-bg, #fff);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .course-card, .contact-card {
+            margin-bottom: 25px;
+        }
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .pillar-card:hover, .course-card:hover, .contact-card:hover, .arm-card:hover, .accordion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(30, 58, 138, 0.07);
+        }
+        .pillar-card::before, .course-card::before, .contact-card::before, .arm-card::before, .accordion-item::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; right: 0;
+            height: 3px;
+            background: var(--theme-color-main);
+        }
+        .pillar-card, .arm-card { padding: 30px; }
+        .course-card { padding: 40px; }
+        .contact-card { padding: 0; }
+
+        /* --- [핵심] 아코디언 디자인 개편 --- */
+        .accordion-item { border-bottom: none; }
+        .accordion-header {
+            width: 100%; background: #fff; border: none; text-align: left;
+            padding: 20px 25px; font-size: 1.2rem; font-weight: 700;
+            cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; color: var(--text-color-primary);
+        }
+        .accordion-header::after {
+            content: '▼'; font-size: 11px; color: #94a3b8;
+            margin-left: 15px; transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header::after { transform: rotate(180deg); }
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out;
+            background-color: #f8fafc; border-top: 1px solid var(--border-color);
+        }
+        .accordion-content-inner {
+            padding: 25px 30px; color: var(--text-color-secondary);
+            font-size: 1rem; line-height: 1.8;
+        }
+
+        /* --- ARM 프로그램 탭 스타일 --- */
+        .section-heading { text-align: center; margin-bottom: 40px; }
+        .section-heading h3 { font-size: 2.2rem; font-weight: 900; color: var(--theme-color-main); }
+        .section-heading p { font-size: 1.1rem; color: var(--text-color-secondary); max-width: 700px; margin: 15px auto 0; }
+        
+        .arm-section + .arm-section {
+            margin-top: 60px;
+        }
+        .arm-container .arm-card,
+        .arm-container .pillar-card {
+            margin-bottom: 0;
+        }
+
+        .arm-card.text-center { text-align: center; }
+
+        /* ★★★ [요청 수정] ARM 프로그램 탭의 특정 카드 내부 p태그 스타일 통일 ★★★ */
+        .arm-card.text-center p {
+            margin: 0 0 0.5em 0;
+        }
+        .arm-card.text-center p.quote-intro {
+            margin-bottom: 1.5em; /* 제목과 내용 사이 간격 */
+        }
+        .arm-card.text-center p:last-of-type {
+            margin-bottom: 0;
+        }
+
+
+        .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .pillar-card h4 { font-size: 1.5rem; color: var(--theme-color-main); margin: 0 0 15px 0; }
+        .pillar-card p { font-size: 0.95rem; line-height: 1.8; color: var(--text-color-secondary); margin: 0; }
+
+        /* --- 강좌 안내 탭 스타일 --- */
+        .course-card h3 { font-size: 2rem; font-weight: 900; color: var(--theme-color-main); margin: 0 0 15px 0; position: relative; padding-left: 35px; }
+        .course-card h3::before { content: '📚'; position: absolute; left: 0; font-size: 1.8rem; }
+        .course-card .description { font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; }
+        .course-card .details p { position: relative; padding-left: 25px; font-weight: 500; }
+        .course-card .details p::before { content: '☞'; position: absolute; left: 0; color: var(--theme-color-main); font-weight: bold; }
+        .course-levels { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
+        .level-item { margin-bottom: 15px; }
+        .level-item h4 { font-size: 1.2rem; font-weight: 700; margin: 0 0 5px 0; position: relative; padding-left: 25px; }
+        .level-item h4::before { content: attr(data-icon); position: absolute; left: 0; color: var(--theme-color-main); }
+        .level-item p { font-size: 0.95rem; color: var(--text-color-secondary); margin: 0; padding-left: 25px; }
+
+        /* --- 상담 및 위치 탭 스타일 --- */
+        .interactive {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 30px;
+        }
+        .contact-card-content { flex-grow: 1; }
+        .contact-card-content h3 { font-size: 1.5rem; color: var(--text-color-primary); margin-bottom: 8px; }
+        .contact-card-content p { color: var(--text-color-secondary); margin: 0; }
+        .contact-card-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--bg-light); border: 1px solid var(--border-color);
+            color: var(--theme-color-main); transition: all 0.2s ease;
+            flex-shrink: 0; margin-left: 20px;
+        }
+        .contact-card-icon:hover { background-color: var(--theme-color-main); color: #fff; }
+        .contact-card-icon svg { width: 22px; height: 22px; }
+        .contact-card-details { padding: 0 40px 40px; }
+        .address-info {
+            text-align: center;
+            padding: 30px 0 15px; 
+            border-top: 1px dashed var(--border-color);
+            margin-top: 0;
+        }
+        .address-info .preamble {
+            color: var(--theme-color-main); font-weight: 700;
+            margin-bottom: 15px; font-size: 1.6rem;
+        }
+        .address-info h4 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+        .address-info p { font-size: 1rem; color: var(--text-color-secondary); margin-top: 5px; }
+        .photo-gallery {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .photo-gallery img {
+            width: 100%; aspect-ratio: 16 / 9;
+            object-fit: cover; border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+        .photo-gallery img:hover { transform: scale(1.05); }
+
+        /* --- 관리 규정 탭 스타일 --- */
+        .rules-list { list-style: none; padding-left: 0; }
+        .rules-list > li { position: relative; padding-left: 1.8em; margin-bottom: 1.2em; line-height: 1.8; }
+        .rules-list > li::before { content: '★'; position: absolute; left: 0; top: 0; line-height: 1.8; color: var(--theme-color-main); font-size: 1.2em; }
+        .rules-list ul { list-style: none; padding-left: 1.2em; margin-top: 1em; }
+        .rules-list ul li { position: relative; padding-left: 1.2em; margin-bottom: 0.8em; }
+        .rules-list ul li::before { content: '-'; position: absolute; left: 0; }
+        .rules-list strong { color: var(--text-color-primary); }
+        
+        /* --- 반응형 스타일 --- */
+        @media (max-width: 992px) { .pillar-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+             .interactive { flex-direction: column; align-items: flex-start; gap: 20px; }
+             .contact-card-icon { margin-left: 0; }
+        }
+        @media (max-width: 600px) { .tabs { flex-wrap: wrap; } .tab-link { font-size: 13px; padding: 8px 15px; } }
+    </style>
+</head>
+<body>
+
+<header class="site-nav">
+    <a href="index.html" class="logo-link" title="홈으로 이동"></a>
+</header>
+<section class="hero hero-sub">
+    <div class="hero-bg-images">
+      <img src="images/lyj1.png" class="h-img img-init" alt="">
+      <img src="images/lyj4.png" class="h-img img-final" alt="">
+    </div>
+    <div class="container">
+        <h1>Offline 정수학</h1>
+        <p>현장에서 직접 배우는 집중 교육!</p>
+    </div>
+</section>
+<main class="container">
+    <ul class="tabs">
+        <li class="tab-link active" onclick="openTab(event, 'tab1')">ARM 프로그램</li>
+        <li class="tab-link" onclick="openTab(event, 'tab2')">강좌 안내</li>
+        <li class="tab-link" onclick="openTab(event, 'tab3')">상담 및 위치</li>
+        <li class="tab-link" onclick="openTab(event, 'tab4')">관리 규정</li>
+    </ul>
+        <div id="tab1" class="tab-content active custom-tab-content">
+            <div class="arm-container">
+                <section class="arm-section">
+                    <div class="section-heading reveal">
+                        <h3>성적이 마음에 들지 않나요?</h3>
+                        <p>공부란 무언가를 배워서 아는 것이고, 시험이란 알고 있는 것을 살피는 것입니다.</p>
+                    </div>
+                    <!-- ★★★ [요청 수정] 박스 내용 및 구조 통일, br 태그 삭제 ★★★ -->
+                    <div class="arm-card text-center">
+                        <p class="quote-intro"><strong>성적에 대한 고민의 시작은 다음 세 가지 사이의 차이에서 비롯됩니다.</strong></p>
+                        <p>① 본인의 목표 및 기대치 (100점 맞고 싶다고)</p>
+                        <p>② 실제 학습 성취도 (그만큼 공부하는 것도 아니고)</p>
+                        <p>③ 시험 결과 (그나마 공부한 만큼 성적이 나오는 것도 아니고...)</p>
+                    </div>
+                </section>
+                <section class="arm-section"><div class="section-heading reveal"><h3>성장을 이끄는 3가지 원칙 A.R.M.</h3><p>ARM 프로그램은 분석, 반복, 관리를 통해 학생의 노력이 온전히 성적으로 증명되도록 돕습니다.</p></div><div class="pillar-grid"><div class="pillar-card reveal"><h4>Analyze (분석)</h4><p>단순한 문제풀이를 넘어, 시험 결과와 학습 습관을 분석하여 진짜 약점을 찾아냅니다. 무엇을, 어떻게 공부해야 하는지 명확한 방향을 제시합니다.</p></div><div class="pillar-card reveal"><h4>Repeat (반복)</h4><p>'아는 것'을 '풀 수 있는 것'으로 만드는 유일한 방법입니다. 체계적인 반복 훈련을 통해 실수를 줄이고, 정해진 시간 안에 정확하게 문제를 푸는 실력을 완성합니다.</p></div><div class="pillar-card reveal"><h4>Manage (관리)</h4><p>벼락공부로는 한계가 명확합니다. 3년간의 장기적인 학습 계획을 세우고, 24시간의 시간 관리까지 조율하여 꾸준히 학습 리듬을 유지하도록 관리합니다.</p></div></div></section>
+                <section class="arm-section"><div class="section-heading reveal"><h3>완성을 향한 4단계 로드맵</h3><p>기본을 지켜 단계적으로 학습하는 것이 가장 효율적인 길입니다.</p></div><div class="accordion arm-accordion"><div class="accordion-item reveal"><button class="accordion-header">Step 1. 기본개념이해</button><div class="accordion-content"><div class="accordion-content-inner">기본개념을 이해하고 기본문제를 통해 공식을 습득합니다. 유형별 학습에만 치중하면 응용문제에서 약점을 보이므로, 이론의 유도과정까지 깊이 있게 학습합니다.</div></div></div><div class="accordion-item reveal"><button class="accordion-header">Step 2. 문제풀이연습</button><div class="accordion-content"><div class="accordion-content-inner">개념과 공식의 활용을 돕는 여러 형태의 문제를 풀고 반복합니다. 한번 푼 문제도 다시 반복하여 '이해'를 넘어 '체화' 단계로 나아갑니다.</div></div></div><div class="accordion-item reveal"><button class="accordion-header">Step 3. 기출문제분석</button><div class="accordion-content"><div class="accordion-content-inner">수능 및 내신 기출문제를 직접 분석하며 출제 유형과 난이도를 체감합니다. 이를 통해 실전에 맞는 학습 내용을 숙성시킵니다.</div></div></div><div class="accordion-item reveal"><button class="accordion-header">Final. 실전모의고사</button><div class="accordion-content"><div class="accordion-content-inner">시간 배분, 검토, 실수 유형 발견 등을 실전과 동일한 환경에서 훈련합니다. "아는 문제는 확실히 맞힌다"는 전략을 완성합니다.</div></div></div></div></section>
+                <section class="arm-section"><div class="section-heading reveal"><h3>최적의 효과를 위한 3가지 수업 유형</h3><p>ARM 프로그램은 학생의 학습 상황에 맞춰 인터넷, 맞춤, 칠판 수업을 유기적으로 결합하여 최상의 시너지를 만듭니다.</p></div><div class="pillar-grid"><div class="pillar-card reveal"><h4>인터넷 수업</h4><p>담당 선생님의 인강을 통해 시간과 공간 제약 없이 예습 및 복습을 진행합니다. 언제든, 몇 번이든 반복 학습이 가능합니다.</p></div><div class="pillar-card reveal"><h4>맞춤 수업 (1:1)</h4><p>예습 내용을 확인하고, 학생이 어려워하는 부분 위주로 집중 학습합니다. 쌍방향 피드백을 통해 시간 낭비 없는 효율적인 수업을 만듭니다.</p></div><div class="pillar-card reveal"><h4>칠판 수업 (현장)</h4><p>적절한 긴장감 속에서 선생님의 풀이를 보며 배우는 모방학습 효과를 극대화하고, 다른 학생들과 함께하며 학습 동기를 부여받습니다.</p></div></div></section>
+            </div>
+        </div>
+        <div id="tab2" class="tab-content custom-tab-content">
+            <div class="course-card"><h3>&nbsp;정규반</h3><p class="description">현 학기 내용을 집중적으로 공부하고, 약간의 예습을 원하는 학생에게 추천합니다.<br>보다 더 선행하고자 하는 학생은 아래 클리닉반, 방학특강반 또는 인강을 활용하세요.</p><div class="details"><p><strong>개념, 내신대비 심화 문제풀이 / 현강, 인강을 결합한 수업 / 주 2~3회</strong></p><p>수시상담 후 실력별 반배정 (요일/시간) / 필요시 보충 후 수업</p></div><div class="course-levels"><div class="level-item"><h4 data-icon="◎">중1, 중2, 중3</h4><p>중1 수학, 중2 수학, 중3 수학 (학원교재, 교과서, 쎈, + )</p></div><div class="level-item"><h4 data-icon="◎">고1</h4><p>수학 (학원교재, 교과서, 쎈, 정석, 블랙라벨, + )</p></div><div class="level-item"><h4 data-icon="◎">고2</h4><p>공통수학, 대수, 미적분Ⅰ, 확률과 통계, 미적분Ⅱ, 기하 (학원교재, 교과서, 쎈, 정석, 블랙라벨, + )</p></div><div class="level-item"><h4 data-icon="◎">고3</h4><p>수능대비개념, 수능기출분석, 실전모의고사 (학원교재, 수능특강, 수능완성, 실전모의고사, + )</p></div></div></div>
+            <div class="course-card"><h3>&nbsp;클리닉반</h3><p class="description">많이 앞서 있거나, 부족하거나, 개별적인 학습을 원하는 학생에게 추천합니다.</p><div class="details"><p><strong>학생별 맞춤수업(1명~4명) / 현강, 인강, 과외를 결합한 수업 / 주 2~3회</strong></p><p>수시상담 후 개강</p></div></div>
+            <div class="course-card"><h3>&nbsp;방학특강반</h3><p class="description">여유있는 방학 동안 예습을 원하는 학생에게 추천합니다.</p><div class="details"><p>자세한 특강일정은 공지사항을 참고하거나 학원에 문의하기 바랍니다.</p></div></div>
+        </div>
+        <div id="tab3" class="tab-content custom-tab-content">
+            <div class="contact-card">
+                <div class="interactive">
+                    <div class="contact-card-content">
+                        <h3>전화 상담</h3>
+                        <p><strong>031) 591-6114</strong> <small>(오전 10시 ~ 오후 10시)</small></p>
+                    </div>
+                    <a href="tel:031-591-6114" class="contact-card-icon" title="전화 걸기">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="interactive">
+                    <div class="contact-card-content">
+                        <h3>방문 상담</h3>
+                        <p>전화 상담시 입학 TEST <strong>시간 예약</strong> 후 방문하면 자세한 상담이 가능합니다. (약 30분~100분 소요, <strong>학생 참석 필수</strong>)</p>
+                    </div>
+                    <a href="https://map.naver.com/p/entry/place/37171626?c=15.00,0,0,0,dh" target="_blank" class="contact-card-icon" title="네이버 지도">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                    </a>
+                </div>
+                <div class="contact-card-details">
+                    <div class="address-info">
+                        <div class="preamble">중, 고등 내신/수능/논술 수학전문학원 - 정수학</div>
+                        <h4>경기도 남양주시 의안로 121-10 정환빌딩 3층 </h4>
+                        <p>(평내고등학교와 평내도서관 사이 화성아파트 맞은편)</p>
+                    </div>
+                    <div class="photo-gallery">
+                        <img src="images/photo1.JPG" alt="학원 전경">
+                        <img src="images/photo2.JPG" alt="학원 입구">
+                        <img src="images/photo3.JPG" alt="학원 전실">
+                        <img src="images/photo4.JPG" alt="상담실">
+                        <img src="images/photo5.JPG" alt="강의실">
+                        <img src="images/photo6.JPG" alt="휴게실">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab4" class="tab-content custom-tab-content">
+            <div class="accordion">
+                <div class="accordion-item reveal"><button class="accordion-header">수강료</button><div class="accordion-content"><div class="accordion-content-inner"><ul class="rules-list"><li>모든 수업은 수강 전까지 수강료 납입이 완료되어야 합니다.<br>(단, 선생님이 필요에 따라 임의로 진행하는 보강, 청강 수업은 제외)</li><li>선 수강 후 등록을 결정하겠다는 요청은 학생의 학습자세 미비와 학원 면학분위기의 조성관리를 이유로 정중히 사양합니다.<br>(선생님도 학생에 대해서 1~2주 수업 후 조심스레 접근합니다. 학생이 한두번 수업으로 선생님을 판단하겠다는 것은 학습자세가 준비가 안 된 요구입니다. 본인에게 맞는 학원인지를 판단하는 것은 수강료 환불기준을 따르면 충분히 가능합니다.)</li><li>재원생의 경우 수강료 납입 기일 경과 수업 2회 차부터는 수업참가가 불가능합니다.</li><li>학교내신기간에 학생본인의 판단에 따라 수업에 불참한 경우 수강료 환불, 이월, 보강은 없습니다.<br>(그 전에 내신직전 수업, 보강, 청강 등 수업이 충분히 이루어지기 때문입니다.)</li><li>학교내신기간 전에 학생본인의 판단에 따라 수업에 불참한 경우에도 수강료 환불, 이월, 보강은 없습니다. 이 경우 즉시 퇴원 조치 대상입니다.<br>(학원 커리큘럼이 아니라, 학생 커리큘럼에 의한 학습을 원하는 경우 1:1 횟수 과외를 권합니다.)</li></ul></div></div></div>
+                <div class="accordion-item reveal"><button class="accordion-header">보강</button><div class="accordion-content"><div class="accordion-content-inner"><ul class="rules-list"><li><strong>인정되는 지각/결석 사유의 경우</strong><br>보강이 이루어지거나 동영상 수업 후 개별 피드백으로 보강이 대체됩니다.<br>(보강은 정규수업의 50% 시간 내에서 진행되며, 보강불참 시 혹은 당일 보강수업취소는 재보강이 진행되지 않으며 수강료 환불 및 이월은 없습니다. 보강을 위해 학원에서 시간을 내기 때문입니다.)<br><strong>예)</strong> 공적사유: 학교 공식행사, 임원 수련회, 수련회, 경시대회, 인증시험 등<br>사적사유: 병원 참석, 가족행사 등 (사적사유는 무분별한 지각/결석으로 인한 정규수업의 질 하락을 우려하여 월 2회 제한)</li><li><strong>인정되지 않는 지각/결석 사유의 경우</strong><br>보강은 이루어지지 않습니다.<br><strong>예)</strong> 무단지각, 무단결석, 내신기간에 본인 판단에 따른 수업 불참 (각 학교내신기간에 학생본인의 판단에 따라 수업에 불참한 경우는 결석입니다. 내신기간에도 본인 정규수업시간에 항상 수업은 진행되기 때문입니다.)</li></ul></div></div></div>
+                <div class="accordion-item reveal"><button class="accordion-header">공휴일</button><div class="accordion-content"><div class="accordion-content-inner"><ul class="rules-list"><li>모든 공휴일은 휴원이 원칙입니다.<br>(수강료 환불, 이월, 보강은 없습니다. 단, 선생님이 재량으로 보강을 할 수 있습니다.)</li></ul></div></div></div>
+                <div class="accordion-item reveal"><button class="accordion-header">퇴원</button><div class="accordion-content"><div class="accordion-content-inner"><ul class="rules-list"><li>본 학원에서는 학생에 대한 체벌이 없습니다. 하지만, 다른 학생의 학습을 방해하는 행위는 아무리 사소한 것일지라도(그 행위가 공부하기 위한 것이라도) 용납하지 않습니다. 단체 학습상황에 방해가 된다면 어떤 행위도 단호히 차단하며, 학생이 시정하지 않을 경우에는 퇴원 조치합니다. 이때, 부모님과 학생의 이의제기는 불허합니다. 개인의 개성은 존중하지만 그로 인해 학원의 학습분위기에 위해가 있어서는 안 되기 때문입니다. 본 학원에서 퇴원조치된 학생이 나중에 다시 재등록을 원할 때에는 학생의 학습자세 미비와 학원 면학분위기의 조성관리를 이유로 정중히 사양합니다.</li><li><strong>3회 경고 후 퇴원조치​ 대상</strong><ul><li>다른 학생의 학습을 방해하는 학생<br>(예: 학원 내 허락 받지 않은 학생 간 대화<공부에 관한 내용 포함>를 하는 학생)</li><li>무단지각, 과제 미실시 등 수업에 불충실한 학생<br>(단, 특별한 사유로 인해 미리 연락을 취한 경우는 횟수에서 제외)</li><li>학원의 학습커리큘럼은 무시하고 본인이 원하는 것만 요구하는 학생<br>(예: 이것 하라면 저것 하고 저것 하라면 이것 하는 학생, 과제는 안하고 질문만 하려는 학생)</li><li>내신기간 전에 본인 판단 하에 수업에 불참하는 학생</li><li>허락 없이 학원 내에서 스마트폰이나 전자기기를 사용하는 학생</li><li>허락 없이 학원 건물을 벗어나는 학생</li><li>수업 중, 거짓말하는 학생</li><li>미등록 학생</li></ul></li><li><strong>즉시 퇴원조치 대상</strong><ul><li>흡연, 음주, 욕설, 폭력 등을 하는 학생</li><li>학원 및 다른 학원생을 비방 또는 음해를 하는 학생</li><li>수업 중, 학습지도에 불만을 갖고 반항하는 학생</li><li>무단결석한 학생</li></ul></li></ul></div></div></div>
+                <div class="accordion-item reveal"><button class="accordion-header">환불</button><div class="accordion-content"><div class="accordion-content-inner"><ul class="rules-list"><li>퇴원의사가 있는 경우는 즉시 학원으로 의사를 전달하여야 합니다. 의사를 전달한 시점(당일 수업은 결석으로 처리) 또는 퇴원조치일을 기준으로 수강료를 산정합니다.</li></ul></div></div></div>
+            </div>
+        </div>
+</main>
+  <!-- 푸터 위에 추가될 버튼 섹션 -->
+  <section class="action-buttons-container">
+    <div class="container">
+
+      <a href="#" class="action-btn top-btn" title="맨 위로">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentColor" d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+      </a>
+      <a href="#" class="action-btn back-btn" title="이전 페이지">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H109.2l105.3-105.3c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </a>
+    </div>
+  </section>
+<footer>
+  <div class="container">
+      <!-- 푸터 상단 로고 추가 -->
+      <a href="index.html" class="footer-logo-link" title="홈으로 이동">
+        <img src="images/logo1.svg" alt="LYJ MATH 로고">
+      </a>
+    <div class="footer-info">
+      <p>상호 : 正수학 ㅣ 대표 : 이영진 ㅣ ☎ 031) 591-6114 ㅣ 경기도 남양주시 의안로 121-10, 3층</p>
+      <p>사업자등록번호 : 509-95-01083 ㅣ 상표등록번호 : 45-0043624-0000</p>
+    </div>
+    <p class="footer-copyright">Copyright © 1991&nbsp; <b>LYJ MATH - 정수학.</b>&nbsp; All Rights Reserved.</p>
+  </div>
+</footer>
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        if (evt) {
+            evt.currentTarget.className += " active";
+        } else {
+            document.querySelector(`[onclick*='${tabName}']`).className += " active";
+        }
+    }
+
+    window.onload = function() {
+        var hash = window.location.hash;
+        if (hash) {
+            var tabId = hash.replace('#', '');
+            var targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                openTab(null, tabId);
+                setTimeout(function() {
+                    const tabsElement = document.querySelector('.tabs');
+                    if(tabsElement) {
+                        window.scrollTo({ 
+                            top: tabsElement.offsetTop - 20,
+                            behavior: 'smooth' 
+                        });
+                    }
+                }, 100);
+            }
+        }
+    }
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    revealElements.forEach(element => { observer.observe(element); });
+
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    accordionItems.forEach(clickedItem => {
+        const header = clickedItem.querySelector('.accordion-header');
+        const content = clickedItem.querySelector('.accordion-content');
+        header.addEventListener('click', () => {
+            const wasActive = clickedItem.classList.contains('active');
+            const parentTab = clickedItem.closest('.tab-content');
+            if (parentTab) {
+                parentTab.querySelectorAll('.accordion-item').forEach(item => {
+                    if (item !== clickedItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.accordion-content').style.maxHeight = '0';
+                    }
+                });
+            }
+            if (!wasActive) {
+                clickedItem.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                clickedItem.classList.remove('active');
+                content.style.maxHeight = '0';
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const backBtn = document.querySelector('.back-btn');
+        if (backBtn) {
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                history.back();
+            });
+        }
+
+        const topBtn = document.querySelector('.top-btn');
+        if (topBtn) {
+            topBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

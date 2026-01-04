@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYJ MATH - 정수학</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        :root {
+            --theme-color-main: #1e3a8a;
+            --text-color-primary: #1e293b;
+            --text-color-secondary: #475569;
+            --border-color: #e2e8f0;
+        }
+
+        .advice-item {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            /* ★★★ [요청 수정] 상하 여백 축소 ★★★ */
+            padding: 15px 30px; 
+        }
+
+        .advice-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(30, 58, 138, 0.07);
+        }
+
+        .advice-item::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; right: 0;
+            height: 3px;
+            background: var(--theme-color-main);
+        }
+
+        .advice-item {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+        
+        .advice-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px; 
+            /* ★★★ [요청 수정] 카드 폭 확장을 위해 max-width 제거 ★★★ */
+            margin: 0 auto;
+        }
+        
+        /* ★★★ [요청 수정] 하단 박스 스타일 통일 ★★★ */
+        .final-message { 
+            text-align: center; background-color: var(--theme-color-main); color: #fff; 
+            padding: 30px 20px; border-radius: 16px;
+        }
+        .final-message h4 { font-size: 2rem; font-weight: 900; margin: 0; }
+
+    </style>
+</head>
+<body>
+
+<header class="site-nav">
+    <a href="index.html" class="logo-link" title="홈으로 이동"></a>
+</header>
+
+<section class="hero hero-sub">
+    <div class="hero-bg-images">
+      <img src="images/lyj1.png" class="h-img img-init" alt="">
+      <img src="images/lyj4.png" class="h-img img-final" alt="">
+    </div>
+    <div class="container">
+        <h1>알.피.살.이.</h1>
+        <p>알면 피가 되고 살이 되는 이야기</p>
+    </div>
+</section>
+
+<main class="container" style="padding: 50px 20px; max-width: 1200px;">
+    <section class="philosophy-section">
+        <div class="content-body reveal visible">
+            <!-- ★★★ [요청 수정] 따옴표 삭제 ★★★ -->
+            <h3 style="color: var(--main-navy); margin-bottom: 40px; font-size: 2.2rem; text-align: center;">노력하는 사람만이 행복할 수 있습니다.</h3>
+
+            <div class="advice-content">
+                <div class="advice-item">수학은 적어서 푸는 과목이다. 적을 줄 아는 것은 기본이다.<br>적으면서 생각하고 풀어야 머리에 과부하가 걸리지 않는다.<br>실수도 줄고, 오히려 풀이시간도 준다.<br>머리를 쓸 때는 손도 같이 쓰는 습관을 들인다.</div>
+                <div class="advice-item">이해하면 대부분 저절로 외워진다.<br>반복은 외우기 위해서가 아니라, 좀 더 깊은 이해 즉, 숙달을 위한 것이다.</div>
+                <div class="advice-item">한 번 푸는 것은 공부가 아니다. 두 번 이상이 진짜 공부다.<br>책에 한 번씩 푸는 것은 안 좋은 습관이다. 연습장을 사용하자.</div>
+                <div class="advice-item">안다고 느껴질 때 멈추면 안된다. 지겹다고 느껴질 때까지 반복해야 한다.</div>
+                <div class="advice-item">수학시험은 정해진 시간 안에 정확하게 빨리 풀어야 한다.<br>'풀 수 있는 것' 과 '점수를 맞는 것' 은 완전히 다른 것이다.<br>한 번 틀렸던 대부분의 문제는 1분 이내에 실수 없이 풀 수 있어야 한다.</div>
+                <div class="advice-item">'낯선 것' 을 '어려운 것' 으로 착각하지 말자.<br>낯선 것은 여러 번 보면 익숙해진다.</div>
+                <div class="advice-item">'헷갈리는 것' 은 '알아가고 있는 중' 이다. 조금만 더 하자.</div>
+                <div class="advice-item">시험결과를 인정하자.<br>그만큼 공부한 것이다. 더 바라면 더 하자.<br>기분이 안 좋다면 즉, 60점 맞을만큼 하고 90점 이상 바라면 양심불량!</div>
+                <div class="advice-item">'학생이 혼자 할 부분' 과 '선생님과 같이 할 부분' 을 구별하자.<br>반복, 숙달까지 선생님과 하면서 (최)상위권을 바라는 것은 양심불량!</div>
+                <div class="advice-item">'(하루 평균 연습장 수) × 10' 점 이상 기대해서는 안 된다.<br>점수가 이보다 더 잘 나왔다면 시험이 쉬운 것이다.</div>
+                <div class="advice-item">'1248법칙' 을 지키자.<br>배운 후, 1시간 안에 그리고 24시간 안에 복습하고 최소 8번 이상 공부한다.<br>하루(1일)에 최소 2시간 이상, 40문제 이상, 연습장 8장 이상을 꾸준히 공부한다.</div>
+                <div class="advice-item">시험공부는 시험 전날 정리를 위한 것이다. 시험 당일은 '진인사대천명' 이다.</div>
+                <div class="advice-item">한 계단씩 오르자. 여러 계단을 한 번에 오르면, 힘들고 계속 못 오른다.</div>
+                <div class="advice-item">구구단 외울 때를 생각하자. 오감을 이용해 공부하는 방법은 이미 습득했다.</div>
+                <div class="advice-item">구구단도 긴장하면 틀린다. 실수는 할 수 있다. 실수는 고칠 수 있어야 한다.</div>
+                <div class="advice-item">'겸손' 은 (최)상위권 학생이 갖춰야 할 기본 덕목이다.</div>
+                <div class="advice-item">학교 수업 무시하면 하루의 대부분 시간을 버린다.<br>아무리 초보 선생님에게 배워도 시키는 대로 꾸준히 하면 결과는 좋다.</div>
+                <div class="advice-item">'포기', '어렵다' 란 말은 함부로 사용하면 안 된다. 열심히 했던 것 같잖아!</div>
+                <div class="advice-item">오늘 걷지 않으면 내일은 뛰어야 한다.</div>
+                <div class="advice-item">잠을 자면 꿈을 꾸지만 공부를 하면 꿈을 이룬다.</div>
+                <div class="advice-item">죽어라 열심히 공부해도 죽지는 않는다.<br>공부가 인생의 전부는 아니다. 하지만<br>인생의 전부도 아닌 공부 하나 제대로 못해서, 과연 다른 것은?</div>
+                <div class="advice-item">공부 계획은 필수!!! 단, 시간보다는 양으로. 지켰으면 홀가분하게 휴식!</div>
+            </div>
+
+            <div class="final-message" style="margin-top: 60px;">
+                <h4>노력하는 사람만이 행복할 수 있습니다.</h4><br>
+                <p>항상 기억할 것은 공부의 주체는 학생 본인이라는 것입니다.<br>선생님은 안내자일 뿐입니다.<br><br>선생님마다 주장하는 효율적인 공부 방법론은 여러 가지입니다.<br>그렇지만, 기본을 지키면서 꾸준히 학습하면 좋은 결과가 나옵니다.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<section class="action-buttons-container">
+    <div class="container">
+      <a href="#" class="action-btn top-btn" title="맨 위로">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
+      </a>
+      <a href="#" class="action-btn back-btn" title="이전 페이지">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H109.2l105.3-105.3c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+      <a href="index.html" class="footer-logo-link">
+        <img src="images/logo1.svg" alt="LYJ MATH 로고">
+      </a>
+      <div class="footer-info">
+        <p>상호 : 正수학 ㅣ 대표 : 이영진 ㅣ ☎ 031) 591-6114 ㅣ 경기도 남양주시 의안로 121-10, 3층</p>
+      </div>
+      <p class="footer-copyright">Copyright © 1991 <b>LYJ MATH - 정수학.</b> All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const topBtn = document.querySelector('.top-btn');
+        if (topBtn) {
+            topBtn.addEventListener('click', e => { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); });
+        }
+        const backBtn = document.querySelector('.back-btn');
+        if (backBtn) {
+            backBtn.addEventListener('click', e => { e.preventDefault(); history.back(); });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+name: Update Lessonlink Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # 매 시간 실행
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Run update script
+        run: node js/update_lessonlink.js  # 변경된 파일명 실행
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add lessonlink.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update lessonlink data" && git push)

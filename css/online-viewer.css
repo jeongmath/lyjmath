@@ -1,0 +1,275 @@
+/* ======================================================= */
+/* [V5 수정] 온라인 뷰어 전용 스타일 (컬러 시스템 통일)    */
+/* ======================================================= */
+:root {
+  --primary-color: #315f97; 
+  --primary-hover: #264a76;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;    
+  --text-lesson: #4c4c4c;  
+  --border-color: #e2e8f0;
+  --modal-h: 92vh;           
+  --control-h: 60px;
+  
+  /* ★★★ [복원] 학년별 색상 변수 ★★★ */
+  --color-중1: #7dd3fc; /* 매우 밝은 하늘색 */
+  --color-중2: #38bdf8; /* 밝은 하늘색 */
+  --color-중3: #0ea5e9; /* 스카이 블루 */
+  --color-고1: #0284c7; /* 약간 짙은 스카이 블루 */
+  --color-고2: #0369a1; /* 더 짙은 스카이 블루 */
+  --color-고3: #315f97; /* 목표 색상 (히어로 그라데이션 끝 색) */
+  --color-etc: #8b5cf6; /* 기타는 보라색 유지 */
+}
+/* --- 본문 영역 --- */
+main.content-area {
+    padding-top: 50px; /* 부모가 여백 담당 */
+    background-color: #f8fafc;
+}
+
+/* --- 히어로 섹션 내 검색창 스타일 --- */
+.hero-sub #search-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 430px;
+  margin: 20px auto 0;
+  padding: 0 15px;
+  position: relative;
+  top: -5px;
+}
+#searchBox { 
+    flex: 1; padding: 11px 24px; font-size: 15px; border-radius: 12px;
+    border: 2px solid var(--primary-color); outline: none; transition: all 0.2s;
+    text-align: center; box-shadow: 0 4px 12px rgba(49, 95, 151, 0.08);
+    font-weight: 400;
+}
+#searchBox:focus { background: #fff; box-shadow: 0 0 0 4px rgba(49, 95, 151, 0.15); }
+#searchBtn { padding: 0 28px; background: var(--primary-color); color: #fff; border: none; border-radius: 12px; font-weight: 400; cursor: pointer; font-size: 15px; }
+
+/* --- 필터 버튼 섹션 중앙 정렬 --- */
+#filter-section {
+    position: sticky; 
+    top: 0; 
+    z-index: 100;
+    background: var(--bg-color);
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+#filter-stack {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: 10px; 
+  max-width: 1024px;
+  margin: 0 auto;
+}
+.filter-btn { padding: 9px 22px; font-size: 14px; font-weight: 400; border-radius: 25px; border: 1px solid var(--border-color); background: #fff; color: #64748b; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.filter-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
+.filter-btn.active { color: #fff; border-color: transparent; font-weight: 500; }
+/* ★★★ [복원] 필터 버튼 활성화 시 학년별 색상 적용 ★★★ */
+.filter-btn[data-grade="중1"].active { background: var(--color-중1); }
+.filter-btn[data-grade="중2"].active { background: var(--color-중2); }
+.filter-btn[data-grade="중3"].active { background: var(--color-중3); }
+.filter-btn[data-grade="고1"].active { background: var(--color-고1); }
+.filter-btn[data-grade="고2"].active { background: var(--color-고2); }
+.filter-btn[data-grade="고3"].active { background: var(--color-고3); }
+
+/* --- 강의 목록 및 안내문 디자인 개선 --- */
+#lessonContainer { max-width: 1024px; margin: 0 auto; padding: 20px; }
+
+#lesson-placeholder {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 100px 40px;
+    text-align: center;
+    margin: 20px;
+    display: block;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+.placeholder-icon {
+    width: 50px; height: 50px;
+    fill: #cbd5e1;
+    margin-bottom: 25px;
+}
+#lesson-placeholder p {
+    font-size: 1.3rem; font-weight: 500;
+    color: #475569; line-height: 1.7;
+}
+#chapterList {
+    display: none;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    align-items: start;
+}
+
+/* --- 강의 카드 스타일 --- */
+.chapter { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+.chapter:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.07); }
+
+/* ★★★ [복원] 카드에 학년별 색상 변수 지정 ★★★ */
+.chapter.grade-중1 { --current-accent: var(--color-중1); }
+.chapter.grade-중2 { --current-accent: var(--color-중2); }
+.chapter.grade-중3 { --current-accent: var(--color-중3); }
+.chapter.grade-고1 { --current-accent: var(--color-고1); }
+.chapter.grade-고2 { --current-accent: var(--color-고2); }
+.chapter.grade-고3 { --current-accent: var(--color-고3); }
+.chapter.grade-etc { --current-accent: var(--color-etc); }
+
+/* ★★★ [복원] 카드 상단 라인에 학년별 색상 적용 ★★★ */
+.chapter::before {
+  content: ""; position: absolute; left: 0; top: 0; right: 0;
+  height: 3px; background: var(--current-accent);
+}
+
+.chapter-header { padding: 12px 22px 12px 28px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+
+.chapter-header h3, .chapter-header h4 {
+    margin: 0; padding: 0; line-height: 1.4; font-weight: 500;
+}
+.grade-unit-line { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; }
+/* ★★★ [복원] 학년 라벨에 학년별 색상 적용 ★★★ */
+.grade-label { font-size: 11px; color: var(--current-accent); font-weight: 700; }
+.unit-label { font-size: 17px; color: #0f172a; }
+.chapter-line { font-size: 15px; color: #475569; }
+
+.lesson-count { font-size: 13px; color: #94a3b8; font-weight: 400; margin-left: 1px; }
+
+.chapter-header::after { content: '▼'; font-size: 11px; color: #94a3b8; margin-left: 15px; transition: transform 0.3s ease; }
+.chapter.active .chapter-header::after { transform: rotate(180deg); }
+
+.lessons { 
+    background-color: #f1f5f9; 
+    border-top: 1px solid var(--border-color); 
+    max-height: 0;
+    overflow: hidden; 
+    transition: max-height 0.5s ease-out;
+}
+
+.lessons-inner {
+    padding: 6px 15px 14px;
+}
+
+.lesson { margin: 6px 0; }
+
+.lesson a { text-decoration: none; color: var(--text-lesson); font-weight: 400; display: flex; align-items: center; padding: 8px 14px; background: #fff; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.03); font-size: 13.5px; }
+
+/* ★★★ [복원] 소단원 호버 시 학년별 색상 적용 ★★★ */
+.lesson a:hover { color: var(--current-accent); transform: translateX(5px); box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
+.lesson a::before { content: '▶'; font-size: 9px; margin-right: 10px; color: #ef4444; }
+
+
+/* --- 모달 및 미디어 쿼리 --- */
+#videoModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 9999; display: none; align-items: center; justify-content: center; }
+#videoModal.show { display: flex; }
+#videoContent { display: flex; width: 98vw; height: var(--modal-h); background: #000; border-radius: 20px; overflow: hidden; }
+#videoContainer { flex: 1; display: flex; flex-direction: column; justify-content: center; background: #000; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+#lessonVideo { width: 100%; aspect-ratio: 3840 / 1680; max-height: calc(var(--modal-h) - var(--control-h)); background: #000; }
+
+#videoControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: var(--control-h);
+  background: #1e293b;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+#videoControls button {
+  padding: 0 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #334155;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  transition: 0.2s;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#playPauseBtn {
+  min-width: 80px;
+}
+
+.skip-btn {
+  background: #334155;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 0 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.skip-btn:hover {
+  background: #4a5568;
+}
+
+#speedControls {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+}
+#speedControls button {
+  padding: 0 10px;
+  min-width: 40px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.speedOption { background: #4f46e5 !important; }
+#showPdfBtn { background: #10b981 !important; }
+#endLectureBtn { background: #ef4444 !important; }
+#modalPdfContainer { width: 0; height: 100%; background: #000000 !important; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: auto !important; border-left: none; }
+#modalPdfContainer.active { border-left: none; }
+#modalPdfFrame { width: 100%; height: 100%; border: none; display: block; background: #000; min-width: 600px; }
+
+@media (max-width: 1100px) { #chapterList { grid-template-columns: repeat(2, 1fr); } } 
+@media (max-width: 700px) {
+  #chapterList { grid-template-columns: 1fr; }
+  #videoContent { flex-direction: column; }
+  .hero-sub #search-group { max-width: 90%; }
+
+  #videoControls {
+    gap: 8px;
+    height: auto;
+    padding: 10px;
+  }
+  #videoControls button,
+  #videoControls .skip-btn {
+    font-size: 12px;
+    padding: 0 12px;
+  }
+  #playPauseBtn {
+    min-width: 70px;
+  }
+  #speedControls button {
+    font-size: 12px;
+    padding: 0 8px;
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-sub #searchBtn {
+    font-size: 0; width: 45px; flex-shrink: 0; padding: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23ffffff'%3E%3Cpath d='M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px;
+  }
+}
