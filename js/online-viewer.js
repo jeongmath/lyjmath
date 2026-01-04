@@ -1,18 +1,18 @@
 // =================================================================================
-// [v14.6 최종] 로딩 버그 수정 + 학년 판별(색상) + 원문 표시(라벨)
+// [v14.8 최종] 깃허브/클라우드플레어 인코딩 충돌 완벽 해결 버전
 // =================================================================================
 let player = null, allChapters = [];
 
-// 1. 학년 판별 함수 (색상 테마 결정용)
+// 1. 학년 판별 함수 (CSS 클래스용 영문 코드 반환)
 function detectGrade(text = '') {
     if (!text) return 'etc';
-    if (text.includes('중1')) return '중1';
-    if (text.includes('중2')) return '중2';
-    if (text.includes('중3')) return '중3';
-    if (text.includes('고1')) return '고1';
-    if (text.includes('고2')) return '고2';
-    if (text.includes('고3')) return '고3';
-    return 'etc'; // [tip], [특강] 등은 모두 etc(보라색)로 분류
+    if (text.includes('중1')) return 'm1';
+    if (text.includes('중2')) return 'm2';
+    if (text.includes('중3')) return 'm3';
+    if (text.includes('고1')) return 'h1';
+    if (text.includes('고2')) return 'h2';
+    if (text.includes('고3')) return 'h3';
+    return 'etc'; // [공부법], [특강], [tip] 등은 모두 etc(보라색)로 분류
 }
 
 function isMobile() {
@@ -77,8 +77,11 @@ function renderChapters(data) {
     placeholder.style.display = 'none'; list.style.display = 'grid';
 
     data.forEach(chap => {
-        const detected = detectGrade(chap.grade); 
-        const gradeClass = `grade-${detected}`;   
+        // [중요] 색상 클래스는 영문으로 생성 (GitHub/Cloudflare 호환)
+        const gradeKey = detectGrade(chap.grade); 
+        const gradeClass = `grade-${gradeKey}`;   
+        
+        // [중요] 화면 표시 라벨은 시트 원문 그대로 사용 (예: [공부법], [중1])
         const displayLabel = chap.grade;          
 
         const chapterEl = document.createElement('div');
@@ -138,8 +141,14 @@ function performSearch() {
         list.style.display = 'none'; placeholder.style.display = 'block'; return;
     }
 
-    const detected = detectGrade(keyword);
-    if(detected !== 'etc') {
+    // 키워드에 학년명이 포함되어 있으면 상단 필터 버튼 활성화
+    const checkGrade = (txt) => {
+        if (txt.includes('중1')) return '중1'; if (txt.includes('중2')) return '중2'; if (txt.includes('중3')) return '중3';
+        if (txt.includes('고1')) return '고1'; if (txt.includes('고2')) return '고2'; if (txt.includes('고3')) return '고3';
+        return null;
+    };
+    const detected = checkGrade(keyword);
+    if(detected) {
         const btn = document.querySelector(`.filter-btn[data-grade="${detected}"]`);
         if(btn) btn.classList.add('active');
     }
@@ -186,15 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.querySelectorAll('.speedOption').forEach(b => { b.onclick = () => player?.setPlaybackRate(parseFloat(b.dataset.speed)); });
 
-    // [로딩 버그 해결] 데이터 수신 후 스피너 제거 로직
     fetchAllSheets().then(data => { 
         allChapters = data.chapters; 
-        
-        // 1. 스피너 SVG 숨기기
         const spinner = placeholder.querySelector('.loading-spinner');
         if (spinner) spinner.style.display = 'none';
-
-        // 2. 안내 텍스트 업데이트
         placeholder.querySelector('p').innerHTML = `
             <svg style="width:50px; height:50px; fill:#cbd5e1; margin-bottom:15px;" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
             <br>강의 데이터를 성공적으로 불러왔습니다.<br>학년 버튼을 누르거나 키워드를 검색해 보세요.
