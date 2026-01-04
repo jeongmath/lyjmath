@@ -1,5 +1,5 @@
 // =================================================================================
-// [v14.5 최종] 학년 판별(색상) + 원문 표시(라벨) + 검색 연동
+// [v14.6 최종] 로딩 버그 수정 + 학년 판별(색상) + 원문 표시(라벨)
 // =================================================================================
 let player = null, allChapters = [];
 
@@ -16,7 +16,7 @@ function detectGrade(text = '') {
 }
 
 function isMobile() {
-  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
 function onYouTubeIframeAPIReady() {}
@@ -44,7 +44,7 @@ function setupPlayer(lesson) {
                 'onReady': () => player.loadVideoById(lesson.videoid, startSeconds),
                 'onStateChange': (e) => {
                     const btn = document.getElementById('playPauseBtn');
-                    btn.innerText = (e.data === YT.PlayerState.PLAYING) ? '일시 정지' : '재 생';
+                    if(btn) btn.innerText = (e.data === YT.PlayerState.PLAYING) ? '일시 정지' : '재 생';
                 }
             }
         });
@@ -72,14 +72,14 @@ function renderChapters(data) {
     list.innerHTML = "";
     if (data.length === 0) {
         placeholder.style.display = 'block'; list.style.display = 'none';
-        placeholder.querySelector('p').innerHTML = '검색된 강의가 없습니다.'; return;
+        placeholder.querySelector('p').innerHTML = '검색된 강의가 없습니다.<br>다른 키워드로 검색해 보세요.'; return;
     }
     placeholder.style.display = 'none'; list.style.display = 'grid';
 
     data.forEach(chap => {
-        const detected = detectGrade(chap.grade); // 색상 판별용 (중1~고3, etc)
-        const gradeClass = `grade-${detected}`;   // CSS 클래스 (grade-중1, grade-etc 등)
-        const displayLabel = chap.grade;          // 화면 표시용 (원문 그대로: [tip], [중1] 등)
+        const detected = detectGrade(chap.grade); 
+        const gradeClass = `grade-${detected}`;   
+        const displayLabel = chap.grade;          
 
         const chapterEl = document.createElement('div');
         chapterEl.className = `chapter ${gradeClass}`;
@@ -160,6 +160,8 @@ function performSearch() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchBox = document.getElementById('searchBox');
+    const placeholder = document.getElementById('lesson-placeholder');
+
     document.getElementById('searchBtn').addEventListener('click', performSearch);
     searchBox.addEventListener('keydown', (e) => { if (e.key === 'Enter') performSearch(); });
 
@@ -172,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
     document.getElementById('fullscreenBtn').onclick = () => document.getElementById('lessonVideo').requestFullscreen();
     document.getElementById('endLectureBtn').onclick = () => { document.getElementById('videoModal').classList.remove('show'); player?.stopVideo(); };
+    
     document.getElementById('showPdfBtn').onclick = (e) => {
         const pc = document.getElementById('modalPdfContainer'), vc = document.getElementById('videoContainer'), frame = document.getElementById('modalPdfFrame');
         if (pc.style.width !== '0px' && pc.style.width !== '') { pc.style.width = '0'; vc.style.width = '100%'; e.target.innerText = '교재 보기'; }
@@ -183,8 +186,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.querySelectorAll('.speedOption').forEach(b => { b.onclick = () => player?.setPlaybackRate(parseFloat(b.dataset.speed)); });
 
+    // [로딩 버그 해결] 데이터 수신 후 스피너 제거 로직
     fetchAllSheets().then(data => { 
         allChapters = data.chapters; 
-        document.getElementById('lesson-placeholder').querySelector('p').innerText = "키워드를 검색해 보세요.";
+        
+        // 1. 스피너 SVG 숨기기
+        const spinner = placeholder.querySelector('.loading-spinner');
+        if (spinner) spinner.style.display = 'none';
+
+        // 2. 안내 텍스트 업데이트
+        placeholder.querySelector('p').innerHTML = `
+            <svg style="width:50px; height:50px; fill:#cbd5e1; margin-bottom:15px;" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+            <br>강의 데이터를 성공적으로 불러왔습니다.<br>학년 버튼을 누르거나 키워드를 검색해 보세요.
+        `;
+    }).catch(err => {
+        console.error("Data Load Error:", err);
+        placeholder.querySelector('p').innerText = "데이터 로딩 중 오류가 발생했습니다.";
     });
 });
