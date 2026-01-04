@@ -1,5 +1,5 @@
 // =================================================================================
-// [v14.3 최종] 데이터 로딩 및 렌더링 로직 확인
+// [v14.4 최종] 학년별 색상 매칭 로직 개선 (공백 및 포함관계 대응)
 // =================================================================================
 let player = null, allChapters = [];
 
@@ -85,6 +85,7 @@ function openModal(lesson) {
     }
 }
 
+// === 강의 목록 렌더링 함수 ===
 function renderChapters(data) {
     const list = document.getElementById('chapterList');
     const placeholder = document.getElementById('lesson-placeholder');
@@ -101,12 +102,20 @@ function renderChapters(data) {
     list.style.display = 'grid';
 
     data.forEach(chap => {
-        // ★★★ [핵심] 학년 데이터(chap.grade)를 기반으로 CSS 클래스(grade-중1 등)를 생성하는 부분 ★★★
-        const gradeClassMap = { '중1':'grade-중1', '중2':'grade-중2', '중3':'grade-중3', '고1':'grade-고1', '고2':'grade-고2', '고3':'grade-고3' };
-        const gradeClass = gradeClassMap[chap.grade] || 'grade-etc';
+        // ★★★ [수정] 학년별 색상 클래스 판별 로직 개선 ★★★
+        // 데이터에 공백이 있거나 "고3(수능)" 처럼 뒤에 글자가 붙어 있어도 인식하도록 함
+        let gradeClass = 'grade-etc'; 
+        const g = (chap.grade || "").toString();
+
+        if (g.includes('중1')) gradeClass = 'grade-중1';
+        else if (g.includes('중2')) gradeClass = 'grade-중2';
+        else if (g.includes('중3')) gradeClass = 'grade-중3';
+        else if (g.includes('고1')) gradeClass = 'grade-고1';
+        else if (g.includes('고2')) gradeClass = 'grade-고2';
+        else if (g.includes('고3')) gradeClass = 'grade-고3';
 
         const chapterEl = document.createElement('div');
-        chapterEl.className = `chapter ${gradeClass}`; // chapter 와 grade-학년 클래스를 함께 적용
+        chapterEl.className = `chapter ${gradeClass}`;
 
         chapterEl.innerHTML = `
             <div class="chapter-header">
@@ -185,9 +194,12 @@ function performSearch() {
         return;
     }
 
-    // 키워드에 해당하는 버튼 활성화
-    const matchingButton = document.querySelector(`.filter-btn[data-grade="${searchBox.value.trim()}"]`);
-    if(matchingButton) matchingButton.classList.add('active');
+    // 필터 버튼 활성화 로직
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        if(btn.dataset.grade === searchBox.value.trim()) {
+            btn.classList.add('active');
+        }
+    });
 
     const andGroups = keyword.split(',').map(s => s.trim()).filter(Boolean);
     const filtered = allChapters.filter(chapter => {
@@ -229,23 +241,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // (모달 컨트롤러 이벤트 핸들러는 변경 없음)
+    // 모달 컨트롤러 이벤트
     document.getElementById('playPauseBtn').onclick = () => { if (!player || typeof player.getPlayerState !== 'function') return; player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo(); };
     document.getElementById('skipBackwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() - 5, true);
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
     document.getElementById('fullscreenBtn').onclick = () => document.getElementById('lessonVideo').requestFullscreen();
     document.getElementById('endLectureBtn').onclick = () => { document.getElementById('videoModal').classList.remove('show'); player?.stopVideo(); };
-    document.getElementById('showPdfBtn').onclick = (e) => { const pc = document.getElementById('modalPdfContainer'); const vc = document.getElementById('videoContainer'); const frame = document.getElementById('modalPdfFrame'); if (pc.style.width !== '0px' && pc.style.width !== '') { pc.style.width = '0'; vc.style.width = '100%'; e.target.innerText = '교재 보기'; } else { if (frame.src.includes("about:blank")) { frame.src = getDriveLink(e.target.dataset.pdfId); } const targetW = Math.max(document.getElementById('videoContent').offsetHeight * 0.707, 600); pc.style.width = targetW + 'px'; vc.style.width = `calc(100% - ${targetW}px)`; e.target.innerText = '교재 닫기'; } };
+    document.getElementById('showPdfBtn').onclick = (e) => { 
+        const pc = document.getElementById('modalPdfContainer'); 
+        const vc = document.getElementById('videoContainer'); 
+        const frame = document.getElementById('modalPdfFrame'); 
+        if (pc.style.width !== '0px' && pc.style.width !== '') { 
+            pc.style.width = '0'; 
+            vc.style.width = '100%'; 
+            e.target.innerText = '교재 보기'; 
+        } else { 
+            if (frame.src.includes("about:blank")) { 
+                frame.src = getDriveLink(e.target.dataset.pdfId); 
+            } 
+            const targetW = Math.max(document.getElementById('videoContent').offsetHeight * 0.707, 600); 
+            pc.style.width = targetW + 'px'; 
+            vc.style.width = `calc(100% - ${targetW}px)`; 
+            e.target.innerText = '교재 닫기'; 
+        } 
+    };
     document.querySelectorAll('.speedOption').forEach(b => { b.onclick = () => player?.setPlaybackRate(parseFloat(b.dataset.speed)); });
 
-    // 데이터 로드
-    fetchAllSheets()
-        .then(data => {
-            allChapters = data.chapters;
-            showSearchPrompt();
-        })
-        .catch(error => {
-            console.error("데이터 로딩 실패:", error);
-            placeholder.innerHTML = `<p style="color: #f87171;">강의 목록을 불러오는 데 실패했습니다.<br>잠시 후 다시 시도해 주세요.</p>`;
-        });
+    // 데이터 로드 (fetchAllSheets 함수는 lessonlink.js에 정의되어 있어야 함)
+    if (typeof fetchAllSheets === 'function') {
+        fetchAllSheets()
+            .then(data => {
+                allChapters = data.chapters;
+                showSearchPrompt();
+            })
+            .catch(error => {
+                console.error("데이터 로딩 실패:", error);
+                placeholder.innerHTML = `<p style="color: #f87171;">강의 목록을 불러오는 데 실패했습니다.<br>잠시 후 다시 시도해 주세요.</p>`;
+            });
+    }
 });
