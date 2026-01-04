@@ -1,5 +1,5 @@
 // =================================================================================
-// [v14.4 최종] 학년별 색상 매칭 로직 개선 (공백 및 포함관계 대응)
+// [v14.4 최종] 한글 인코딩 수정 및 학년별 색상 매칭 로직 개선
 // =================================================================================
 let player = null, allChapters = [];
 
@@ -102,8 +102,7 @@ function renderChapters(data) {
     list.style.display = 'grid';
 
     data.forEach(chap => {
-        // ★★★ [수정] 학년별 색상 클래스 판별 로직 개선 ★★★
-        // 데이터에 공백이 있거나 "고3(수능)" 처럼 뒤에 글자가 붙어 있어도 인식하도록 함
+        // [수정] 학년별 색상 클래스 판별 로직 개선 (공백/특수문자 포함 대응)
         let gradeClass = 'grade-etc'; 
         const g = (chap.grade || "").toString();
 
@@ -177,7 +176,6 @@ function renderChapters(data) {
     });
 }
 
-// === 전역 검색 함수 ===
 function performSearch() {
     const searchBox = document.getElementById('searchBox');
     const placeholder = document.getElementById('lesson-placeholder');
@@ -194,7 +192,6 @@ function performSearch() {
         return;
     }
 
-    // 필터 버튼 활성화 로직
     document.querySelectorAll('.filter-btn').forEach(btn => {
         if(btn.dataset.grade === searchBox.value.trim()) {
             btn.classList.add('active');
@@ -215,8 +212,6 @@ function performSearch() {
     renderChapters(filtered);
 };
 
-
-// === 페이지 로딩 및 이벤트 핸들러 설정 ===
 document.addEventListener('DOMContentLoaded', () => {
     const searchBtn = document.getElementById('searchBtn');
     const searchBox = document.getElementById('searchBox');
@@ -241,7 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 모달 컨트롤러 이벤트
     document.getElementById('playPauseBtn').onclick = () => { if (!player || typeof player.getPlayerState !== 'function') return; player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo(); };
     document.getElementById('skipBackwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() - 5, true);
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
@@ -267,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.querySelectorAll('.speedOption').forEach(b => { b.onclick = () => player?.setPlaybackRate(parseFloat(b.dataset.speed)); });
 
-    // 데이터 로드 (fetchAllSheets 함수는 lessonlink.js에 정의되어 있어야 함)
     if (typeof fetchAllSheets === 'function') {
         fetchAllSheets()
             .then(data => {
