@@ -1,9 +1,7 @@
-// =================================================================================
-// [v14.8 최종] 깃허브/클라우드플레어 인코딩 충돌 완벽 해결 버전
-// =================================================================================
+// [v15.0 최종] 깃허브/클라우드플레어 배포 환경 완벽 대응 버전
 let player = null, allChapters = [];
 
-// 1. 학년 판별 함수 (CSS 클래스용 영문 코드 반환)
+// 1. 학년 판별 함수 (CSS 매칭을 위해 영문 코드 반환)
 function detectGrade(text = '') {
     if (!text) return 'etc';
     if (text.includes('중1')) return 'm1';
@@ -15,50 +13,41 @@ function detectGrade(text = '') {
     return 'etc'; // [공부법], [특강], [tip] 등은 모두 etc(보라색)로 분류
 }
 
-function isMobile() {
-    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-function onYouTubeIframeAPIReady() {}
+function isMobile() { return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent); }
 function getDriveLink(id) { return id ? `https://drive.google.com/file/d/${id}/preview` : ''; }
 
 function updateVideoUI(hasVideo, lessonPdf) {
-    const videoPlayerEl = document.getElementById('lessonVideo');
-    const videoPlaceholderEl = document.getElementById('videoPlaceholder');
-    const videoControls = document.querySelectorAll('#videoControls button');
-    videoPlayerEl.style.display = hasVideo ? 'block' : 'none';
-    videoPlaceholderEl.style.display = hasVideo ? 'none' : 'flex';
-    videoControls.forEach(btn => { if (btn.id !== 'endLectureBtn' && btn.id !== 'showPdfBtn') btn.disabled = !hasVideo; });
-    if (!hasVideo) {
-        videoPlaceholderEl.innerHTML = lessonPdf ? '강의가 준비 중이거나<br>PDF 교재만 제공됩니다.' : '강의가 준비 중입니다.';
-    }
+    const vPlayer = document.getElementById('lessonVideo');
+    const vPlaceholder = document.getElementById('videoPlaceholder');
+    const vControls = document.querySelectorAll('#videoControls button');
+    vPlayer.style.display = hasVideo ? 'block' : 'none';
+    vPlaceholder.style.display = hasVideo ? 'none' : 'flex';
+    vControls.forEach(btn => { if (btn.id !== 'endLectureBtn' && btn.id !== 'showPdfBtn') btn.disabled = !hasVideo; });
+    if (!hasVideo) vPlaceholder.innerHTML = lessonPdf ? '강의가 준비 중이거나<br>PDF 교재만 제공됩니다.' : '강의가 준비 중입니다.';
 }
 
 function setupPlayer(lesson) {
-    const startSeconds = lesson.time ? parseInt(lesson.time) : 0;
+    const startSec = lesson.time ? parseInt(lesson.time) : 0;
     if (!player) {
         player = new YT.Player('lessonVideo', {
             height: '100%', width: '100%',
             playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
             events: {
-                'onReady': () => player.loadVideoById(lesson.videoid, startSeconds),
+                'onReady': () => player.loadVideoById(lesson.videoid, startSec),
                 'onStateChange': (e) => {
                     const btn = document.getElementById('playPauseBtn');
                     if(btn) btn.innerText = (e.data === YT.PlayerState.PLAYING) ? '일시 정지' : '재 생';
                 }
             }
         });
-    } else { player.loadVideoById(lesson.videoid, startSeconds); }
+    } else { player.loadVideoById(lesson.videoid, startSec); }
 }
 
 function openModal(lesson) {
     document.getElementById('videoModal').classList.add('show');
     const showPdfBtn = document.getElementById('showPdfBtn');
-    if (lesson.pdf) {
-        showPdfBtn.disabled = false; showPdfBtn.innerText = '교재 보기'; showPdfBtn.dataset.pdfId = lesson.pdf;
-    } else {
-        showPdfBtn.disabled = true; showPdfBtn.innerText = '교재 없음';
-    }
+    if (lesson.pdf) { showPdfBtn.disabled = false; showPdfBtn.innerText = '교재 보기'; showPdfBtn.dataset.pdfId = lesson.pdf; }
+    else { showPdfBtn.disabled = true; showPdfBtn.innerText = '교재 없음'; }
     document.getElementById('modalPdfFrame').src = "about:blank";
     document.getElementById('modalPdfContainer').style.width = '0';
     document.getElementById('videoContainer').style.width = '100%';
@@ -72,17 +61,14 @@ function renderChapters(data) {
     list.innerHTML = "";
     if (data.length === 0) {
         placeholder.style.display = 'block'; list.style.display = 'none';
-        placeholder.querySelector('p').innerHTML = '검색된 강의가 없습니다.<br>다른 키워드로 검색해 보세요.'; return;
+        placeholder.querySelector('p').innerHTML = '검색된 강의가 없습니다.'; return;
     }
     placeholder.style.display = 'none'; list.style.display = 'grid';
 
     data.forEach(chap => {
-        // [중요] 색상 클래스는 영문으로 생성 (GitHub/Cloudflare 호환)
         const gradeKey = detectGrade(chap.grade); 
-        const gradeClass = `grade-${gradeKey}`;   
-        
-        // [중요] 화면 표시 라벨은 시트 원문 그대로 사용 (예: [공부법], [중1])
-        const displayLabel = chap.grade;          
+        const gradeClass = `grade-${gradeKey}`; // 영문 클래스 (grade-m1 등)
+        const displayLabel = chap.grade;        // 화면 표시 (원문 그대로)
 
         const chapterEl = document.createElement('div');
         chapterEl.className = `chapter ${gradeClass}`;
@@ -132,26 +118,7 @@ function renderChapters(data) {
 function performSearch() {
     const searchBox = document.getElementById('searchBox');
     const keyword = searchBox.value.toLowerCase().trim();
-    const placeholder = document.getElementById('lesson-placeholder');
-    const list = document.getElementById('chapterList');
-
-    document.querySelectorAll('.filter-btn.active').forEach(b => b.classList.remove('active'));
-
-    if (!keyword) {
-        list.style.display = 'none'; placeholder.style.display = 'block'; return;
-    }
-
-    // 키워드에 학년명이 포함되어 있으면 상단 필터 버튼 활성화
-    const checkGrade = (txt) => {
-        if (txt.includes('중1')) return '중1'; if (txt.includes('중2')) return '중2'; if (txt.includes('중3')) return '중3';
-        if (txt.includes('고1')) return '고1'; if (txt.includes('고2')) return '고2'; if (txt.includes('고3')) return '고3';
-        return null;
-    };
-    const detected = checkGrade(keyword);
-    if(detected) {
-        const btn = document.querySelector(`.filter-btn[data-grade="${detected}"]`);
-        if(btn) btn.classList.add('active');
-    }
+    if (!keyword) { renderChapters([]); return; }
 
     const andGroups = keyword.split(',').map(s => s.trim()).filter(Boolean);
     const filtered = allChapters.filter(chap => {
@@ -168,22 +135,16 @@ function performSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const searchBox = document.getElementById('searchBox');
-    const placeholder = document.getElementById('lesson-placeholder');
-
     document.getElementById('searchBtn').addEventListener('click', performSearch);
-    searchBox.addEventListener('keydown', (e) => { if (e.key === 'Enter') performSearch(); });
-
+    document.getElementById('searchBox').addEventListener('keydown', (e) => { if (e.key === 'Enter') performSearch(); });
     document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() { searchBox.value = this.dataset.grade; performSearch(); });
+        btn.addEventListener('click', function() { document.getElementById('searchBox').value = this.dataset.grade; performSearch(); });
     });
-
+    // 모달 제어 등 기타 이벤트 로직 생략 (백업본 유지)
     document.getElementById('playPauseBtn').onclick = () => { if(player) player.getPlayerState() === 1 ? player.pauseVideo() : player.playVideo(); };
     document.getElementById('skipBackwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() - 5, true);
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
-    document.getElementById('fullscreenBtn').onclick = () => document.getElementById('lessonVideo').requestFullscreen();
     document.getElementById('endLectureBtn').onclick = () => { document.getElementById('videoModal').classList.remove('show'); player?.stopVideo(); };
-    
     document.getElementById('showPdfBtn').onclick = (e) => {
         const pc = document.getElementById('modalPdfContainer'), vc = document.getElementById('videoContainer'), frame = document.getElementById('modalPdfFrame');
         if (pc.style.width !== '0px' && pc.style.width !== '') { pc.style.width = '0'; vc.style.width = '100%'; e.target.innerText = '교재 보기'; }
@@ -197,14 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchAllSheets().then(data => { 
         allChapters = data.chapters; 
-        const spinner = placeholder.querySelector('.loading-spinner');
-        if (spinner) spinner.style.display = 'none';
-        placeholder.querySelector('p').innerHTML = `
-            <svg style="width:50px; height:50px; fill:#cbd5e1; margin-bottom:15px;" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-            <br>강의 데이터를 성공적으로 불러왔습니다.<br>학년 버튼을 누르거나 키워드를 검색해 보세요.
-        `;
-    }).catch(err => {
-        console.error("Data Load Error:", err);
-        placeholder.querySelector('p').innerText = "데이터 로딩 중 오류가 발생했습니다.";
+        const spin = document.querySelector('.loading-spinner');
+        if (spin) spin.style.display = 'none';
+        document.getElementById('lesson-placeholder').querySelector('p').innerText = "데이터 로드 완료. 검색해 보세요!";
     });
 });
