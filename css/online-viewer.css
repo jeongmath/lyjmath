@@ -284,7 +284,7 @@ main.content-area {
 
 #customAlertModal .n-modal-content {
   background: #fff; width: 100%; max-width: 340px; border-radius: 16px;
-  padding: 25px; position: relative; border-top: 5px solid var(--main-navy);
+  padding: 25px; position: relative; border-top: 5px solid #ef4444; /* 경고 느낌의 빨간색 포인트 */
   animation: modalFadeUp 0.3s ease-out;
   text-align: center;
 }
