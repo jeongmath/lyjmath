@@ -162,15 +162,22 @@
       ]
     },
     {
-      "grade": "[실전] 모의고사",
-      "unit": "",
-      "chapter": "",
+      "grade": "[실전] 대수",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
       "lessons": [
         {
-          "lesson": "",
-          "pdf": "",
-          "listid": "",
-          "videoid": "",
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
+          "time": ""
+        },
+        {
+          "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+          "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+          "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+          "videoid": "XYlgigEIfGo",
           "time": ""
         }
       ]
@@ -465,13 +472,23 @@
       "time": ""
     },
     {
-      "grade": "[실전] 모의고사",
-      "unit": "",
-      "chapter": "",
-      "listid": "",
-      "lesson": "",
-      "pdf": "",
-      "videoid": "",
+      "grade": "[실전] 대수",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
+      "time": ""
+    },
+    {
+      "grade": "[실전] 대수",
+      "unit": "지수와 로그",
+      "chapter": "제5강 거듭제곱근",
+      "listid": "PLSuswcbaS-Rl9CWTSiKLyf-9wHwN6VMG2",
+      "lesson": "[수능기출] 동류항은 계수끼리 (Q21~Q50)",
+      "pdf": "1FgAnGep1muMikpRC4GvUcqdsJ0VFO9n0",
+      "videoid": "XYlgigEIfGo",
       "time": ""
     },
     {
