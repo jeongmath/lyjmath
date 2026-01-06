@@ -2,49 +2,27 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>LYJ MATH - 정수학</title>
+  
+  <!-- [PWA 및 모바일 앱 설정] -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e3a8a"> <!-- 안드로이드 상태바 색상 -->
+  
+  <!-- [iOS 전용 설정] -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="정수학">
+  <link rel="apple-touch-icon" href="images/logo.png">
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
-  <style>
-    /* === 공지사항 전용 모달 스타일 추가 === */
-    .n-modal {
-      display: none; position: fixed; z-index: 2000; left: 0; top: 0;
-      width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8);
-      align-items: center; justify-content: center; padding: 20px;
-    }
-    .n-modal.show { display: flex; }
-    .n-modal-content {
-      background: #fff; width: 100%; max-width: 500px; border-radius: 16px;
-      padding: 30px; position: relative; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-      border-top: 5px solid #1e3a8a; /* --main-navy */
-      animation: modalFadeUp 0.3s ease-out;
-    }
-    @keyframes modalFadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .n-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-    .n-modal-close { background: none; border: none; font-size: 28px; color: #94a3b8; cursor: pointer; line-height: 1; }
-    .n-modal-content h3 { font-size: 1.3rem; color: #1e3a8a; margin-bottom: 15px; font-weight: 700; }
-    .n-modal-divider { height: 1px; background: #e2e8f0; margin-bottom: 15px; }
-    .n-modal-content p { color: #475569; line-height: 1.7; font-size: 1rem; margin-bottom: 25px; white-space: pre-wrap; text-align: left; }
-    .n-modal-confirm {
-      width: 100%; background: #1e3a8a; color: #fff; border: none;
-      padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s;
-    }
-    .n-modal-confirm:hover { background: #1a306e; }
-    @media (max-width: 767px) {
-      .n-modal-content { padding: 20px; }
-      .n-modal-content h3 { font-size: 1.1rem; }
-    }
-  </style>
 </head>
 <body>
   <header class="site-nav">
     <a href="index.html" class="logo-link" title="홈으로 이동"></a>
   </header>
+
   <section class="hero hero-main">
     <div class="hero-bg-images">
       <img src="images/lyj0.png" class="h-img img-init" alt="">
@@ -56,15 +34,14 @@
     </div>
   </section>
 
-  <!-- ★ 공지사항 섹션 (데이터 속성 추가) ★ -->
+  <!-- 공지사항 섹션 (data 속성으로 내용 저장) -->
   <section class="section-notice">
     <div class="container">
       <div class="notice-box">
         
-        <!-- 첫 번째 줄 (내용 추가) -->
         <a href="#" class="notice-item js-open-notice" 
            data-title="4K 강의 촬영 및 업로드 중입니다." 
-           data-content="현장 강의의 생동감을 그대로 전달하기 위해 모든 강의를 4K 고해상도로 촬영하고 있습니다. 더욱 선명한 화질로 몰입도 높은 학습을 경험하세요.">
+           data-content="현장의 생동감을 그대로 전달하기 위해 모든 강의를 4K 고해상도로 재촬영하고 있습니다. 더욱 선명한 화질로 몰입도 높은 학습을 경험하세요.">
           <div class="notice-left">
             <span class="notice-badge">NOTICE</span>
             <span class="notice-title">4K 강의 촬영 및 업로드 중입니다.</span>
@@ -74,10 +51,9 @@
 
         <div class="notice-divider"></div>
 
-        <!-- 두 번째 줄 (내용 추가) -->
         <a href="#" class="notice-item js-open-notice" 
            data-title="홈페이지 리뉴얼 중입니다." 
-           data-content="학생들의 학습 편의를 위해 홈페이지를 새롭게 단장하고 있습니다. 일부 기능이 업데이트 중일 수 있으니 양해 부탁드립니다.">
+           data-content="학습 편의를 위해 홈페이지 기능을 강화하고 있습니다. 이용 중 불편한 점이나 건의사항은 언제든 학원으로 문의주세요.">
           <div class="notice-left">
             <span class="notice-badge">NOTICE</span>
             <span class="notice-title">홈페이지 리뉴얼 중입니다.</span>
@@ -89,57 +65,61 @@
     </div>
   </section>
 
-<section class="section-off-online" >
+  <section class="section-off-online">
     <div class="container section-inner">
       <div class="box feature-box">
         <div class="box-header">
           <h2>Online 정수학</h2>
-          <a href="sub_online.html" class="btn-original btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
+          <a href="sub_online.html" class="btn-original btn-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+          </a>
         </div>
         <p>언제 어디서나 학습 가능한 명품 강의!</p>
-        <div class="video-embed-container" id="online-video-container">
+        <div class="video-embed-container">
           <iframe src="https://www.youtube.com/embed/MhDjvKObcco" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
 
-  <div class="box feature-box">
-    <div class="box-header">
-      <h2>Offline 정수학</h2>
-      <a href="sub_offline.html" class="btn-original btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
-    </div>
-    <p>현장에서 직접 배우는 집중 교육!</p>
-    <div class="video-embed-container">
-      <iframe src="https://www.youtube.com/embed/MhDjvKObcco" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
+      <div class="box feature-box">
+        <div class="box-header">
+          <h2>Offline 정수학</h2>
+          <a href="sub_offline.html" class="btn-original btn-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+          </a>
+        </div>
+        <p>현장에서 직접 배우는 집중 교육!</p>
+        <div class="video-embed-container">
+          <iframe src="https://www.youtube.com/embed/MhDjvKObcco" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
     </div>
   </section>
 
-<section style="padding: 50px 0; background-color: #f8fafc;">
-  <div class="container section-inner" style="display: flex; gap: 30px;">
-    <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
-      <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">올바른 수학공부</h2>
-      <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">수학 공부에 대한 당연한 이야기</p>
-      <a href="sub_philosophy.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
+  <section style="padding: 50px 0; background-color: #f8fafc;">
+    <div class="container section-inner" style="display: flex; gap: 30px;">
+      <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
+        <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">올바른 수학공부</h2>
+        <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">수학 공부에 대한 당연한 이야기</p>
+        <a href="sub_philosophy.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
+      </div>
+      <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
+        <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">알.피.살.이.</h2>
+        <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">알면 피가 되고 살이 되는 이야기</p>
+        <a href="sub_philosophy_advice.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
+      </div>
     </div>
-    <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
-      <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">알.피.살.이.</h2>
-      <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">알면 피가 되고 살이 되는 이야기</p>
-      <a href="sub_philosophy_advice.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
-    </div>
-  </div>
-</section>
+  </section>
 
-  <!-- ★ 공지사항 팝업 모달 구조 ★ -->
+  <!-- 공지사항 팝업 모달 -->
   <div id="noticePopup" class="n-modal">
     <div class="n-modal-content">
       <div class="n-modal-header">
-        <span class="notice-badge" style="background-color: #1e3a8a;">NOTICE</span>
-        <button class="n-modal-close">&times;</button>
+        <span class="notice-badge">NOTICE</span>
+        <button class="n-modal-close" aria-label="닫기">&times;</button>
       </div>
       <h3 id="n-popup-title">공지사항 제목</h3>
       <div class="n-modal-divider"></div>
-      <p id="n-popup-text">공지사항 내용</p>
+      <p id="n-popup-text">상세 내용이 이곳에 표시됩니다.</p>
       <button class="n-modal-confirm">확인</button>
     </div>
   </div>
@@ -151,6 +131,7 @@
       </a>
     </div>
   </section>
+
   <footer>
     <div class="container">
       <a href="index.html" class="footer-logo-link" title="홈으로 이동">
@@ -164,9 +145,9 @@
     </div>
   </footer>
 
-<script>
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 공지사항 모달 제어
+        // 공지사항 팝업 제어
         const modal = document.getElementById('noticePopup');
         const modalTitle = document.getElementById('n-popup-title');
         const modalText = document.getElementById('n-popup-text');
@@ -178,39 +159,27 @@
                 modalTitle.innerText = this.getAttribute('data-title');
                 modalText.innerText = this.getAttribute('data-content');
                 modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
             });
         });
 
-        closeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                modal.classList.remove('show');
-                document.body.style.overflow = '';
-            });
-        });
+        const closeModal = () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        };
 
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('show');
-                document.body.style.overflow = '';
-            }
-        });
+        closeBtns.forEach(btn => btn.addEventListener('click', closeModal));
+        window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-        // 기존 버튼 제어
-        const backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-            backBtn.addEventListener('click', function(e) { e.preventDefault(); history.back(); });
-        }
+        // 맨 위로 이동 버튼
         const topBtn = document.querySelector('.top-btn');
         if (topBtn) {
-            topBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            topBtn.addEventListener('click', function(e) { 
+                e.preventDefault(); 
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            });
         }
     });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
+  </script>
 </body>
 </html>
