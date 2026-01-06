@@ -1,5 +1,5 @@
 // =================================================================================
-// [v14.4 최종] 한글 인코딩 수정 및 학년별 색상 매칭 로직 개선
+// [v14.5 최종] 모바일 커스텀 알림 팝업 통합 및 학년별 색상 매칭 개선
 // =================================================================================
 let player = null, allChapters = [];
 
@@ -9,6 +9,26 @@ function isMobile() {
 
 function onYouTubeIframeAPIReady() {}
 function getDriveLink(id) { return id ? `https://drive.google.com/file/d/${id}/preview` : ''; }
+
+// [추가] 커스텀 알림 팝업 제어 함수
+function showAlertModal(msg) {
+    const alertModal = document.getElementById('customAlertModal');
+    const alertText = document.getElementById('alertMessage');
+    if (alertModal && alertText) {
+        alertText.innerHTML = msg;
+        alertModal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+    }
+}
+
+// [추가] 커스텀 알림 팝업 닫기 함수
+function closeAlert() {
+    const alertModal = document.getElementById('customAlertModal');
+    if (alertModal) {
+        alertModal.classList.remove('show');
+        document.body.style.overflow = ''; // 배경 스크롤 복구
+    }
+}
 
 function updateVideoUI(hasVideo, lessonPdf) {
     const videoPlayerEl = document.getElementById('lessonVideo');
@@ -102,7 +122,6 @@ function renderChapters(data) {
     list.style.display = 'grid';
 
     data.forEach(chap => {
-        // [수정] 학년별 색상 클래스 판별 로직 개선 (공백/특수문자 포함 대응)
         let gradeClass = 'grade-etc'; 
         const g = (chap.grade || "").toString();
 
@@ -164,7 +183,11 @@ function renderChapters(data) {
                         if (lesson.time) mobileUrl += `&t=${lesson.time}`;
                         window.open(mobileUrl, '_blank');
                     } else {
-                        alert('강의가 준비 중입니다.');
+                        // [수정] alert 대신 커스텀 팝업 사용
+                        const msg = lesson.pdf 
+                            ? '강의 영상은 준비 중이며,<br>현재는 교재(PDF)만 제공됩니다.' 
+                            : '해당 강의는 현재 업로드 준비 중입니다.<br>잠시만 기다려주세요!';
+                        showAlertModal(msg);
                     }
                 } else {
                     openModal(lesson);
@@ -241,6 +264,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
     document.getElementById('fullscreenBtn').onclick = () => document.getElementById('lessonVideo').requestFullscreen();
     document.getElementById('endLectureBtn').onclick = () => { document.getElementById('videoModal').classList.remove('show'); player?.stopVideo(); };
+    
+    // 알림 모달 배경 클릭 시 닫기
+    const alertModal = document.getElementById('customAlertModal');
+    if (alertModal) {
+        alertModal.addEventListener('click', (e) => {
+            if (e.target === alertModal) closeAlert();
+        });
+    }
+
     document.getElementById('showPdfBtn').onclick = (e) => { 
         const pc = document.getElementById('modalPdfContainer'); 
         const vc = document.getElementById('videoContainer'); 
