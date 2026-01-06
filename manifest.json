@@ -4,7 +4,7 @@
   "description": "노력하는 사람만이 행복할 수 있습니다. 정수학 온라인 강의 시스템",
   "start_url": "index.html",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#1e3a8a",
   "icons": [
