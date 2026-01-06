@@ -11,7 +11,6 @@
   <header class="site-nav">
     <a href="index.html" class="logo-link" title="홈으로 이동"></a>
   </header>
-
   <section class="hero hero-main">
     <div class="hero-bg-images">
       <img src="images/lyj0.png" class="h-img img-init" alt="">
@@ -23,37 +22,39 @@
     </div>
   </section>
 
-  <!-- ★ 공지사항 섹션 (클릭 시 커스텀 모달 실행) ★ -->
+  <!-- ★ 공지사항 섹션 추가 ★ -->
   <section class="section-notice">
     <div class="container">
       <div class="notice-box">
         
-        <!-- 첫 번째 공지 -->
-        <div class="notice-item" onclick="showNotice(this)">
+        <!-- 첫 번째 줄 -->
+        <a href="#" class="notice-item">
           <div class="notice-left">
             <span class="notice-badge">NOTICE</span>
             <span class="notice-title">4K 강의 촬영 및 업로드 중입니다.</span>
           </div>
           <span class="notice-date">2026.01.01</span>
-        </div>
+        </a>
 
         <div class="notice-divider"></div>
 
-        <!-- 두 번째 공지 -->
-        <div class="notice-item" onclick="showNotice(this)">
+        <!-- 두 번째 줄 -->
+        <a href="#" class="notice-item">
           <div class="notice-left">
             <span class="notice-badge">NOTICE</span>
             <span class="notice-title">홈페이지 리뉴얼 중입니다.</span>
           </div>
           <span class="notice-date">2026.01.01</span>
-        </div>
+        </a>
 
       </div>
     </div>
   </section>
 
-  <section class="section-off-online">
+<section class="section-off-online" >
     <div class="container section-inner">
+      
+      <!-- ★★★ [요청 수정] box 클래스에 feature-box 클래스 추가 ★★★ -->
       <div class="box feature-box">
         <div class="box-header">
           <h2>Online 정수학</h2>
@@ -65,33 +66,47 @@
         </div>
       </div>
 
-      <div class="box feature-box">
-        <div class="box-header">
-          <h2>Offline 정수학</h2>
-          <a href="sub_offline.html" class="btn-original btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
-        </div>
-        <p>현장에서 직접 배우는 집중 교육!</p>
-        <div class="video-embed-container">
-          <iframe src="https://www.youtube.com/embed/MhDjvKObcco" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
+   <!-- ★★★ [요청 수정] box 클래스에 feature-box 클래스 추가 ★★★ -->
+  <div class="box feature-box">
+    <div class="box-header">
+      <h2>Offline 정수학</h2>
+      <a href="sub_offline.html" class="btn-original btn-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H338.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></a>
+    </div>
+    <p>현장에서 직접 배우는 집중 교육!</p>
+    <div class="video-embed-container">
+      <iframe 
+        src="https://www.youtube.com/embed/MhDjvKObcco" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
     </div>
   </section>
 
-  <section class="section-philosophy-links">
-    <div class="container section-inner">
-      <div class="box feature-box" style="text-align: center;">
-        <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">올바른 수학공부</h2>
-        <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">수학 공부에 대한 당연한 이야기</p>
-        <a href="sub_philosophy.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
-      </div>
-      <div class="box feature-box" style="text-align: center;">
-        <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">알.피.살.이.</h2>
-        <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">알면 피가 되고 살이 되는 이야기</p>
-        <a href="sub_philosophy_advice.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
-      </div>
+
+<section style="padding: 50px 0; background-color: #f8fafc;">
+  <div class="container section-inner" style="display: flex; gap: 30px;">
+    
+    <!-- ★★★ [요청 수정] box 클래스에 feature-box 클래스 추가 ★★★ -->
+    <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
+      <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">올바른 수학공부</h2>
+      <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">수학 공부에 대한 당연한 이야기</p>
+      <a href="sub_philosophy.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
     </div>
-  </section>
+
+    <!-- ★★★ [요청 수정] box 클래스에 feature-box 클래스 추가 ★★★ -->
+    <div class="box feature-box" style="text-align: center; flex: 1; padding: 40px; border: 1px solid #e2e8f0; border-radius: 16px; background: #fff;">
+      <h2 style="font-size: 2rem; color: #1e3a8a; margin-bottom: 15px;">알.피.살.이.</h2>
+      <p style="font-size: 1.1rem; color: #475569; margin-bottom: 30px;">알면 피가 되고 살이 되는 이야기</p>
+      <a href="sub_philosophy_advice.html" class="btn-original" style="background-color: #1e3a8a;">자세히 보기</a>
+    </div>
+
+  </div>
+</section>
 
   <section class="action-buttons-container">
     <div class="container">
@@ -100,7 +115,6 @@
       </a>
     </div>
   </section>
-
   <footer>
     <div class="container">
       <a href="index.html" class="footer-logo-link" title="홈으로 이동">
@@ -113,51 +127,17 @@
       <p class="footer-copyright">Copyright © 1991&nbsp; <b>LYJ MATH - 정수학.</b>&nbsp; All Rights Reserved.</p>
     </div>
   </footer>
-
-  <!-- ★ 공지사항 커스텀 모달 ★ -->
-  <div id="customNoticeModal" class="modal-overlay" onclick="closeNotice()">
-    <div class="modal-window" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <span class="modal-badge">NOTICE</span>
-        <button class="modal-close-btn" onclick="closeNotice()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p id="modalNoticeTitle"></p>
-        <p id="modalNoticeDate"></p>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-confirm-btn" onclick="closeNotice()">확인</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 공지사항 모달 열기
-    function showNotice(element) {
-      const title = element.querySelector('.notice-title').innerText;
-      const date = element.querySelector('.notice-date').innerText;
-      
-      document.getElementById('modalNoticeTitle').innerText = title;
-      document.getElementById('modalNoticeDate').innerText = "작성일: " + date;
-      
-      const modal = document.getElementById('customNoticeModal');
-      modal.style.display = 'flex'; 
-      document.body.style.overflow = 'hidden'; 
-    }
-
-    // 공지사항 모달 닫기
-    function closeNotice() {
-      const modal = document.getElementById('customNoticeModal');
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto'; 
-    }
-
+<script>
     document.addEventListener('DOMContentLoaded', function() {
+        const backBtn = document.querySelector('.back-btn');
+        if (backBtn) {
+            backBtn.addEventListener('click', function(e) { e.preventDefault(); history.back(); });
+        }
         const topBtn = document.querySelector('.top-btn');
         if (topBtn) {
             topBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         }
     });
-  </script>
+</script>
 </body>
 </html>
