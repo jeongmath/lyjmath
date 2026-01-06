@@ -23,7 +23,7 @@
     </div>
   </section>
 
-  <!-- ★ 공지사항 섹션 (클릭 시 알림창 기능) ★ -->
+  <!-- ★ 공지사항 섹션 (클릭 시 커스텀 모달 실행) ★ -->
   <section class="section-notice">
     <div class="container">
       <div class="notice-box">
@@ -114,11 +114,42 @@
     </div>
   </footer>
 
+  <!-- ★ 공지사항 커스텀 모달 ★ -->
+  <div id="customNoticeModal" class="modal-overlay" onclick="closeNotice()">
+    <div class="modal-window" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span class="modal-badge">NOTICE</span>
+        <button class="modal-close-btn" onclick="closeNotice()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalNoticeTitle"></p>
+        <p id="modalNoticeDate"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-confirm-btn" onclick="closeNotice()">확인</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // 공지사항 모달 열기
     function showNotice(element) {
       const title = element.querySelector('.notice-title').innerText;
       const date = element.querySelector('.notice-date').innerText;
-      alert("[공지사항]\n\n" + title + "\n\n작성일: " + date);
+      
+      document.getElementById('modalNoticeTitle').innerText = title;
+      document.getElementById('modalNoticeDate').innerText = "작성일: " + date;
+      
+      const modal = document.getElementById('customNoticeModal');
+      modal.style.display = 'flex'; 
+      document.body.style.overflow = 'hidden'; 
+    }
+
+    // 공지사항 모달 닫기
+    function closeNotice() {
+      const modal = document.getElementById('customNoticeModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto'; 
     }
 
     document.addEventListener('DOMContentLoaded', function() {
