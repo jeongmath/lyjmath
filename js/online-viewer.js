@@ -45,9 +45,9 @@ function updateVideoUI(hasVideo, lessonPdf) {
 
     if (!hasVideo) {
         if (lessonPdf) {
-            videoPlaceholderEl.innerHTML = '강의가 준비 중이거나<br>PDF 교재만 제공됩니다.';
+            videoPlaceholderEl.innerHTML = '강의 영상은 준비 중이며,<br>현재는 교재(PDF)만 제공됩니다.';
         } else {
-            videoPlaceholderEl.innerHTML = '강의가 준비 중입니다.';
+            videoPlaceholderEl.innerHTML = '해당 강의는 현재 업로드 준비 중입니다.<br>잠시만 기다려주세요!';
         }
     }
 }
