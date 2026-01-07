@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>QR code 생성기</title>
+<!-- 라이브러리 로드 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 20px; background-color: #f4f6f8; color: #333; }
+    
+    h2 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+    h3 { text-align: center; color: #2c3e50; margin-top: 0; }
+    
+    input, select, button { padding: 8px; margin: 4px; border: 1px solid #ddd; border-radius: 4px; vertical-align: middle; }
+    
+    input[type="color"] {
+        padding: 2px;
+        border: 2px solid #7f8c8d;
+        height: 35px;
+        width: 60px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    button { background-color: #3498db; color: white; border: none; cursor: pointer; transition: background 0.3s; }
+    button:hover { background-color: #2980b9; }
+    button.secondary { background-color: #95a5a6; }
+    button.secondary:hover { background-color: #7f8c8d; }
+    
+    /* 제목 옆 헤더 버튼 스타일 (통일됨) */
+    .header-btn {
+        font-size: 0.6em;
+        padding: 5px 12px;
+        margin-left: 15px;
+        background-color: #7f8c8d;
+        border-radius: 20px;
+        vertical-align: middle;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .header-btn:hover { background-color: #2c3e50; }
+
+    .regen-btn {
+        font-size: 0.8em;
+        padding: 4px 8px;
+        margin-top: 5px;
+        background-color: #607d8b;
+        border-radius: 3px;
+        display: inline-block;
+    }
+    .regen-btn:hover { background-color: #455a64; }
+
+    .section-box {
+        background: white; padding: 20px; margin-bottom: 20px;
+        border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .flex-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; } 
+    .section-box .flex-row { justify-content: center; } 
+
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    th, td { border: 1px solid #eee; padding: 10px; text-align: center; vertical-align: middle; }
+    th { background: #ecf0f1; font-weight: 600; }
+    td a { text-decoration: none; color: #3498db; font-size: 0.9em; display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0 auto;}
+    
+    /* [수정됨] QR 생성 공간 여유있게 변경 */
+    .qr-container { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        min-height: 200px; /* 세로 공간 늘림 */
+        padding: 20px;     /* 내부 여백 추가 */
+    }
+    .qr-container img { max-width: 100%; }
+    
+    #loading { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8); z-index:9999; text-align:center; padding-top:20%; font-size:1.5em; font-weight:bold; color:#555; }
+    
+    .color-label { font-weight: bold; transition: color 0.2s; }
+</style>
+</head>
+<body>
+
+<div id="loading">데이터 처리 중...</div>
+
+<!-- [수정됨] 제목 변경 -->
+<h2>QR code 생성기</h2>
+
+<!-- 1. QR 공통 설정 -->
+<div class="section-box">
+    <h3>⚙️ QR 공통 설정 <button class="header-btn" onclick="applyStylesToAll()">🔄 모든 QR 재적용</button></h3>
+    <div class="flex-row">
+        <label>크기: 
+            <select id="qrSize">
+                <option value="100">100x100</option>
+                <option value="120" selected>120x120</option>
+                <option value="160">160x160</option>
+                <option value="200">200x200</option>
+            </select>
+        </label>
+        <label>레벨:
+            <select id="qrLevel">
+                <option value="L">L (7%)</option>
+                <option value="M" selected>M (15%)</option>
+                <option value="Q">Q (25%)</option>
+                <option value="H">H (30%)</option>
+            </select>
+        </label>
+        <label>버전(1~40): <input type="number" id="qrVersion" min="1" max="40" value="20" style="width:60px;"></label>
+        <label>여백(px): <input type="number" id="qrMargin" value="11" style="width:50px;"></label>
+        <label>테두리 두께(px): <input type="number" id="qrBorderWidth" value="11" style="width:50px;"></label>
+    </div>
+</div>
+
+<!-- 2. 임의 링크 생성 -->
+<div class="section-box">
+    <h3>🔗 임의 링크 QR</h3>
+    <div class="flex-row">
+        <input type="text" id="customUrl" style="flex:1; max-width: 600px;" placeholder="https://youtu.be/...">
+    </div>
+    <div class="flex-row" style="margin-top:10px;">
+        <label>QR 색상: <input type="color" id="customQRColor" value="#666666" oninput="if(document.getElementById('customUrl').value) generateCustomQR()"></label>
+        <label>테두리 색상: <input type="color" id="customBorderColor" value="#e8b8b8" oninput="if(document.getElementById('customUrl').value) generateCustomQR()"></label>
+        <button onclick="generateCustomQR()">QR 생성</button>
+        <button onclick="downloadCustomQR()">⬇</button>
+    </div>
+    <!-- 공간이 넓어진 QR 컨테이너 -->
+    <div id="customQRDiv" class="qr-container" style="margin-top:10px;"></div>
+</div>
+
+<!-- 3. 통합 섹션 (API + 디자인 + 버튼) -->
+<div class="section-box">
+    <h3>📺 재생목록 설정 및 디자인</h3>
+    
+    <!-- API 입력 -->
+    <div class="flex-row">
+        <input type="text" id="apiKey" style="flex:1; max-width: 600px;" placeholder="YouTube Data API Key 입력">
+    </div>
+    <div class="flex-row" style="margin-top:5px;">
+        <input type="text" id="playlistUrl" style="flex:1; max-width: 600px;" placeholder="https://www.youtube.com/playlist?list=...">
+    </div>
+
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+    <!-- 디자인 설정 -->
+    <div class="flex-row" style="justify-content: center; gap: 20px;">
+        <label>이해 영상 개수: <input type="number" id="frontCount" value="3" style="width:50px;"></label>
+        <!-- [수정됨] 버튼 스타일을 header-btn으로 통일 -->
+        <button class="header-btn" onclick="applyStylesToPlaylist()">🔄 재생목록 QR만 재적용</button>
+    </div>
+    
+    <!-- 색상 설정 -->
+    <div class="flex-row" style="margin-top: 15px;">
+        <span id="txt_playlist" class="color-label" style="color:#c75252;">[재생 목록]</span>
+        QR: <input type="color" id="playlistQRColor" value="#666666" oninput="document.getElementById('txt_playlist').style.color=this.value">
+        테두리: <input type="color" id="playlistBorderColor" value="#a0bee0">
+    </div>
+    <div class="flex-row">
+        <span id="txt_front" class="color-label" style="color:#315f97;">[이해 영상]</span>
+        QR: <input type="color" id="frontColor" value="#666666" oninput="document.getElementById('txt_front').style.color=this.value">
+        테두리: <input type="color" id="frontBorder" value="#cedeef">
+    </div>
+    <div class="flex-row">
+        <span id="txt_back" class="color-label" style="color:#699b37;">[숙달 영상]</span>
+        QR: <input type="color" id="backColor" value="#666666" oninput="document.getElementById('txt_back').style.color=this.value">
+        테두리: <input type="color" id="backBorder" value="#e0eed1">
+    </div>
+
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+    <!-- 실행 버튼 -->
+    <div class="flex-row" style="justify-content: space-between;">
+        <button onclick="run()" style="padding:10px 20px; font-size:1.1em; background-color:#e67e22;">▶ 재생목록 불러오기</button>
+        <button onclick="downloadAllQR()" style="padding:10px 20px; font-size:1.1em; background-color:#27ae60;">📦 전체 QR (.zip) 다운로드</button>
+    </div>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width:5%">No</th>
+            <th style="width:30%">제목</th>
+            <th style="width:10%">시간</th>
+            <th style="width:20%">링크</th>
+            <th style="width:10%">시작(초)</th>
+            <th style="width:15%">QR 코드</th>
+            <th style="width:10%">저장</th>
+        </tr>
+    </thead>
+    <tbody id="resultBody">
+        <tr><td colspan="7">재생목록을 불러와주세요.</td></tr>
+    </tbody>
+</table>
+
+<script>
+// --- 전역 변수 ---
+let videos = [];
+let playlistInfo = { title: "", url: "" };
+let qrDataList = [];
+let customQRData = null;
+let playlistQRData = null;
+
+// --- 유틸리티 함수 ---
+function safeName(text) { return text.replace(/[\\/:*?"<>|]/g, "_").substring(0, 50); }
+function parseDuration(iso) { 
+    const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+    if(!match) return 0;
+    return (parseInt(match[1]||0)*3600) + (parseInt(match[2]||0)*60) + (parseInt(match[3]||0));
+}
+function formatTime(sec) {
+    const h = Math.floor(sec/3600);
+    const m = Math.floor((sec%3600)/60);
+    const s = sec % 60;
+    const hh = h > 0 ? String(h).padStart(2,'0')+':' : '';
+    return `${hh}${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function appendTimeParam(url, seconds) {
+    if (!seconds || seconds <= 0) return url;
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}t=${seconds}`;
+}
+
+// --- QR 설정 가져오기 ---
+function getQRCorrectLevel() {
+    const val = document.getElementById("qrLevel").value;
+    switch(val) {
+        case 'L': return QRCode.CorrectLevel.L;
+        case 'M': return QRCode.CorrectLevel.M;
+        case 'Q': return QRCode.CorrectLevel.Q;
+        case 'H': return QRCode.CorrectLevel.H;
+        default: return QRCode.CorrectLevel.M;
+    }
+}
+
+// --- QR 스타일링 및 생성 (Promise 기반) ---
+function createStyledQR(containerId, text, color, borderColor) {
+    return new Promise((resolve) => {
+        const container = document.getElementById(containerId);
+        if (!container) return resolve(null);
+        
+        // 가상의 div 생성 (DOM에 추가하지 않음 - 깜빡임 방지)
+        const tempDiv = document.createElement("div");
+
+        // 설정값 읽기
+        const size = parseInt(document.getElementById("qrSize").value);
+        const margin = parseInt(document.getElementById("qrMargin").value);
+        const borderWidth = parseInt(document.getElementById("qrBorderWidth").value);
+        const level = getQRCorrectLevel();
+        const versionInput = document.getElementById("qrVersion").value;
+        const version = versionInput ? parseInt(versionInput) : undefined;
+
+        const qrOptions = {
+            text: text,
+            width: size,
+            height: size,
+            colorDark: color,
+            colorLight: "transparent", 
+            correctLevel: level
+        };
+        if (version && version >= 1 && version <= 40) {
+            qrOptions.typeNumber = version;
+        }
+
+        try {
+            new QRCode(tempDiv, qrOptions);
+        } catch(e) {
+            console.error("QR 생성 실패:", e);
+            container.innerText = "Error";
+            return resolve(null);
+        }
+
+        setTimeout(() => {
+            const originalCanvas = tempDiv.querySelector("canvas");
+            if (!originalCanvas) {
+                const img = tempDiv.querySelector("img");
+                if(img) resolve(img.src);
+                return; 
+            }
+
+            const totalSize = size + (margin * 2) + (borderWidth * 2);
+            const newCanvas = document.createElement("canvas");
+            newCanvas.width = totalSize;
+            newCanvas.height = totalSize;
+            const ctx = newCanvas.getContext("2d");
+
+            // 배경 투명 (fillRect 없음)
+            
+            // 테두리 그리기
+            if (borderWidth > 0) {
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = borderWidth;
+                ctx.strokeRect(borderWidth/2, borderWidth/2, totalSize - borderWidth, totalSize - borderWidth);
+            }
+
+            // QR 코드 그리기
+            ctx.drawImage(originalCanvas, margin + borderWidth, margin + borderWidth);
+
+            const dataUrl = newCanvas.toDataURL("image/png");
+            const finalImg = document.createElement("img");
+            finalImg.src = dataUrl;
+            
+            // 이미지 교체
+            container.innerHTML = "";
+            container.appendChild(finalImg);
+            
+            resolve(dataUrl);
+        }, 50);
+    });
+}
+
+// --- 임의 링크 기능 ---
+async function generateCustomQR() {
+    const url = document.getElementById("customUrl").value.trim();
+    if (!url) return alert("링크를 입력하세요.");
+    
+    const cColor = document.getElementById("customQRColor").value;
+    const cBorder = document.getElementById("customBorderColor").value;
+    
+    customQRData = await createStyledQR("customQRDiv", url, cColor, cBorder);
+}
+
+function downloadCustomQR() {
+    if (customQRData) saveAs(customQRData, "Custom_QR.png");
+    else alert("QR 코드를 먼저 생성하세요.");
+}
+
+// --- 메인 로직 (재생목록) ---
+async function run() {
+    const apiKey = document.getElementById("apiKey").value.trim();
+    const playlistUrl = document.getElementById("playlistUrl").value.trim();
+    
+    if (!apiKey || !playlistUrl) return alert("API Key와 재생목록 URL을 모두 입력하세요.");
+    
+    let playlistId = "";
+    try {
+        const urlObj = new URL(playlistUrl);
+        playlistId = urlObj.searchParams.get("list");
+    } catch(e) {
+        if(playlistUrl.includes("list=")) playlistId = playlistUrl.split("list=")[1];
+    }
+
+    if (!playlistId) return alert("올바른 재생목록 URL이 아닙니다.");
+
+    document.getElementById("loading").style.display = "block";
+    
+    try {
+        videos = [];
+        qrDataList = [];
+        let nextPageToken = "";
+        let totalDuration = 0;
+
+        const metaRes = await fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${apiKey}`);
+        const metaData = await metaRes.json();
+        if(!metaData.items || metaData.items.length === 0) throw new Error("재생목록을 찾을 수 없습니다.");
+        playlistInfo.title = metaData.items[0].snippet.title;
+        playlistInfo.url = playlistUrl;
+
+        while (true) {
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}&pageToken=${nextPageToken}`);
+            const data = await res.json();
+            if (data.error) throw new Error(data.error.message);
+            
+            data.items.forEach(item => {
+                videos.push({
+                    id: item.snippet.resourceId.videoId,
+                    title: item.snippet.title,
+                    duration: 0
+                });
+            });
+            
+            if (!data.nextPageToken) break;
+            nextPageToken = data.nextPageToken;
+        }
+
+        for (let i = 0; i < videos.length; i += 50) {
+            const chunk = videos.slice(i, i + 50);
+            const ids = chunk.map(v => v.id).join(",");
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${ids}&key=${apiKey}`);
+            const data = await res.json();
+            
+            data.items.forEach(item => {
+                const vid = videos.find(v => v.id === item.id);
+                if(vid) {
+                    const sec = parseDuration(item.contentDetails.duration);
+                    vid.duration = sec;
+                    totalDuration += sec;
+                }
+            });
+        }
+
+        renderTable(totalDuration);
+        await applyStylesToPlaylist();
+
+    } catch (err) {
+        alert("오류 발생: " + err.message);
+        console.error(err);
+    } finally {
+        document.getElementById("loading").style.display = "none";
+    }
+}
+
+function renderTable(totalDuration) {
+    const tbody = document.getElementById("resultBody");
+    tbody.innerHTML = "";
+
+    const trTotal = document.createElement("tr");
+    trTotal.style.backgroundColor = "#f9f9f9";
+    
+    trTotal.innerHTML = `
+        <td><strong>재생 목록</strong></td>
+        <td style="font-weight:bold; color:#d35400; text-align: left;">${playlistInfo.title}</td>
+        <td>${formatTime(totalDuration)}</td>
+        <td><a href="${playlistInfo.url}" target="_blank">${playlistInfo.url}</a></td>
+        <td>
+            <input type="number" id="start_playlist" value="0" min="0" style="width:60px" onchange="updateSingleQR('playlist')"><br>
+            <button class="regen-btn" onclick="updateSingleQR('playlist')">↻ 재생성</button>
+        </td>
+        <td class="qr-container"><div id="qr_playlist"></div></td>
+        <td><button onclick="downloadSingleQR('playlist')">⬇</button></td>
+    `;
+    tbody.appendChild(trTotal);
+
+    videos.forEach((video, idx) => {
+        const tr = document.createElement("tr");
+        const link = `https://youtu.be/${video.id}`;
+        
+        tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td style="text-align:left;">${video.title}</td>
+            <td>${formatTime(video.duration)}</td>
+            <td><a href="${link}" target="_blank">${link}</a></td>
+            <td>
+                <input type="number" id="start_${idx}" value="0" min="0" style="width:60px" onchange="updateSingleQR(${idx})"><br>
+                <button class="regen-btn" onclick="updateSingleQR(${idx})">↻ 재생성</button>
+            </td>
+            <td class="qr-container"><div id="qr_${idx}"></div></td>
+            <td><button onclick="downloadSingleQR(${idx})">⬇</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// [1] 모든 QR 적용
+async function applyStylesToAll() {
+    const customUrl = document.getElementById("customUrl").value.trim();
+    if (customUrl) {
+        const cColor = document.getElementById("customQRColor").value;
+        const cBorder = document.getElementById("customBorderColor").value;
+        customQRData = await createStyledQR("customQRDiv", customUrl, cColor, cBorder);
+    }
+    await applyStylesToPlaylist();
+}
+
+// [2] 재생목록 QR만 적용
+async function applyStylesToPlaylist() {
+    const frontCount = parseInt(document.getElementById("frontCount").value) || 3;
+    const pColor = document.getElementById("playlistQRColor").value;
+    const pBorder = document.getElementById("playlistBorderColor").value;
+    const fColor = document.getElementById("frontColor").value;
+    const fBorder = document.getElementById("frontBorder").value;
+    const bColor = document.getElementById("backColor").value;
+    const bBorder = document.getElementById("backBorder").value;
+
+    if (playlistInfo.url) {
+        const pStart = parseInt(document.getElementById("start_playlist").value) || 0;
+        const pLink = appendTimeParam(playlistInfo.url, pStart);
+        playlistQRData = await createStyledQR("qr_playlist", pLink, pColor, pBorder);
+    }
+
+    if (videos.length > 0) {
+        qrDataList = new Array(videos.length);
+        for (let i = 0; i < videos.length; i++) {
+            const isFront = i < frontCount;
+            const color = isFront ? fColor : bColor;
+            const border = isFront ? fBorder : bBorder;
+            const start = parseInt(document.getElementById(`start_${i}`).value) || 0;
+            const link = appendTimeParam(`https://youtu.be/${videos[i].id}`, start);
+            
+            const dataUrl = await createStyledQR(`qr_${i}`, link, color, border);
+            qrDataList[i] = {
+                title: videos[i].title,
+                data: dataUrl
+            };
+        }
+    }
+}
+
+async function updateSingleQR(index) {
+    const frontCount = parseInt(document.getElementById("frontCount").value);
+    
+    if (index === 'playlist') {
+        const color = document.getElementById("playlistQRColor").value;
+        const border = document.getElementById("playlistBorderColor").value;
+        const start = parseInt(document.getElementById("start_playlist").value) || 0;
+        const link = appendTimeParam(playlistInfo.url, start);
+        playlistQRData = await createStyledQR("qr_playlist", link, color, border);
+    } else {
+        const isFront = index < frontCount;
+        const color = isFront ? document.getElementById("frontColor").value : document.getElementById("backColor").value;
+        const border = isFront ? document.getElementById("frontBorder").value : document.getElementById("backBorder").value;
+        const start = parseInt(document.getElementById(`start_${index}`).value) || 0;
+        const link = appendTimeParam(`https://youtu.be/${videos[index].id}`, start);
+        
+        const dataUrl = await createStyledQR(`qr_${index}`, link, color, border);
+        qrDataList[index] = { title: videos[index].title, data: dataUrl };
+    }
+}
+
+function downloadSingleQR(index) {
+    if (index === 'playlist') {
+        if (playlistQRData) saveAs(playlistQRData, `[Playlist]_${safeName(playlistInfo.title)}.png`);
+    } else {
+        if (qrDataList[index] && qrDataList[index].data) {
+            saveAs(qrDataList[index].data, `${index+1}_${safeName(qrDataList[index].title)}.png`);
+        }
+    }
+}
+
+function downloadAllQR() {
+    if (videos.length === 0 && !playlistQRData) return alert("다운로드할 재생목록 QR이 없습니다.");
+    
+    const zip = new JSZip();
+    const folder = zip.folder("YouTube_QRs");
+
+    if (playlistQRData) {
+        folder.file(`00_Playlist_${safeName(playlistInfo.title)}.png`, playlistQRData.split(",")[1], {base64: true});
+    }
+
+    qrDataList.forEach((item, idx) => {
+        if (item && item.data) {
+            const filename = `${String(idx+1).padStart(2,'0')}_${safeName(item.title)}.png`;
+            folder.file(filename, item.data.split(",")[1], {base64: true});
+        }
+    });
+
+    zip.generateAsync({type:"blob"}).then(content => {
+        saveAs(content, "YouTube_QR_Set.zip");
+    });
+}
+</script>
+
+</body>
+</html>

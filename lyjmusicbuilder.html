@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYJ MUSIC BUILDER (Final v26)</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #7c4dff;
+            --accent-hover: #651fff;
+            --secondary-color: #00b0ff;
+            --image-color: #ff9100;
+            --simple-color: #00e676;
+            --preset-color: #ff4081; 
+            --mix-color: #ffab00;
+            --random-color: #d500f9;
+            --border-color: #333;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        h1 { 
+            text-align: center; margin-bottom: 5px; color: #fff; 
+            font-size: 2.2rem; letter-spacing: 2px;
+            background: linear-gradient(to right, #7c4dff, #ff4081);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        p.subtitle { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 0.9rem; }
+
+        .main-section {
+            border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px; background-color: #252525;
+        }
+        
+        .section-header {
+            display: flex; align-items: center; 
+            margin-bottom: 10px; 
+            border-bottom: 2px solid #444; padding-bottom: 10px;
+        }
+        .section-header h2 { margin: 0; font-size: 1.3rem; color: #fff; }
+        .section-header .badge {
+            background-color: var(--accent-color); color: white;
+            padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; margin-right: 10px; font-weight: bold;
+        }
+
+        /* 2열 레이아웃 */
+        .split-container { display: flex; gap: 20px; }
+        .half-section { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+        /* 4열 그리드 */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+
+        .unified-btn {
+            background-color: #2c2c2c; color: #fff;
+            padding: 8px 12px; border-radius: 6px; cursor: pointer;
+            text-align: left; transition: all 0.2s;
+            display: flex; flex-direction: row; align-items: center;
+            min-height: 42px; gap: 10px;
+        }
+        .preset-style { border: 1px solid #444; }
+        .preset-style:hover { background-color: #3a3a3a; border-color: var(--preset-color); }
+        .mix-style { border: 1px solid var(--mix-color); }
+        .mix-style:hover { background-color: var(--mix-color); color: #000; font-weight: bold; }
+        .mix-style:hover .btn-desc { color: #333; }
+
+        .btn-icon { font-size: 1.2rem; line-height: 1; }
+        .text-wrap { display: flex; flex-direction: column; justify-content: center; line-height: 1.1; overflow: hidden; }
+        .btn-title { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .btn-desc { font-size: 0.7rem; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .category-title { color: #fff; font-size: 1rem; margin-bottom: 10px; margin-top: 15px; border-left: 3px solid var(--accent-color); padding-left: 10px; }
+        .option-item {
+            background-color: #333; border: 1px solid #444; border-radius: 6px; padding: 8px 10px;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s;
+        }
+        .option-item:hover { background-color: #444; }
+        .option-item.active { background-color: var(--accent-color); border-color: var(--accent-color); }
+        .option-item.active span { color: #fff !important; }
+        .opt-name { color: #eee; font-size: 0.85rem; font-weight: bold; }
+        .opt-desc { color: #888; font-size: 0.7rem; }
+
+        .bpm-control {
+            display: flex; align-items: center; background-color: #333; padding: 10px; border-radius: 8px; margin-bottom: 10px;
+        }
+        .bpm-input-group { display: flex; align-items: center; gap: 10px; width: 100%; }
+        .bpm-control input { background-color: #121212; border: 1px solid #555; color: #fff; padding: 5px; width: 60px; text-align: center; }
+
+        .lang-inst-row { display: flex; gap: 15px; margin-bottom: 10px; align-items: center; }
+        .lang-control { 
+            flex: 1; background: #222; padding: 8px; border-radius: 6px; 
+            border: 1px solid #444; display: flex; align-items: center; justify-content: space-between;
+        }
+        .lang-selector { display: flex; gap: 5px; flex: 1; }
+        .lang-label { 
+            flex: 1; text-align: center; padding: 8px 4px; cursor: pointer; border-radius: 4px; 
+            border: 1px solid #444; color: #aaa; font-size: 0.8rem; font-weight: bold; transition: 0.2s;
+        }
+        .lang-label:hover { background: #333; }
+        input[name="lang"]:checked + .lang-label {
+            background-color: var(--secondary-color); color: #000; border-color: var(--secondary-color);
+        }
+        .inst-switch-area {
+            display: flex; align-items: center; justify-content: center;
+            background: #222; border: 1px solid #444; padding: 8px 15px; border-radius: 6px;
+            height: 100%; box-sizing: border-box; min-width: 200px;
+        }
+        .inst-switch-area label { color: #fff; margin-right: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; }
+        .inst-switch-area input[type="checkbox"] { transform: scale(1.3); accent-color: var(--accent-color); cursor: pointer; }
+
+        .topic-input-area { margin-top: 20px; margin-bottom: 10px; }
+        .topic-label { color: var(--image-color); font-weight: bold; margin-bottom: 5px; display: block; font-size: 0.9rem; }
+        .topic-input-area input {
+            width: 100%; padding: 12px; background-color: #1a1a1a; border: 1px solid var(--image-color);
+            color: #fff; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem;
+        }
+
+        textarea {
+            width: 100%; background-color: #121212; border: 1px solid #444;
+            color: #fff; padding: 15px; border-radius: 8px; font-size: 0.9rem;
+            resize: vertical; font-family: 'Pretendard', sans-serif; line-height: 1.5; box-sizing: border-box;
+        }
+        #style-result { height: 80px; margin-bottom: 10px; }
+        #lyrics-area, #image-area { height: 200px; margin-bottom: 10px; flex-grow: 1; }
+        #lyrics-area { border: 1px solid var(--secondary-color); }
+        #image-area { border: 1px solid var(--image-color); }
+
+        .btn-group { display: flex; gap: 10px; justify-content: flex-end; margin-top: 5px; }
+        button.action-btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.85rem;}
+        .btn-copy { background-color: var(--accent-color); color: white; }
+        .btn-copy-sec { background-color: var(--secondary-color); color: #000; }
+        .btn-copy-img { background-color: var(--image-color); color: #000; }
+        .btn-clear { background-color: #444; color: white; }
+
+        .img-options-wrapper {
+            background-color: #222; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #444;
+        }
+        .img-opt-row { display: flex; align-items: center; margin-bottom: 8px; }
+        .img-opt-row:last-child { margin-bottom: 0; }
+        .img-opt-label { width: 65px; font-size: 0.8rem; color: #aaa; font-weight: bold; }
+        .img-chips { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
+        .img-chip {
+            background: #333; border: 1px solid #555; color: #ccc;
+            padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+        }
+        .img-chip:hover { background: #444; }
+        .img-chip.active { background: var(--image-color); color: #000; border-color: var(--image-color); font-weight: bold; }
+
+        .ratio-control { margin-bottom: 10px; }
+        .ratio-selector { display: flex; gap: 5px; }
+        .ratio-label {
+            flex: 1; text-align: center; padding: 6px 0; cursor: pointer; border-radius: 6px;
+            border: 1px solid #444; background: #222; color: #aaa; font-size: 0.75rem; font-weight: bold; transition: 0.2s;
+        }
+        .ratio-label:hover { background: #333; }
+        input[name="ratio"]:checked + .ratio-label {
+            background-color: var(--image-color); color: #000; border-color: var(--image-color);
+        }
+
+        .full-width-btn {
+            width: 100%; padding: 12px; border: none; border-radius: 8px; 
+            font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: background 0.2s;
+            margin-bottom: 5px; margin-top: 15px;
+        }
+        .btn-gen-lyrics { background-color: var(--secondary-color); color: #000; }
+        .btn-gen-lyrics:hover { background-color: #0091ea; }
+        .btn-gen-simple { background-color: var(--simple-color); color: #000; margin-top: 5px;}
+        .btn-gen-simple:hover { background-color: #00c853; }
+        .btn-gen-random { background-color: var(--random-color); color: #fff; margin-bottom: 20px; margin-top: 0; }
+        .btn-gen-random:hover { background-color: #aa00ff; }
+        .btn-gen-image { background-color: var(--image-color); color: #000; }
+        .btn-gen-image:hover { background-color: #ff6d00; }
+
+        .tag-buttons { display: flex; flex-wrap: wrap; gap: 6px; padding: 5px 0; }
+        .tag-btn { background-color: #333; border: 1px solid var(--secondary-color); color: var(--secondary-color); padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        
+        .disabled-area { opacity: 0.3; pointer-events: none; }
+        .copy-guide { font-size: 0.8rem; color: #888; margin-bottom: 5px; text-align: center; margin-top: 5px; }
+
+        /* 도움말 박스 스타일 (확장됨) */
+        .btn-help-toggle {
+            background-color: #333; color: #fff; width: 100%; padding: 12px; border: 1px solid #555;
+            border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; transition: 0.2s;
+        }
+        .btn-help-toggle:hover { background-color: #444; border-color: var(--secondary-color); }
+        
+        .help-content {
+            display: none; background-color: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;
+            max-height: 400px; overflow-y: auto; /* 내용이 많아져서 스크롤 추가 */
+        }
+        .help-category { 
+            color: var(--secondary-color); font-weight: bold; font-size: 0.95rem; 
+            margin-top: 15px; margin-bottom: 8px; display: block; 
+            border-bottom: 1px solid #444; padding-bottom: 5px; 
+        }
+        .help-category:first-child { margin-top: 0; }
+        
+        .help-chip {
+            display: inline-block; background: #333; border: 1px solid #555; color: #ddd;
+            padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; margin: 3px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .help-chip:hover { background: var(--secondary-color); color: #000; border-color: var(--secondary-color); font-weight: bold;}
+
+        @media (max-width: 900px) { 
+            .split-container { flex-direction: column; } 
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .lang-inst-row { flex-direction: column; align-items: stretch; }
+        }
+        @media (max-width: 480px) { .grid-4 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>LYJ MUSIC BUILDER</h1>
+    <p class="subtitle">음악 스타일, 가사, 앨범 아트 프롬프트를 한 곳에서!</p>
+
+    <!-- STEP 1 -->
+    <div class="main-section">
+        <div class="section-header">
+            <span class="badge">STEP 1</span>
+            <h2>음악 스타일 & 기본 설정 (Style & Config)</h2>
+        </div>
+
+        <h3 style="color:#fff; font-size:1rem; margin-bottom:10px;">🔥 인기 상황별 프리셋</h3>
+        <div class="grid-4">
+            <div class="unified-btn preset-style" onclick="applyPreset('dopamine')"><span class="btn-icon">🎧</span><div class="text-wrap"><span class="btn-title">노동요/텐션UP</span><span class="btn-desc">펑키, 중독성</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('sad')"><span class="btn-icon">☔️</span><div class="text-wrap"><span class="btn-title">우울/새벽감성</span><span class="btn-desc">잔잔한 피아노</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('drive')"><span class="btn-icon">🚗</span><div class="text-wrap"><span class="btn-title">드라이브</span><span class="btn-desc">신스웨이브</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('sleep')"><span class="btn-icon">🛌</span><div class="text-wrap"><span class="btn-title">수면/명상</span><span class="btn-desc">몽환적</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('cafe')"><span class="btn-icon">☕️</span><div class="text-wrap"><span class="btn-title">카페/카공</span><span class="btn-desc">Lo-fi</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('gym')"><span class="btn-icon">💪</span><div class="text-wrap"><span class="btn-title">헬스/쇠질</span><span class="btn-desc">메탈, 하드락</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('jogging')"><span class="btn-icon">🏃</span><div class="text-wrap"><span class="btn-title">러닝/조깅(180)</span><span class="btn-desc">EDM, 무한질주</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('christmas')"><span class="btn-icon">🎄</span><div class="text-wrap"><span class="btn-title">크리스마스</span><span class="btn-desc">캐롤</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('morning')"><span class="btn-icon">☀️</span><div class="text-wrap"><span class="btn-title">상쾌한 아침</span><span class="btn-desc">보사노바</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('party')"><span class="btn-icon">🎉</span><div class="text-wrap"><span class="btn-title">파티/클럽</span><span class="btn-desc">빅룸 하우스</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('travel')"><span class="btn-icon">✈️</span><div class="text-wrap"><span class="btn-title">여행/브이로그</span><span class="btn-desc">트로피칼 하우스</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('gaming')"><span class="btn-icon">🎮</span><div class="text-wrap"><span class="btn-title">게임/E-스포츠</span><span class="btn-desc">덥스텝, 웅장함</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('retro')"><span class="btn-icon">📼</span><div class="text-wrap"><span class="btn-title">뉴트로/복고</span><span class="btn-desc">80년대 디스코</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('scifi')"><span class="btn-icon">🤖</span><div class="text-wrap"><span class="btn-title">SF/사이버펑크</span><span class="btn-desc">미래적, 기계음</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('musical')"><span class="btn-icon">🎭</span><div class="text-wrap"><span class="btn-title">뮤지컬/디즈니</span><span class="btn-desc">오케스트라</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('rage')"><span class="btn-icon">🤬</span><div class="text-wrap"><span class="btn-title">극대노/분노</span><span class="btn-desc">스크리밍, 펑크</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('walk')"><span class="btn-icon">🚶</span><div class="text-wrap"><span class="btn-title">산책(90)</span><span class="btn-desc">휘파람</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('powerwalk')"><span class="btn-icon">👟</span><div class="text-wrap"><span class="btn-title">경보(140)</span><span class="btn-desc">당당한 비트</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('kitchen')"><span class="btn-icon">🍳</span><div class="text-wrap"><span class="btn-title">요리/키친</span><span class="btn-desc">재즈 트리오</span></div></div>
+            <div class="unified-btn preset-style" onclick="applyPreset('ending')"><span class="btn-icon">🎬</span><div class="text-wrap"><span class="btn-title">감동적 엔딩</span><span class="btn-desc">웅장한 마무리</span></div></div>
+        </div>
+
+        <h3 style="color:#fff; font-size:1rem; margin-bottom:10px;">🧪 의외의 꿀조합</h3>
+        <div class="grid-4">
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_symphonicrock')"><span class="btn-icon">🎻</span><div class="text-wrap"><span class="btn-title">심포닉 락</span><span class="btn-desc">오케+락</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_latinpop')"><span class="btn-icon">💃</span><div class="text-wrap"><span class="btn-title">라틴 K-Pop</span><span class="btn-desc">레게톤+아이돌</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_cinematicedm')"><span class="btn-icon">🌌</span><div class="text-wrap"><span class="btn-title">시네마틱 EDM</span><span class="btn-desc">영화+비트</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_cybergukak')"><span class="btn-icon">🇰🇷</span><div class="text-wrap"><span class="btn-title">사이버+국악</span><span class="btn-desc">가야금퓨처</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_jazztrap')"><span class="btn-icon">🎷</span><div class="text-wrap"><span class="btn-title">재즈+트랩</span><span class="btn-desc">고급+힙합</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_trotedm')"><span class="btn-icon">✨</span><div class="text-wrap"><span class="btn-title">트로트+EDM</span><span class="btn-desc">뽕짝일렉</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_kawaiimetal')"><span class="btn-icon">🎸</span><div class="text-wrap"><span class="btn-title">메탈+귀여움</span><span class="btn-desc">베이비메탈</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_operarap')"><span class="btn-icon">🎤</span><div class="text-wrap"><span class="btn-title">오페라+힙합</span><span class="btn-desc">성악+랩</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_holytechno')"><span class="btn-icon">🙏</span><div class="text-wrap"><span class="btn-title">성가+테크노</span><span class="btn-desc">신성한레이브</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_skapunk')"><span class="btn-icon">🏁</span><div class="text-wrap"><span class="btn-title">레게+펑크락</span><span class="btn-desc">스카 리듬</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_8bitorch')"><span class="btn-icon">👾</span><div class="text-wrap"><span class="btn-title">8비트+오케</span><span class="btn-desc">게임 BGM</span></div></div>
+            <div class="unified-btn mix-style" onclick="applyPreset('mix_acousticrap')"><span class="btn-icon">🍂</span><div class="text-wrap"><span class="btn-title">어쿠+랩</span><span class="btn-desc">감성 힙합</span></div></div>
+        </div>
+
+        <hr style="border:0; border-top:1px dashed #444; margin:20px 0;">
+
+        <button class="full-width-btn btn-gen-random" onclick="applyRandomMix()">
+            🎲 랜덤 스타일 조합 생성 (Random Mix)
+        </button>
+
+        <div class="category-title" style="margin-top:0;">추가 프롬프트 (직접 조합)</div>
+        <div class="grid-4" id="manual-options-grid">
+            <div class="option-item" onclick="toggleStyle(this)" data-value="K-pop"><span class="opt-name">K-pop</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Ballad"><span class="opt-name">발라드</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="R&B"><span class="opt-name">R&B</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Rock"><span class="opt-name">락</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Hip-hop"><span class="opt-name">힙합</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="EDM"><span class="opt-name">EDM</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Emotional"><span class="opt-name">감성적인</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Uplifting"><span class="opt-name">희망찬</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Catchy Hook"><span class="opt-name">🍬 수능금지곡</span></div>
+            <div class="option-item" onclick="toggleStyle(this)" data-value="Duet"><span class="opt-name">🎤 듀엣 (Duet)</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Female Vocals"><span class="opt-name">여성 보컬</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Male Vocals"><span class="opt-name">남성 보컬</span></div>
+        </div>
+
+        <div class="category-title" style="margin-top:10px;">설정 (언어, 연주곡, BPM)</div>
+        <div class="lang-inst-row">
+            <div class="lang-control" id="lang-control-area">
+                <div style="font-size:0.8rem; color:#aaa; margin-right:10px; font-weight:bold;">🌐 언어:</div>
+                <div class="lang-selector">
+                    <input type="radio" name="lang" id="lang-mix" value="mix" checked onchange="updateLanguageInStyle()">
+                    <label for="lang-mix" class="lang-label">🇰🇷🇺🇸 혼용</label>
+                    <input type="radio" name="lang" id="lang-ko" value="ko" onchange="updateLanguageInStyle()">
+                    <label for="lang-ko" class="lang-label">🇰🇷 한글</label>
+                    <input type="radio" name="lang" id="lang-en" value="en" onchange="updateLanguageInStyle()">
+                    <label for="lang-en" class="lang-label">🇺🇸 영어</label>
+                </div>
+            </div>
+            <div class="inst-switch-area">
+                <input type="checkbox" id="inst-mode" onchange="toggleInstrumental()">
+                <label for="inst-mode">🎹 순수 연주곡</label>
+            </div>
+        </div>
+        <div class="bpm-control">
+            <div class="bpm-input-group">
+                <label style="color:#fff; font-weight:bold;">⏱ 속도(BPM):</label>
+                <input type="number" id="bpm-input" placeholder="120" min="40" max="250">
+                <button onclick="updateBPM()" style="background:var(--secondary-color); border:none; padding:5px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">적용</button>
+            </div>
+        </div>
+
+        <div class="category-title" style="margin-top:10px;">목소리 질감 (Voice Texture)</div>
+        <div class="grid-4" id="voice-texture-grid">
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Husky Voice"><span class="opt-name">허스키</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Clear Voice"><span class="opt-name">청아함</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Deep Voice"><span class="opt-name">굵은 저음</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Auto-tuned"><span class="opt-name">오토튠</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Dreamy Voice"><span class="opt-name">몽환적</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Whispery Voice"><span class="opt-name">속삭임</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Power Vocals"><span class="opt-name">파워풀</span></div>
+            <div class="option-item vocal-opt" onclick="toggleStyle(this)" data-value="Raspy Voice"><span class="opt-name">거친(Raspy)</span></div>
+        </div>
+
+        <div class="topic-input-area">
+            <label class="topic-label">✍️ 주제/내용 입력 (가사 및 앨범 아트 생성에 사용):</label>
+            <input type="text" id="lyrics-topic" placeholder="예: 비 오는 날의 커피, 우주 여행, 시험 기간의 고통...">
+        </div>
+
+        <textarea id="style-result" placeholder="위 버튼들을 누르면 [Suno]에 넣을 스타일 프롬프트가 완성됩니다."></textarea>
+        <div class="btn-group">
+            <button class="action-btn btn-clear" onclick="clearStyle()">초기화</button>
+            <button class="action-btn btn-copy" onclick="copyText('style-result')">내용 복사</button>
+        </div>
+    </div>
+
+    <!-- 하단 2열 배치 -->
+    <div class="split-container">
+        
+        <!-- STEP 2: 가사 생성 -->
+        <div class="main-section half-section">
+            <div class="section-header">
+                <span class="badge" style="background-color: var(--secondary-color);">STEP 2</span>
+                <h2>가사 (Lyrics)</h2>
+            </div>
+            
+            <!-- 도움말 토글 -->
+            <button class="btn-help-toggle" onclick="toggleHelp()">📚 가사 명령어 도움말 (클릭해서 열기/닫기)</button>
+            
+            <!-- 확장된 도움말 컨텐츠 -->
+            <div id="lyrics-help" class="help-content">
+                <span class="help-category">🏗️ 곡의 구조 (Structure)</span>
+                <div class="help-chip" onclick="insertTag('[Intro]')">[Intro]</div>
+                <div class="help-chip" onclick="insertTag('[Hook]')">[Hook]</div>
+                <div class="help-chip" onclick="insertTag('[Verse]')">[Verse]</div>
+                <div class="help-chip" onclick="insertTag('[Pre-Chorus]')">[Pre-Chorus]</div>
+                <div class="help-chip" onclick="insertTag('[Chorus]')">[Chorus]</div>
+                <div class="help-chip" onclick="insertTag('[Post-Chorus]')">[Post-Chorus]</div>
+                <div class="help-chip" onclick="insertTag('[Bridge]')">[Bridge]</div>
+                <div class="help-chip" onclick="insertTag('[Interlude]')">[Interlude]</div>
+                <div class="help-chip" onclick="insertTag('[Outro]')">[Outro]</div>
+                <div class="help-chip" onclick="insertTag('[End]')">[End]</div>
+
+                <span class="help-category">🎸 악기/연주 (Instrumental)</span>
+                <div class="help-chip" onclick="insertTag('[Instrumental Break]')">[Inst Break]</div>
+                <div class="help-chip" onclick="insertTag('[Guitar Solo]')">[Guitar Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Piano Solo]')">[Piano Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Drum Break]')">[Drum Break]</div>
+                <div class="help-chip" onclick="insertTag('[Bass Solo]')">[Bass Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Synth Solo]')">[Synth Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Violin Solo]')">[Violin Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Saxophone Solo]')">[Sax Solo]</div>
+                <div class="help-chip" onclick="insertTag('[Drop]')">[Drop]</div>
+                <div class="help-chip" onclick="insertTag('[Bass Drop]')">[Bass Drop]</div>
+
+                <span class="help-category">🎤 성별/인원 (Voice Type)</span>
+                <div class="help-chip" onclick="insertTag('[Male Vocals]')">[Male]</div>
+                <div class="help-chip" onclick="insertTag('[Female Vocals]')">[Female]</div>
+                <div class="help-chip" onclick="insertTag('[Duet]')">[Duet]</div>
+                <div class="help-chip" onclick="insertTag('[Choir]')">[Choir]</div>
+                <div class="help-chip" onclick="insertTag('[Children\'s Choir]')">[Kids Choir]</div>
+                <div class="help-chip" onclick="insertTag('[Backing Vocals]')">[Backing Vocals]</div>
+                <div class="help-chip" onclick="insertTag('[Gang Vocals]')">[Gang Vocals]</div>
+
+                <span class="help-category">🗣️ 창법/연출 (Vocal Style)</span>
+                <div class="help-chip" onclick="insertTag('[Rap]')">[Rap]</div>
+                <div class="help-chip" onclick="insertTag('[Spoken Word]')">[Spoken]</div>
+                <div class="help-chip" onclick="insertTag('[Whisper]')">[Whisper]</div>
+                <div class="help-chip" onclick="insertTag('[Shout]')">[Shout]</div>
+                <div class="help-chip" onclick="insertTag('[Scream]')">[Scream]</div>
+                <div class="help-chip" onclick="insertTag('[Falsetto]')">[Falsetto]</div>
+                <div class="help-chip" onclick="insertTag('[Autotune]')">[Autotune]</div>
+                <div class="help-chip" onclick="insertTag('[A Cappella]')">[A Cappella]</div>
+                <div class="help-chip" onclick="insertTag('[Humming]')">[Humming]</div>
+                <div class="help-chip" onclick="insertTag('[Whistling]')">[Whistling]</div>
+                <div class="help-chip" onclick="insertTag('[Giggle]')">[Giggle]</div>
+                <div class="help-chip" onclick="insertTag('[Sobbing]')">[Sobbing]</div>
+
+                <span class="help-category">🎚️ 속도/분위기 (Dynamics)</span>
+                <div class="help-chip" onclick="insertTag('[Build Up]')">[Build Up]</div>
+                <div class="help-chip" onclick="insertTag('[Slow Down]')">[Slow Down]</div>
+                <div class="help-chip" onclick="insertTag('[Speed Up]')">[Speed Up]</div>
+                <div class="help-chip" onclick="insertTag('[Double Time]')">[Double Time]</div>
+                <div class="help-chip" onclick="insertTag('[Half Time]')">[Half Time]</div>
+                <div class="help-chip" onclick="insertTag('[Key Change]')">[Key Change]</div>
+
+                <span class="help-category">🛑 멈춤/효과 (Pause & FX)</span>
+                <div class="help-chip" onclick="insertTag('[Silence]')">[Silence]</div>
+                <div class="help-chip" onclick="insertTag('[Pause]')">[Pause]</div>
+                <div class="help-chip" onclick="insertTag('[Break]')">[Break]</div>
+                <div class="help-chip" onclick="insertTag('[Fade Out]')">[Fade Out]</div>
+                <div class="help-chip" onclick="insertTag('[Fade In]')">[Fade In]</div>
+                <div class="help-chip" onclick="insertTag('[Big Finish]')">[Big Finish]</div>
+            </div>
+
+            <button class="full-width-btn btn-gen-lyrics" onclick="generateLyricsPrompt()">
+                🤖 가사 프롬프트 생성
+            </button>
+
+            <button class="full-width-btn btn-gen-simple" onclick="generateSunoSimplePrompt()">
+                ⚡️ 자동 곡 생성 프롬프트 (Simple Mode) 생성
+            </button>
+
+            <div class="copy-guide">👇 아래 내용을 복사해서 가사생성 또는 음악생성 AI에 붙여넣으세요 👇</div>
+
+            <textarea id="lyrics-area" placeholder="버튼을 누르면 결과가 여기에 나타납니다."></textarea>
+            <div class="btn-group">
+                <button class="action-btn btn-copy-sec" onclick="copyText('lyrics-area')">내용 복사</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: 이미지 생성 -->
+        <div class="main-section half-section">
+            <div class="section-header">
+                <span class="badge" style="background-color: var(--image-color);">STEP 3</span>
+                <h2>이미지 (Image)</h2>
+            </div>
+
+            <div class="img-options-wrapper">
+                <div class="img-opt-row">
+                    <span class="img-opt-label">🎨 화풍</span>
+                    <div class="img-chips" id="style-group">
+                        <div class="img-chip active" onclick="selectImgOpt('style', this, 'Photorealistic')">실사</div>
+                        <div class="img-chip" onclick="selectImgOpt('style', this, '3D Render')">3D</div>
+                        <div class="img-chip" onclick="selectImgOpt('style', this, 'Anime/Manhwa')">만화</div>
+                        <div class="img-chip" onclick="selectImgOpt('style', this, 'Oil Painting')">유화</div>
+                        <div class="img-chip" onclick="selectImgOpt('style', this, 'Pixel Art')">픽셀</div>
+                        <div class="img-chip" onclick="selectImgOpt('style', this, 'Abstract')">추상</div>
+                    </div>
+                </div>
+                <div class="img-opt-row">
+                    <span class="img-opt-label">🌈 색감</span>
+                    <div class="img-chips" id="color-group">
+                        <div class="img-chip active" onclick="selectImgOpt('color', this, 'Vivid Colors')">비비드</div>
+                        <div class="img-chip" onclick="selectImgOpt('color', this, 'Pastel Tones')">파스텔</div>
+                        <div class="img-chip" onclick="selectImgOpt('color', this, 'Black and White')">흑백</div>
+                        <div class="img-chip" onclick="selectImgOpt('color', this, 'Neon Colors')">네온</div>
+                        <div class="img-chip" onclick="selectImgOpt('color', this, 'Warm Tones')">따뜻함</div>
+                        <div class="img-chip" onclick="selectImgOpt('color', this, 'Cool Tones')">차가움</div>
+                    </div>
+                </div>
+                <div class="img-opt-row">
+                    <span class="img-opt-label">👤 인물</span>
+                    <div class="img-chips" id="char-group">
+                        <div class="img-chip active" onclick="selectImgOpt('char', this, 'No Humans, Scenery')">비포함</div>
+                        <div class="img-chip" onclick="selectImgOpt('char', this, 'Korean Female')">韓여성</div>
+                        <div class="img-chip" onclick="selectImgOpt('char', this, 'Korean Male')">韓남성</div>
+                        <div class="img-chip" onclick="selectImgOpt('char', this, 'American Female')">美여성</div>
+                        <div class="img-chip" onclick="selectImgOpt('char', this, 'American Male')">美남성</div>
+                    </div>
+                </div>
+                <div class="img-opt-row">
+                    <span class="img-opt-label">🔤 텍스트</span>
+                    <div class="img-chips" id="text-group">
+                        <div class="img-chip active" onclick="selectImgOpt('text', this, 'Clean, No Text')">없음</div>
+                        <div class="img-chip" onclick="selectImgOpt('text', this, 'Include Title Typography')">포함</div>
+                    </div>
+                </div>
+                <div class="img-opt-row">
+                    <span class="img-opt-label">✨ 화질</span>
+                    <div class="img-chips" id="qual-group">
+                        <div class="img-chip active" onclick="selectImgOpt('qual', this, 'Standard')">기본</div>
+                        <div class="img-chip" onclick="selectImgOpt('qual', this, '4K/UHD, Sharp Focus')">4K</div>
+                        <div class="img-chip" onclick="selectImgOpt('qual', this, 'Cinematic Lighting')">시네마</div>
+                        <div class="img-chip" onclick="selectImgOpt('qual', this, 'Masterpiece, Best Quality')">걸작</div>
+                        <div class="img-chip" onclick="selectImgOpt('qual', this, 'Vintage Film Look')">빈티지</div>
+                        <div class="img-chip" onclick="selectImgOpt('qual', this, 'Neon Cyberpunk Lighting')">네온</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ratio-control">
+                <div class="ratio-selector">
+                    <input type="radio" name="ratio" id="r-1-1" value="1:1" checked>
+                    <label for="r-1-1" class="ratio-label">1:1 (정방형)</label>
+
+                    <input type="radio" name="ratio" id="r-16-7" value="16:7">
+                    <label for="r-16-7" class="ratio-label">16:7 (배너)</label>
+
+                    <input type="radio" name="ratio" id="r-16-9" value="16:9">
+                    <label for="r-16-9" class="ratio-label">16:9 (유튜브)</label>
+
+                    <input type="radio" name="ratio" id="r-9-16" value="9:16">
+                    <label for="r-9-16" class="ratio-label">9:16 (세로)</label>
+                </div>
+            </div>
+
+            <button class="full-width-btn btn-gen-image" onclick="generateImagePrompt()">
+                🎨 이미지 프롬프트 생성
+            </button>
+
+            <div class="copy-guide">👇 아래 내용을 복사해서 이미지생성 AI에 붙여넣으세요 👇</div>
+
+            <textarea id="image-area" placeholder="버튼을 누르면 앨범 커버용 이미지 프롬프트가 생성됩니다."></textarea>
+            <div class="btn-group">
+                <button class="action-btn btn-copy-img" onclick="copyText('image-area')">내용 복사</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const presets = {
+        dopamine: "Nu-disco, Funk Pop, Catchy Hook, Bright, Danceable, 124 BPM, Synth Brass, Groovy Bassline",
+        sad: "Indie Folk, Acoustic Piano, Melancholic, Emotional, Soft Vocals, Rain ambience, Slow tempo",
+        drive: "City Pop, Synthwave, Night Drive, Neon Atmosphere, 80s Retro, Groovy, Chill, Saxophone Solo",
+        sleep: "Ambient, Dream Pop, Ethereal, Slow, Meditation, No Percussion, Floating, Spacey, Healing",
+        cafe: "Lo-fi Hip Hop, Jazz Piano, Chill Beats, Relaxing, Background Music, Coffee Shop Vibe, Soft",
+        gym: "Heavy Metal, Hard Rock, Aggressive, Powerful Drums, Electric Guitar Distortion, High Energy, Adrenaline",
+        jogging: "Running Music, High Energy, Drum and Bass, Driving beat, Motivation, EDM, 180 BPM, Marathon, Intense",
+        morning: "Bossa Nova, Acoustic, Bright, Cheerful, Morning Sun, Uplifting, Soft Jazz, Refreshing",
+        christmas: "Christmas Pop, Orchestral, Sleigh Bells, Magical, Warm, Choir, Uplifting, Major Key, Holiday Atmosphere",
+        party: "Big Room House, EDM, Club Banger, Heavy Bass, Party Anthem, Dance, 128 BPM, Hands Up",
+        travel: "Tropical House, Marimba, Summer Vibe, Refreshing, Beach, Bright, Pop, Vacation",
+        retro: "80s Disco, Retro Pop, Analog Synth, Drum Machine, Nostalgic, Dance, Funky",
+        gaming: "Dubstep, Electronic, Epic, Intense, Bass Drop, Action, Cinematic, Glitch, Futuristic",
+        scifi: "Cyberpunk, Sci-fi, Synthesizer, Futuristic, Dark, Cinematic, Industrial, Robot",
+        musical: "Musical Theatre, Broadway Style, Orchestral, Dramatic, Duet, Storytelling, Grand",
+        rage: "Hardcore Punk, Screamo, Fast Tempo, Chaotic, Aggressive, Distortion, Anger, Mosh pit",
+        walk: "Acoustic Pop, Easy Listening, Mid-tempo, Relaxed, Whistling, Stroll, Soft Guitar, Sunshine, 90 BPM",
+        powerwalk: "Power Pop, Confident, Strut, Rhythmic, Upbeat, Bass-heavy, 140 BPM, Walking fast, Energetic",
+        kitchen: "Jazz Trio, Upright Bass, Piano, Light Drums, Cooking, Happy, Swing, Classy",
+        ending: "Cinematic Orchestral, Epic Outro, String Section, Emotional, Grand Finale, Slow Build-up",
+        
+        mix_symphonicrock: "Symphonic Rock, Full Orchestra, Electric Guitar Distortion, Epic, Dramatic, Powerful Vocals, Cinematic",
+        mix_latinpop: "Latin Pop, Reggaeton Beat, K-Pop Melody, Tropical, Danceable, Catchy Hook, Summer Vibe",
+        mix_cinematicedm: "Cinematic Score, EDM Drop, Orchestral Build-up, Epic, Future Bass, Emotional, Grand",
+        mix_cybergukak: "Cyberpunk, Glitch Hop, Traditional Korean Instruments, Gayageum, Futuristic, East meets West",
+        mix_jazztrap: "Jazz Piano, Saxophone, Trap Beat, 808 Bass, Hi-hat rolls, Classy but Hype, Urban",
+        mix_trotedm: "Trot, EDM, Bouncing Beat, Catchy Melody, Korean Party Music, High Energy, Synthesizer",
+        mix_kawaiimetal: "Kawaii Metal, J-Pop Melody, Heavy Metal Riffs, Double Bass Drum, Cute Female Vocals, Aggressive",
+        mix_operarap: "Hip Hop Beat, Opera Vocals, Dramatic, Orchestral Hit, Rap, Epic, Cinematic",
+        mix_holytechno: "Techno, 130 BPM, Gregorian Chant, Choir, Reverb, Holy, Sacred, Dark Atmosphere",
+        mix_skapunk: "Ska Punk, Brass Section, Fast Tempo, Upbeat, Reggae Rhythm, Distorted Guitar, Fun",
+        mix_8bitorch: "Chiptune, 8-bit, Full Orchestra, Epic, Video Game Music, Adventure, Retro Gaming",
+        mix_acousticrap: "Acoustic Guitar, Emotional Rap, Soft Beat, Melancholic, Storytelling, Hip Hop ballad"
+    };
+
+    let currentLangTag = "";
+    let imgOptions = {
+        style: 'Photorealistic',
+        char: 'No Humans, Scenery',
+        text: 'Clean, No Text',
+        qual: 'Standard',
+        color: 'Vivid Colors'
+    };
+
+    function applyPreset(type) {
+        document.querySelectorAll('#manual-options-grid .option-item, #voice-texture-grid .option-item').forEach(item => item.classList.remove('active'));
+        let text = presets[type];
+        if(document.getElementById('inst-mode').checked) {
+             text += ", Instrumental, No Vocals";
+        }
+        document.getElementById('style-result').value = text;
+        updateLanguageInStyle();
+        const match = presets[type].match(/(\d+)\s*BPM/);
+        if(match) document.getElementById('bpm-input').value = match[1];
+        else document.getElementById('bpm-input').value = '';
+    }
+
+    function applyRandomMix() {
+        clearStyle();
+        const grid = document.getElementById('manual-options-grid');
+        const items = Array.from(grid.querySelectorAll('.option-item'));
+        const styleItems = items.slice(0, 10);
+        const vocalItems = items.slice(10, 12);
+        
+        const shuffledStyles = styleItems.sort(() => 0.5 - Math.random());
+        const selectedStyles = shuffledStyles.slice(0, 2);
+        const randomVocal = vocalItems[Math.floor(Math.random() * vocalItems.length)];
+        
+        selectedStyles.forEach(item => item.click());
+        randomVocal.click();
+        
+        const randomBPM = Math.floor(Math.random() * (160 - 80 + 1)) + 80;
+        document.getElementById('bpm-input').value = randomBPM;
+        updateBPM();
+    }
+
+    function updateBPM() {
+        const bpmVal = document.getElementById('bpm-input').value;
+        let text = document.getElementById('style-result').value;
+        if (!bpmVal) { alert("BPM을 입력하세요."); return; }
+        const bpmString = `, ${bpmVal} BPM`;
+        const regex = /,\s*\d+\s*BPM/i;
+        if (text.trim() === "") text = `${bpmVal} BPM`;
+        else if (regex.test(text)) text = text.replace(regex, bpmString);
+        else text += bpmString;
+        document.getElementById('style-result').value = text;
+    }
+
+    function updateLanguageInStyle() {
+        if(document.getElementById('inst-mode').checked) return;
+        const langVal = document.querySelector('input[name="lang"]:checked').value;
+        let newTag = "";
+        if (langVal === 'ko') newTag = "Korean Language";
+        else if (langVal === 'en') newTag = "English Language";
+        else newTag = "Korean & English Lyrics";
+
+        let text = document.getElementById('style-result').value;
+        if (currentLangTag && text.includes(currentLangTag)) {
+            text = text.replace(", " + currentLangTag, "").replace(currentLangTag + ", ", "").replace(currentLangTag, "");
+        }
+        if (text.trim() === "") text = newTag;
+        else if (!text.includes(newTag)) text += ", " + newTag;
+        
+        document.getElementById('style-result').value = text;
+        currentLangTag = newTag;
+    }
+
+    function toggleInstrumental() {
+        const isInst = document.getElementById('inst-mode').checked;
+        const vocalOpts = document.querySelectorAll('.vocal-opt');
+        const langArea = document.getElementById('lang-control-area');
+        let text = document.getElementById('style-result').value;
+
+        if (isInst) {
+            langArea.classList.add('disabled-area');
+            vocalOpts.forEach(el => {
+                el.style.opacity = '0.3'; el.style.pointerEvents = 'none';
+                if(el.classList.contains('active')) {
+                    el.classList.remove('active');
+                    const val = el.dataset.value;
+                    text = text.replace(", " + val, "").replace(val + ", ", "").replace(val, "");
+                }
+            });
+            if (currentLangTag && text.includes(currentLangTag)) {
+                text = text.replace(", " + currentLangTag, "").replace(currentLangTag + ", ", "").replace(currentLangTag, "");
+            }
+            if(!text.includes("Instrumental")) text += text ? ", Instrumental, No Vocals" : "Instrumental, No Vocals";
+        } else {
+            langArea.classList.remove('disabled-area');
+            vocalOpts.forEach(el => { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            text = text.replace(", Instrumental, No Vocals", "").replace("Instrumental, No Vocals", "");
+            updateLanguageInStyle();
+        }
+        document.getElementById('style-result').value = text;
+    }
+
+    function toggleStyle(element) {
+        element.classList.toggle('active');
+        const keyword = element.dataset.value;
+        let currentText = document.getElementById('style-result').value;
+        if (element.classList.contains('active')) {
+             if(currentText === "") currentText = keyword;
+             else if(!currentText.includes(keyword)) currentText += ", " + keyword;
+        } else {
+            currentText = currentText.replace(", " + keyword, "").replace(keyword + ", ", "").replace(keyword, "");
+        }
+        document.getElementById('style-result').value = currentText;
+    }
+
+    function clearStyle() {
+        document.querySelectorAll('.option-item.active').forEach(item => item.classList.remove('active'));
+        document.getElementById('style-result').value = '';
+        document.getElementById('bpm-input').value = '';
+        document.getElementById('lyrics-topic').value = '';
+        
+        document.getElementById('inst-mode').checked = false;
+        const langArea = document.getElementById('lang-control-area');
+        langArea.classList.remove('disabled-area');
+        document.querySelectorAll('.vocal-opt').forEach(el => { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+        
+        document.getElementById('lang-mix').checked = true;
+        currentLangTag = "";
+        updateLanguageInStyle();
+    }
+
+    function insertTag(tag) {
+        const textarea = document.getElementById('lyrics-area');
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        let insertText = tag.startsWith('[') ? "\n" + tag + "\n" : " " + tag + " ";
+        textarea.value = text.substring(0, start) + insertText + text.substring(end);
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = start + insertText.length;
+    }
+
+    function toggleHelp() {
+        const box = document.getElementById('lyrics-help');
+        if(box.style.display === 'block') box.style.display = 'none';
+        else box.style.display = 'block';
+    }
+
+    function generateLyricsPrompt() {
+        const styleText = document.getElementById('style-result').value.trim();
+        const finalStyle = styleText ? styleText : "Pop, Uplifting";
+        const langVal = document.querySelector('input[name="lang"]:checked').value;
+        let langStr = "Mix of Korean and English";
+        if (langVal === 'ko') langStr = "Korean only";
+        else if (langVal === 'en') langStr = "English only";
+
+        const topicInput = document.getElementById('lyrics-topic').value.trim();
+        const topicLine = topicInput ? topicInput : "Free topic (Love, Life)";
+
+        const prompt = `Act as a professional songwriter. Write lyrics for a song with the following specifications:
+
+1. **Musical Style**: ${finalStyle}
+2. **Topic/Theme**: ${topicLine}
+3. **Language**: ${langStr}
+4. **Structure**: Intro - Verse 1 - Pre-Chorus - Chorus - Verse 2 - Chorus - Bridge - Chorus - Outro.
+5. **Requirements**:
+   - Ensure a strong, catchy rhythm matching the style.
+   - Use rhyming where appropriate.
+   - Mark sections clearly with tags like [Verse], [Chorus].
+   - **Length Constraint**: Keep the total character count under 3000 characters to fit Suno AI limits.
+   
+6. **Strict Formatting Rules for Suno AI**:
+   - **Square Brackets [ ]**: Use ONLY for structural tags and instrumental commands (e.g., [Instrumental Intro], [Bass Solo]). **These must be in Standard English and must NOT be sung.**
+   - **Parentheses ( )**: Use for short backing vocals, ad-libs, or echoes (e.g., (Yeah!), (Check it)). **These WILL be sung. Keep content inside parentheses very short.**`;
+
+        document.getElementById('lyrics-area').value = prompt;
+    }
+
+    function generateSunoSimplePrompt() {
+        const styleText = document.getElementById('style-result').value.trim();
+        const topicInput = document.getElementById('lyrics-topic').value.trim();
+        const langVal = document.querySelector('input[name="lang"]:checked').value;
+        let langStr = "korean and english";
+        if (langVal === 'ko') langStr = "korean";
+        else if (langVal === 'en') langStr = "english";
+
+        let prompt = "";
+        if (!topicInput) {
+            prompt = `A ${styleText} song with ${langStr} lyrics.`;
+        } else {
+            prompt = `A ${styleText} song about ${topicInput}, featuring ${langStr} lyrics.`;
+        }
+        prompt = prompt.replace(/\s+/g, ' ').trim();
+        document.getElementById('lyrics-area').value = prompt;
+    }
+
+    function selectImgOpt(type, element, value) {
+        const parent = element.parentElement;
+        parent.querySelectorAll('.img-chip').forEach(chip => chip.classList.remove('active'));
+        element.classList.add('active');
+        imgOptions[type] = value;
+    }
+
+    function generateImagePrompt() {
+        const styleText = document.getElementById('style-result').value.trim();
+        const topicInput = document.getElementById('lyrics-topic').value.trim();
+        const ratio = document.querySelector('input[name="ratio"]:checked').value;
+
+        let cleanStyle = styleText.replace(/,\s*\d+\s*BPM/gi, "").replace(/BPM/gi, "");
+        if(!cleanStyle) cleanStyle = "Music Visualization";
+        
+        const topic = topicInput ? topicInput : "Abstract Art";
+
+        const artStyle = imgOptions.style;
+        const color = imgOptions.color;
+        const character = imgOptions.char;
+        const textOption = imgOptions.text;
+        const quality = imgOptions.qual;
+
+        const prompt = `${artStyle} image of ${topic}. ${color}, ${character}, ${textOption}. ${quality}, high resolution, 8k, highly detailed. --ar ${ratio}`;
+
+        document.getElementById('image-area').value = prompt;
+    }
+
+    function copyText(elementId) {
+        const copyText = document.getElementById(elementId);
+        if (!copyText.value.trim()) return;
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        alert("복사 완료!");
+    }
+    
+    window.onload = function() {
+        updateLanguageInStyle();
+    };
+</script>
+
+</body>
+</html>
