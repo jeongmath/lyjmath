@@ -273,9 +273,11 @@ main.content-area {
     background-size: 18px;
   }
 }
-/* 안내 모달 스타일 (공지사항 팝업과 통일) */
+
+/* === online-viewer.css 내 수정된 스타일 (컬러 통일: #699b37) === */
+
 #customAlertModal.n-modal {
-  display: none; position: fixed; z-index: 10000; /* 영상 모달보다 위에 위치 */
+  display: none; position: fixed; z-index: 10000; 
   left: 0; top: 0; width: 100%; height: 100%; 
   background-color: rgba(15, 23, 42, 0.85);
   align-items: center; justify-content: center; padding: 20px;
@@ -284,18 +286,28 @@ main.content-area {
 
 #customAlertModal .n-modal-content {
   background: #fff; width: 100%; max-width: 340px; border-radius: 16px;
-  padding: 25px; position: relative; border-top: 5px solid #ef4444; /* 경고 느낌의 빨간색 포인트 */
+  padding: 25px; position: relative; 
+  border-top: 5px solid #699b37; /* [수정] 박스 위 띠 */
   animation: modalFadeUp 0.3s ease-out;
   text-align: center;
 }
 
-#customAlertModal h3 { font-size: 1.2rem; color: #1e293b; margin: 15px 0 10px; font-weight: 700; }
+#customAlertModal h3 { 
+  font-size: 1.2rem; 
+  color: #699b37; /* [수정] 글 제목 색 */
+  margin: 15px 0 10px; 
+  font-weight: 700; 
+}
+
 #customAlertModal p { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
 
 #customAlertModal .n-modal-confirm {
-  width: 100%; background: #334155; color: #fff; border: none;
-  padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;
+  width: 100%; 
+  background: #699b37; /* [수정] 확인 버튼 */
+  color: #fff; border: none;
+  padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s;
 }
+#customAlertModal .n-modal-confirm:hover { background: #55802c; }
 
 @keyframes modalFadeUp {
   from { opacity: 0; transform: translateY(10px); }

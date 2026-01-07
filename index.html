@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
-    /* === 공지사항 전용 모달 스타일 추가 === */
+    /* === 공지사항 팝업 스타일 (컬러 통일: #699b37) === */
     .n-modal {
       display: none; position: fixed; z-index: 2000; left: 0; top: 0;
       width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8);
@@ -19,7 +19,7 @@
     .n-modal-content {
       background: #fff; width: 100%; max-width: 500px; border-radius: 16px;
       padding: 30px; position: relative; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-      border-top: 5px solid #1e3a8a; /* --main-navy */
+      border-top: 5px solid #699b37; /* [수정] 박스 위 띠 */
       animation: modalFadeUp 0.3s ease-out;
     }
     @keyframes modalFadeUp {
@@ -28,19 +28,29 @@
     }
     .n-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .n-modal-close { background: none; border: none; font-size: 28px; color: #94a3b8; cursor: pointer; line-height: 1; }
-    .n-modal-content h3 { font-size: 1.3rem; color: #1e3a8a; margin-bottom: 15px; font-weight: 700; }
+    
+    /* [수정] 공지사항 뱃지 컬러 */
+    .n-modal-header .notice-badge { background-color: #699b37 !important; }
+    
+    /* [수정] 공지사항 제목 컬러 */
+    .n-modal-content h3 { font-size: 1.3rem; color: #699b37; margin-bottom: 15px; font-weight: 700; }
+    
     .n-modal-divider { height: 1px; background: #e2e8f0; margin-bottom: 15px; }
     .n-modal-content p { color: #475569; line-height: 1.7; font-size: 1rem; margin-bottom: 25px; white-space: pre-wrap; text-align: left; }
+    
+    /* [수정] 확인 버튼 컬러 */
     .n-modal-confirm {
-      width: 100%; background: #1e3a8a; color: #fff; border: none;
+      width: 100%; background: #699b37; color: #fff; border: none;
       padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s;
     }
-    .n-modal-confirm:hover { background: #1a306e; }
+    .n-modal-confirm:hover { background: #55802c; }
+    
     @media (max-width: 767px) {
       .n-modal-content { padding: 20px; }
       .n-modal-content h3 { font-size: 1.1rem; }
     }
   </style>
+
 </head>
 <body>
   <header class="site-nav">

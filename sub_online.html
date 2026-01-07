@@ -145,17 +145,20 @@
   </section>
 
 
-<!-- [추가] 모바일/비디오 없음 안내 전용 모달 -->
+<!-- [수정] 모바일/비디오 없음 안내 전용 모달 (컬러 통일: #699b37) -->
 <div id="customAlertModal" class="n-modal">
   <div class="n-modal-content alert-style">
     <div class="n-modal-header">
-      <span class="notice-badge" style="background-color: #ef4444;">INFO</span>
+      <!-- [수정] 인포 뱃지 컬러 -->
+      <span class="notice-badge" style="background-color: #699b37;">INFO</span>
       <button class="n-modal-close" onclick="closeAlert()">&times;</button>
     </div>
-    <h3>강의 준비 중</h3>
+    <!-- [수정] 제목 컬러 -->
+    <h3 style="color: #699b37;">강의 준비 중</h3>
     <div class="n-modal-divider"></div>
     <p id="alertMessage">해당 강의는 현재 업로드 준비 중입니다.<br>잠시만 기다려주세요!</p>
-    <button class="n-modal-confirm" onclick="closeAlert()">확인</button>
+    <!-- [수정] 확인 버튼 컬러 -->
+    <button class="n-modal-confirm" style="background-color: #699b37;" onclick="closeAlert()">확인</button>
   </div>
 </div>
 <footer>
