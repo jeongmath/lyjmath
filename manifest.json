@@ -11,13 +11,13 @@
     {
       "src": "images/logo_any.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
       "purpose": "any"
     },
     {
-     "src": "images/logo_maskable.png",
+      "src": "images/logo_maskable.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]
