@@ -229,68 +229,9 @@
       <p class="footer-copyright">Copyright © 1991&nbsp; <b>LYJ MATH - 정수학.</b>&nbsp; All Rights Reserved.</p>
     </div>
   </footer>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // =======================================================
-        // ★ PWA 설치 버튼 로직 (디버깅 코드 추가) ★
-        // =======================================================
-        console.log('PWA 스크립트 실행 시작.'); // ★ 디버깅 코드 1
-
-        let deferredPrompt;
-        const installBtn = document.getElementById('pwa-install-btn');
-        console.log('설치 버튼 요소를 찾았습니다:', installBtn); // ★ 디버깅 코드 2
-
-        // 1. 앱으로 실행 중인 경우, 설치 버튼 로직 전체를 실행하지 않음
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('앱 모드로 실행 중이므로, 설치 버튼을 숨깁니다.'); // ★ 디버깅 코드
-            return; 
-        }
-
-        // 2. 브라우저가 PWA 설치를 지원하고, 아직 앱이 설치되지 않았을 때 발생하는 이벤트
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('beforeinstallprompt 이벤트가 발생했습니다!', e); // ★ 디버깅 코드 3
-            
-            // 브라우저의 기본 설치 배너가 뜨는 것을 막음
-            e.preventDefault();
-            // 나중에 사용하기 위해 이벤트 객체를 저장
-            deferredPrompt = e;
-
-            // 사용자에게 직접 설치를 유도하기 위해 버튼을 보여줌
-            if (installBtn) {
-              console.log('설치 버튼을 화면에 표시합니다.'); // ★ 디버깅 코드 4
-              installBtn.style.display = 'flex';
-            } else {
-              console.error('설치 버튼 요소를 찾을 수 없어 표시할 수 없습니다.'); // ★ 디버깅 코드
-            }
-        });
-
-        // 3. 사용자가 직접 추가한 설치 버튼을 클릭했을 때의 동작
-        if (installBtn) {
-            installBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                console.log('설치 버튼이 클릭되었습니다.'); // ★ 디버깅 코드
-                
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`사용자 선택: ${outcome}`);
-                    deferredPrompt = null;
-                    installBtn.style.display = 'none';
-                }
-            });
-        }
-        
-        // 4. 앱이 성공적으로 설치되었을 때의 이벤트 처리
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA가 성공적으로 설치되었습니다.'); // ★ 디버깅 코드
-            deferredPrompt = null;
-            if (installBtn) {
-                installBtn.style.display = 'none';
-            }
-        });
-
-        // 공지사항 모달 제어
+        /* --- 1. 공지사항 모달 로직 (앱/웹 공통이므로 최상단 배치) --- */
         const modal = document.getElementById('noticePopup');
         const modalTitle = document.getElementById('n-popup-title');
         const modalText = document.getElementById('n-popup-text');
@@ -320,14 +261,43 @@
             }
         });
 
-        // 기존 버튼 제어
-        const backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-            backBtn.addEventListener('click', function(e) { e.preventDefault(); history.back(); });
+        /* --- 2. PWA 설치 로직 (조건문으로 분리) --- */
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        // 앱 모드가 아닐 때만 설치 로직 가동
+        if (!window.matchMedia('(display-mode: standalone)').matches) {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                if (installBtn) installBtn.style.display = 'flex';
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        deferredPrompt = null;
+                        installBtn.style.display = 'none';
+                    }
+                });
+            }
         }
+
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            if (installBtn) installBtn.style.display = 'none';
+        });
+
+        /* --- 3. 기타 버튼 제어 --- */
         const topBtn = document.querySelector('.top-btn');
         if (topBtn) {
-            topBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            topBtn.addEventListener('click', function(e) { 
+                e.preventDefault(); 
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            });
         }
     });
 </script>
