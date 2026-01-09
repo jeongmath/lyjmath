@@ -55,13 +55,43 @@
       .n-modal-content { padding: 20px; }
       .n-modal-content h3 { font-size: 1.1rem; }
     }
-.action-btn.install-btn {
-  background-color: #1e3a8a; /* '자세히 보기' 버튼과 통일감 있는 색상 */
-  bottom: 95px; /* '맨 위로' 버튼과의 간격 확보 */
-}
-.action-btn.install-btn:hover {
-  background-color: #1c316e;
-}
+
+   /* =========================================================
+       ★ PWA 설치 버튼 전용 스타일 (HTML 내에서만 적용) ★
+       ========================================================= */
+    .action-btn-pwa {
+      /* 기본 모양 및 정렬 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      
+      /* 색상 (기존 .action-btn 스타일을 덮어쓰기 위함) */
+      background-color: var(--main-navy); /* 채워진 네이비 배경 */
+      border: 2px solid var(--main-navy); /* 테두리도 같은 색으로 통일 */
+      
+      /* 그림자 및 전환 효과 */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .action-btn-pwa svg {
+      width: 20px;
+      height: 20px;
+      color: #ffffff; /* 아이콘 색상을 흰색으로 */
+      fill: currentColor;
+    }
+
+    .action-btn-pwa:hover {
+      background-color: #1a306e; /* 호버 시 약간 더 어두운 색 */
+      border-color: #1a306e;
+      color: #ffffff; /* 호버 시 아이콘 색상 유지 */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
   </style>
 
 </head>
@@ -168,21 +198,24 @@
     </div>
   </div>
 
-<!-- 이 부분 전체를 복사해서 기존 코드를 덮어쓰세요 -->
-  <section class="action-buttons-container">
+<!-- footer 태그 바로 위의 이 섹션을 찾아서 아래 내용으로 수정하세요 -->
+<section class="action-buttons-container">
     <div class="container">
-      
-      <!-- ★ PWA 설치 버튼 추가 ★ -->
-      <a href="#" class="action-btn install-btn" id="pwa-install-btn" title="앱 설치" style="display: none;">
+
+      <!-- ★ PWA 설치 버튼 (새로운 독립 스타일 적용) ★ -->
+      <a href="#" class="action-btn-pwa" id="pwa-install-btn" title="앱 설치" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.5c-13.6-11.3-33.9-9.4-45.2 4.2s-9.4 33.9 4.2 45.2l128 96c13.6 10.2 32.9 8.2 44.4-4.5s9.7-32.5-3-43.2l-128.4-97.7zM368.5 120.5l-128.4 97.7c-12.7 9.7-17.6 27.2-7.9 40.7s27.2 17.6 40.7 7.9l128-96c13.6-10.2 15.6-29.5 4.2-45.2s-29.5-15.6-45.2-4.2zM256 320c-17.7 0-32 14.3-32 32V448h64V352c0-17.7-14.3-32-32-32zm-64-16c-35.3 0-64 28.7-64 64V448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V368c0-35.3-28.7-64-64-64H192z"/></svg>
       </a>
 
+      <!-- 기존 '맨 위로' 버튼 (기존 CSS 그대로 사용) -->
       <a href="#" class="action-btn top-btn" title="맨 위로">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
       </a>
+
     </div>
-  </section>
-  <!-- 여기까지 덮어쓰세요 -->  <footer>
+</section>
+
+  <footer>
     <div class="container">
       <a href="index.html" class="footer-logo-link" title="홈으로 이동">
         <img src="images/logo1.svg" alt="LYJ MATH 로고">
@@ -198,26 +231,35 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // =======================================================
-        // ★ PWA 설치 버튼 로직 (여기에 추가) ★
+        // ★ PWA 설치 버튼 로직 (디버깅 코드 추가) ★
         // =======================================================
+        console.log('PWA 스크립트 실행 시작.'); // ★ 디버깅 코드 1
+
         let deferredPrompt;
         const installBtn = document.getElementById('pwa-install-btn');
+        console.log('설치 버튼 요소를 찾았습니다:', installBtn); // ★ 디버깅 코드 2
 
         // 1. 앱으로 실행 중인 경우, 설치 버튼 로직 전체를 실행하지 않음
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('Display mode is standalone, hide install button.');
-            return; // 여기서 스크립트 실행 중단
+            console.log('앱 모드로 실행 중이므로, 설치 버튼을 숨깁니다.'); // ★ 디버깅 코드
+            return; 
         }
 
         // 2. 브라우저가 PWA 설치를 지원하고, 아직 앱이 설치되지 않았을 때 발생하는 이벤트
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('beforeinstallprompt 이벤트가 발생했습니다!', e); // ★ 디버깅 코드 3
+            
             // 브라우저의 기본 설치 배너가 뜨는 것을 막음
             e.preventDefault();
             // 나중에 사용하기 위해 이벤트 객체를 저장
             deferredPrompt = e;
+
             // 사용자에게 직접 설치를 유도하기 위해 버튼을 보여줌
             if (installBtn) {
+              console.log('설치 버튼을 화면에 표시합니다.'); // ★ 디버깅 코드 4
               installBtn.style.display = 'flex';
+            } else {
+              console.error('설치 버튼 요소를 찾을 수 없어 표시할 수 없습니다.'); // ★ 디버깅 코드
             }
         });
 
@@ -225,15 +267,13 @@
         if (installBtn) {
             installBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
-                // 저장해둔 설치 프롬프트 이벤트를 사용
+                console.log('설치 버튼이 클릭되었습니다.'); // ★ 디버깅 코드
+                
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    // 사용자의 선택(설치 또는 취소)을 기다림
                     const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User response to the install prompt: ${outcome}`);
-                    // 프롬프트는 한 번만 사용할 수 있으므로, 변수를 초기화
+                    console.log(`사용자 선택: ${outcome}`);
                     deferredPrompt = null;
-                    // 사용자가 선택을 완료하면 버튼을 다시 숨김
                     installBtn.style.display = 'none';
                 }
             });
@@ -241,13 +281,11 @@
         
         // 4. 앱이 성공적으로 설치되었을 때의 이벤트 처리
         window.addEventListener('appinstalled', () => {
-            // deferredPrompt를 null로 만들어 다시 프롬프트가 뜨지 않게 함
+            console.log('PWA가 성공적으로 설치되었습니다.'); // ★ 디버깅 코드
             deferredPrompt = null;
-            // 설치가 완료되었으므로 버튼을 확실히 숨김
             if (installBtn) {
                 installBtn.style.display = 'none';
             }
-            console.log('PWA was installed');
         });
 
         // 공지사항 모달 제어
