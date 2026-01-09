@@ -13,7 +13,63 @@
           "time": ""
         },
         {
-          "lesson": "[숙달]",
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "최대공약수와 최소공배수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "정수와 유리수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "유리수의 덧셈과 뺄셈",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "유리수의 곱셈과 나눗셈",
+      "lessons": [
+        {
+          "lesson": "[이해]",
           "pdf": "",
           "listid": "",
           "videoid": "",
@@ -28,6 +84,580 @@
       "lessons": [
         {
           "lesson": "[수능]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "문자와 식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차방정식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차방정식의 활용",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "좌표",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "그래프",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "정비례와 반비례",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "기본도형",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "위치관계",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "작도와 합동",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "다각형",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "원과 부채꼴",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "다면체와 회전체",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "입체도형의 겉넓이와 부피",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "자료의 정리와 해석",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "상대도수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "대푯값",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "도수분포표에서의 평균",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "수와 연산(2)",
+      "chapter": "순환소수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "수와 연산(2)",
+      "chapter": "유리수와 순환소수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "단항식의 계산",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "다항식의 계산",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "식의 대입",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "일차부등식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "일차부등식의 활용",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "연립일차방정식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "연립일차방정식의 활용",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "함수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "일차함수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "일차함수와 직선의 방정식",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "연립일차방정식과 그래프",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "이등변삼각형",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "삼각형의 외심과 내심",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "사각형",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "평행선과 넓이",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "닮음",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "평행선과 닮음",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "닮음의 활용",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "피타고라스의 정리",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "확률과 통계(2)",
+      "chapter": "경우의 수",
+      "lessons": [
+        {
+          "lesson": "[이해]",
+          "pdf": "",
+          "listid": "",
+          "videoid": "",
+          "time": ""
+        }
+      ]
+    },
+    {
+      "grade": "[중2]",
+      "unit": "확률과 통계(2)",
+      "chapter": "확률",
+      "lessons": [
+        {
+          "lesson": "[이해]",
           "pdf": "",
           "listid": "",
           "videoid": "",
@@ -51,7 +681,47 @@
       "grade": "[중1]",
       "unit": "수와 연산(1)",
       "chapter": "소인수분해",
-      "lesson": "[숙달]",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "최대공약수와 최소공배수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "정수와 유리수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "유리수의 덧셈과 뺄셈",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "수와 연산(1)",
+      "chapter": "유리수의 곱셈과 나눗셈",
+      "lesson": "[이해]",
       "pdf": "",
       "listid": "",
       "videoid": "",
@@ -62,6 +732,416 @@
       "unit": "수와 연산(1)",
       "chapter": "기출문제분석",
       "lesson": "[수능]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "문자와 식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차방정식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "문자와 식(1)",
+      "chapter": "일차방정식의 활용",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "좌표",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "그래프",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "좌표평면과 그래프",
+      "chapter": "정비례와 반비례",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "기본도형",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "위치관계",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "작도와 합동",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "다각형",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "원과 부채꼴",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "다면체와 회전체",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "도형(1)",
+      "chapter": "입체도형의 겉넓이와 부피",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "자료의 정리와 해석",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "상대도수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "대푯값",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중1]",
+      "unit": "확률과 통계(1)",
+      "chapter": "도수분포표에서의 평균",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "수와 연산(2)",
+      "chapter": "순환소수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "수와 연산(2)",
+      "chapter": "유리수와 순환소수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "단항식의 계산",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "다항식의 계산",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "식의 대입",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "일차부등식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "일차부등식의 활용",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "연립일차방정식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "문자와 식(2)",
+      "chapter": "연립일차방정식의 활용",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "함수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "일차함수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "일차함수와 직선의 방정식",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "일차함수",
+      "chapter": "연립일차방정식과 그래프",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "이등변삼각형",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "삼각형의 외심과 내심",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "사각형",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "평행선과 넓이",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "닮음",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "평행선과 닮음",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "닮음의 활용",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "도형(2)",
+      "chapter": "피타고라스의 정리",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "확률과 통계(2)",
+      "chapter": "경우의 수",
+      "lesson": "[이해]",
+      "pdf": "",
+      "listid": "",
+      "videoid": "",
+      "time": ""
+    },
+    {
+      "grade": "[중2]",
+      "unit": "확률과 통계(2)",
+      "chapter": "확률",
+      "lesson": "[이해]",
       "pdf": "",
       "listid": "",
       "videoid": "",
