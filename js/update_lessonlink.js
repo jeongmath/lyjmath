@@ -3,8 +3,8 @@ const axios = require('axios');
 
 // 구글 시트 CSV URL 배열
 const sheetUrls = [
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pubhtml?gid=0&single=true",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pubhtml?gid=132742590&single=true"
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=0&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=132742590&single=true&output=csv"
 ];
 
 async function fetchAndSave() {
