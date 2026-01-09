@@ -249,13 +249,8 @@
             topBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         }
     });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
 
-    // --- PWA 설치 버튼 로직 시작 ---
+   // --- PWA 설치 버튼 로직 시작 ---
         let deferredPrompt;
         const installButton = document.getElementById('pwa-install-button');
 
@@ -298,6 +293,11 @@
         // --- PWA 설치 버튼 로직 끝 ---
 
     });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
 
 </script>
 </body>
