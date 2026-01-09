@@ -15,6 +15,58 @@
 <meta name="apple-mobile-web-app-title" content="LYJ MATH">
 <meta name="theme-color" content="#ffffff">  
   <style>
+/* ========================================================
+   ★ 다크모드 스타일 정의 ★
+   ======================================================== */
+
+/* 1. 다크모드 색상 변수 정의 */
+body.dark-mode {
+  --main-navy: #5595e8; /* 다크모드용 포인트 색상 */
+  --footer-bg: #1e293b;
+  --border-color: #334155;
+  --btn-gray: #475569;
+  --btn-gray-hover: #64748b;
+  
+  /* 기본 배경 및 텍스트 색상 */
+  background-color: #0f172a; /* 아주 어두운 남색 배경 */
+  color: #cbd5e1; /* 밝은 회색 텍스트 */
+}
+
+/* 2. 다크모드 시 컴포넌트별 색상 변경 */
+body.dark-mode .box,
+body.dark-mode .notice-box,
+body.dark-mode header.site-nav,
+body.dark-mode .section-off-online,
+body.dark-mode .action-buttons-container,
+body.dark-mode section[style*="background-color: #f8fafc"] {
+  background-color: #1e293b; /* 컴포넌트 배경 */
+  border-color: var(--border-color);
+}
+body.dark-mode .notice-item:hover {
+  background: #334155;
+}
+body.dark-mode .notice-title,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: #f1f5f9; /* 제목 텍스트 */
+}
+body.dark-mode .hero-bg-images {
+  opacity: 0.7; /* 배경 이미지 살짝 어둡게 */
+}
+body.dark-mode .n-modal-content {
+  background-color: #1e293b;
+  border-top-color: var(--main-navy);
+}
+body.dark-mode .n-modal-content p {
+  color: #94a3b8;
+}
+
+/* 3. 다크모드 버튼 아이콘 전환 */
+#dark-mode-toggle .icon-sun { display: none; }
+body.dark-mode #dark-mode-toggle .icon-moon { display: none; }
+body.dark-mode #dark-mode-toggle .icon-sun { display: block; }
+
     /* === 공지사항 팝업 스타일 (컬러 통일: #699b37) === */
     .n-modal {
       display: none; position: fixed; z-index: 2000; left: 0; top: 0;
@@ -213,7 +265,12 @@
       <a href="#" id="pwa-install-btn" title="앱 설치" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.5c-13.6-11.3-33.9-9.4-45.2 4.2s-9.4 33.9 4.2 45.2l128 96c13.6 10.2 32.9 8.2 44.4-4.5s9.7-32.5-3-43.2l-128.4-97.7zM368.5 120.5l-128.4 97.7c-12.7 9.7-17.6 27.2-7.9 40.7s27.2 17.6 40.7 7.9l128-96c13.6-10.2 15.6-29.5 4.2-45.2s-29.5-15.6-45.2-4.2zM256 320c-17.7 0-32 14.3-32 32V448h64V352c0-17.7-14.3-32-32-32zm-64-16c-35.3 0-64 28.7-64 64V448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V368c0-35.3-28.7-64-64-64H192z"/></svg>
       </a>
-
+<a href="#" id="dark-mode-toggle" class="action-btn" title="테마 변경">
+  <!-- 해 아이콘 (다크모드 시 보임) -->
+  <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.06 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.59 1.59a.75.75 0 01-1.06 1.06l-1.59-1.59a.75.75 0 010-1.06zM12 21a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V21.75A.75.75 0 0112 21zM5.106 17.894a.75.75 0 010-1.06l1.59-1.59a.75.75 0 111.06 1.06l-1.59 1.59a.75.75 0 01-1.06 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM6.106 6.106a.75.75 0 011.06 0l1.59 1.59a.75.75 0 01-1.06 1.06L6.106 7.167a.75.75 0 010-1.06z"/></svg>
+  <!-- 달 아이콘 (라이트모드 시 보임) -->
+  <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.949a.75.75 0 01.981.658c-.149.95-.57 1.833-1.115 2.61a12.047 12.047 0 01-5.998 4.256a12.047 12.047 0 01-7.864-4.256A12.047 12.047 0 011.64 9.382a12.047 12.047 0 014.256-5.998A12.047 12.047 0 019.528 1.718z" clip-rule="evenodd" /></svg>
+</a>
     </div>
 </section>
 
@@ -232,6 +289,29 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+// ★ 다크모드 기능 스크립트 ★
+const themeToggleButton = document.getElementById('dark-mode-toggle');
+const body = document.body;
+
+// 페이지 로드 시 저장된 테마 적용
+if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+}
+
+// 버튼 클릭 시 테마 전환 및 저장
+themeToggleButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    body.classList.toggle('dark-mode');
+
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+});
+
+
         // =======================================================
         // ★ PWA 설치 버튼 로직 (디버깅 코드 추가) ★
         // =======================================================
