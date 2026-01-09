@@ -56,39 +56,41 @@
       .n-modal-content h3 { font-size: 1.1rem; }
     }
 
-   /* =========================================================
-       ★ PWA 설치 버튼 전용 스타일 (HTML 내에서만 적용) ★
-       ========================================================= */
-    .action-btn-pwa {
-      /* 기본 모양 및 정렬 */
+  /* ========================================================
+       ★ PWA 설치 버튼 ID 기반 스타일 (가장 강력한 적용 방식) ★
+       ======================================================== */
+    
+    /* 버튼 자체 스타일 */
+    #pwa-install-btn {
+      /* 위치 및 모양 (기존 .action-btn과 동일하게 설정) */
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       width: 50px;
       height: 50px;
       border-radius: 50%;
       
-      /* 색상 (기존 .action-btn 스타일을 덮어쓰기 위함) */
-      background-color: var(--main-navy); /* 채워진 네이비 배경 */
-      border: 2px solid var(--main-navy); /* 테두리도 같은 색으로 통일 */
+      /* 색상 및 디자인 (기존 스타일 덮어쓰기) */
+      background-color: var(--main-navy); /* 네이비 배경색 강제 적용 */
+      border: none;                       /* 테두리 완전히 제거 */
       
-      /* 그림자 및 전환 효과 */
+      /* 기타 */
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
       text-decoration: none;
     }
-
-    .action-btn-pwa svg {
+    
+    /* 버튼 안의 아이콘(SVG) 스타일 */
+    #pwa-install-btn svg {
       width: 20px;
       height: 20px;
-      color: #ffffff; /* 아이콘 색상을 흰색으로 */
+      color: #ffffff; /* 아이콘 색상을 흰색으로 강제 적용 */
       fill: currentColor;
     }
-
-    .action-btn-pwa:hover {
-      background-color: #1a306e; /* 호버 시 약간 더 어두운 색 */
-      border-color: #1a306e;
-      color: #ffffff; /* 호버 시 아이콘 색상 유지 */
+    
+    /* 마우스를 올렸을 때 스타일 */
+    #pwa-install-btn:hover {
+      background-color: #1a306e; /* 더 어두운 네이비 색상 */
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
@@ -198,16 +200,16 @@
     </div>
   </div>
 
-<!-- footer 태그 바로 위의 이 섹션을 찾아서 아래 내용으로 수정하세요 -->
+<!-- footer 태그 바로 위의 이 섹션을 찾아서 아래 내용으로 교체하세요 -->
 <section class="action-buttons-container">
     <div class="container">
 
-      <!-- ★ PWA 설치 버튼 (새로운 독립 스타일 적용) ★ -->
-      <a href="#" class="action-btn-pwa" id="pwa-install-btn" title="앱 설치" style="display: none;">
+      <!-- ★ PWA 설치 버튼 (ID만 사용) ★ -->
+      <a href="#" id="pwa-install-btn" title="앱 설치" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.5c-13.6-11.3-33.9-9.4-45.2 4.2s-9.4 33.9 4.2 45.2l128 96c13.6 10.2 32.9 8.2 44.4-4.5s9.7-32.5-3-43.2l-128.4-97.7zM368.5 120.5l-128.4 97.7c-12.7 9.7-17.6 27.2-7.9 40.7s27.2 17.6 40.7 7.9l128-96c13.6-10.2 15.6-29.5 4.2-45.2s-29.5-15.6-45.2-4.2zM256 320c-17.7 0-32 14.3-32 32V448h64V352c0-17.7-14.3-32-32-32zm-64-16c-35.3 0-64 28.7-64 64V448H64c-17.7 0-32 14.3-32 32s14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V368c0-35.3-28.7-64-64-64H192z"/></svg>
       </a>
 
-      <!-- 기존 '맨 위로' 버튼 (기존 CSS 그대로 사용) -->
+      <!-- 기존 '맨 위로' 버튼 (변경 없음) -->
       <a href="#" class="action-btn top-btn" title="맨 위로">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
       </a>
