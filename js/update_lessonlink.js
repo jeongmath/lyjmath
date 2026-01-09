@@ -3,9 +3,8 @@ const axios = require('axios');
 
 // 구글 시트 CSV URL 배열
 const sheetUrls = [
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=0&single=true&output=csv",
-
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=132742590&single=true&output=csv"
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pubhtml?gid=0&single=true",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pubhtml?gid=132742590&single=true"
 ];
 
 async function fetchAndSave() {
@@ -21,7 +20,7 @@ async function fetchAndSave() {
 
       const headers = rows[0].map(h => h.trim());
 
-      // 2. 객체 변환 및 엄격한 필터링 적용
+      // 2. 객체 변환 및 필터링 적용
       const data = rows.slice(1).map(row => {
         const obj = {};
         headers.forEach((h, i) => {
@@ -31,13 +30,13 @@ async function fetchAndSave() {
         return obj;
       })
       /**
-       * ⭐ [필터링 조건]
-       * 1. grade가 "[구분]"인 행은 무조건 제외
-       * 2. grade가 비어있지 않아야 함 (AND)
-       * 3. lesson이 비어있지 않아야 함
+       * ⭐ [필터링 조건 수정]
+       * 1. [구분] 필터 삭제됨
+       * 2. 학년(grade)이 비어있지 않아야 함 (AND)
+       * 3. 강의명(lesson)이 비어있지 않아야 함
        */
       .filter(obj => 
-        obj.grade !== "[구분]" && obj.grade !== "" && obj.lesson !== ""
+        obj.grade !== "" && obj.lesson !== ""
       );
 
       allData.push(...data);
@@ -56,7 +55,6 @@ async function fetchAndSave() {
           };
       }
       
-      // 모든 데이터는 이미 lesson이 있음이 필터에서 보장됨
       grouped[key].lessons.push({
         lesson: d.lesson,
         pdf: d.pdf,
@@ -74,7 +72,7 @@ async function fetchAndSave() {
     
     // 5. lessonlink.json 파일로 저장
     fs.writeFileSync('./lessonlink.json', JSON.stringify(finalData, null, 2));
-    console.log("✅ 업데이트 완료: 학년과 강의명이 모두 기입된 행만 저장되었습니다.");
+    console.log("✅ 업데이트 완료: 학년과 강의명이 모두 있는 행을 모두 저장했습니다.");
     
   } catch (e) {
     console.error("❌ 업데이트 실패:", e);
