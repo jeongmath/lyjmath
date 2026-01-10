@@ -132,8 +132,8 @@ main.content-area {
 .grade-unit-line { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; }
 /* ★★★ [복원] 학년 라벨에 학년별 색상 적용 ★★★ */
 .grade-label { font-size: 11px; color: var(--current-accent); font-weight: 700; }
-.unit-label { font-size: 17px; color: #0f172a; }
-.chapter-line { font-size: 15px; color: #475569; }
+.unit-label { font-size: 15px; color: #475569; }   /* 크기 축소 및 색상 연하게 */
+.chapter-line { font-size: 17px; color: #0f172a; } /* 크기 확대 및 색상 진하게 */
 
 .lesson-count { font-size: 13px; color: #94a3b8; font-weight: 400; margin-left: 1px; }
 
