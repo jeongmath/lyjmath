@@ -211,7 +211,7 @@ function performSearch() {
         chapterList.innerHTML = "";
         chapterList.style.display = 'none';
         placeholder.style.display = 'block';
-        placeholder.querySelector('p').innerHTML = '위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색시 띄어쓰기는 OR, 쉼표는 AND 로 검색됩니다.';
+        placeholder.querySelector('p').innerHTML = '위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색 시 띄어쓰기는 AND, 컴마/슬래시/\\는 OR 로 검색됩니다.';
         return;
     }
 
@@ -221,15 +221,12 @@ function performSearch() {
         }
     });
 
-    const andGroups = keyword.split(',').map(s => s.trim()).filter(Boolean);
+    const orGroups = keyword.split(/[,/\\\\]/).map(s => s.trim()).filter(Boolean);
     const filtered = allChapters.filter(chapter => {
-        return andGroups.every(group => {
-            const orWords = group.split(/\s+/).filter(Boolean);
-            return orWords.some(word => {
-                const chapterText = `${chapter.grade} ${chapter.unit} ${chapter.chapter}`.toLowerCase();
-                const lessonsText = chapter.lessons.map(l => l.lesson).join(' ').toLowerCase();
-                return chapterText.includes(word) || lessonsText.includes(word);
-            });
+        const chapterText = `${chapter.grade} ${chapter.unit} ${chapter.chapter} ${chapter.lessons.map(l => l.lesson).join(' ')}`.toLowerCase();
+        return orGroups.some(group => {
+            const andWords = group.split(/\s+/).filter(Boolean);
+            return andWords.every(word => chapterText.includes(word));
         });
     });
     renderChapters(filtered);
@@ -243,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showSearchPrompt = () => {
         placeholder.innerHTML = `
             <svg class="placeholder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-            <p>위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색시 띄어쓰기는 OR, 쉼표는 AND 로 검색됩니다.</p>
+            <p>위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색 시 띄어쓰기는 AND, 컴마/슬래시/\\는 OR 로 검색됩니다.</p>
         `;
     };
 
