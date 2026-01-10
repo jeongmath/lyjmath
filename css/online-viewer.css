@@ -19,6 +19,8 @@
   --color-고1: #0284c7; /* 약간 짙은 스카이 블루 */
   --color-고2: #0369a1; /* 더 짙은 스카이 블루 */
   --color-고3: #315f97; /* 목표 색상 (히어로 그라데이션 끝 색) */
+  --color-실전: #ef4444; /* 빨간색 */
+  --color-Tip: #f97316;  /* 주황색 */
   --color-etc: #8b5cf6; /* 기타는 보라색 유지 */
 }
 /* --- 본문 영역 --- */
@@ -75,6 +77,8 @@ main.content-area {
 .filter-btn[data-grade="고1"].active { background: var(--color-고1); }
 .filter-btn[data-grade="고2"].active { background: var(--color-고2); }
 .filter-btn[data-grade="고3"].active { background: var(--color-고3); }
+.filter-btn[data-grade="실전"].active { background: var(--color-실전); }
+.filter-btn[data-grade="Tip"].active { background: var(--color-Tip); }
 
 /* --- 강의 목록 및 안내문 디자인 개선 --- */
 #lessonContainer { max-width: 1024px; margin: 0 auto; padding: 20px; }
@@ -116,6 +120,8 @@ main.content-area {
 .chapter.grade-고1 { --current-accent: var(--color-고1); }
 .chapter.grade-고2 { --current-accent: var(--color-고2); }
 .chapter.grade-고3 { --current-accent: var(--color-고3); }
+.chapter.grade-실전 { --current-accent: var(--color-실전); }
+.chapter.grade-Tip { --current-accent: var(--color-Tip); }
 .chapter.grade-etc { --current-accent: var(--color-etc); }
 
 /* ★★★ [복원] 카드 상단 라인에 학년별 색상 적용 ★★★ */

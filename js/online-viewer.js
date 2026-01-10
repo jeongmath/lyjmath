@@ -88,7 +88,7 @@ function openModal(lesson) {
     } else {
         showPdfBtn.disabled = true;
         showPdfBtn.innerText = '교재 없음';
-        showPdfBtn.dataset.pdfId = '';
+        showPdfId = '';
     }
 
     document.getElementById('modalPdfFrame').src = "about:blank";
@@ -131,6 +131,8 @@ function renderChapters(data) {
         else if (g.includes('고1')) gradeClass = 'grade-고1';
         else if (g.includes('고2')) gradeClass = 'grade-고2';
         else if (g.includes('고3')) gradeClass = 'grade-고3';
+        else if (g.includes('실전')) gradeClass = 'grade-실전';
+        else if (g.includes('Tip')) gradeClass = 'grade-Tip';
 
         const chapterEl = document.createElement('div');
         chapterEl.className = `chapter ${gradeClass}`;

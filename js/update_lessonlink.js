@@ -1,10 +1,17 @@
 const fs = require('fs');
 const axios = require('axios');
 
+
 // 구글 시트 CSV URL 배열
 const sheetUrls = [
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=0&single=true&output=csv",
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=132742590&single=true&output=csv"
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=132742590&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=1482385894&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=422321869&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=1247568102&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=602759507&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=116381557&single=true&output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vR75_mvscHYwhGjRESHgdWjxsQpXsQ7xH60zoQgw4jomxuxKn61FBhPNg0EYDPW3I1l3elWzQMlQUQV/pub?gid=2022253372&single=true&output=csv"
 ];
 
 async function fetchAndSave() {
