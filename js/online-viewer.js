@@ -1,6 +1,3 @@
-// =================================================================================
-// [v14.5 최종] 모바일 커스텀 알림 팝업 통합 및 학년별 색상 매칭 개선
-// =================================================================================
 let player = null, allChapters = [];
 
 function isMobile() {
@@ -10,23 +7,21 @@ function isMobile() {
 function onYouTubeIframeAPIReady() {}
 function getDriveLink(id) { return id ? `https://drive.google.com/file/d/${id}/preview` : ''; }
 
-// [추가] 커스텀 알림 팝업 제어 함수
 function showAlertModal(msg) {
     const alertModal = document.getElementById('customAlertModal');
     const alertText = document.getElementById('alertMessage');
     if (alertModal && alertText) {
         alertText.innerHTML = msg;
         alertModal.classList.add('show');
-        document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+        document.body.style.overflow = 'hidden';
     }
 }
 
-// [추가] 커스텀 알림 팝업 닫기 함수
 function closeAlert() {
     const alertModal = document.getElementById('customAlertModal');
     if (alertModal) {
         alertModal.classList.remove('show');
-        document.body.style.overflow = ''; // 배경 스크롤 복구
+        document.body.style.overflow = '';
     }
 }
 
@@ -105,7 +100,6 @@ function openModal(lesson) {
     }
 }
 
-// === 강의 목록 렌더링 함수 ===
 function renderChapters(data) {
     const list = document.getElementById('chapterList');
     const placeholder = document.getElementById('lesson-placeholder');
@@ -177,54 +171,39 @@ function renderChapters(data) {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lesson = chap.lessons[index];
-                
                 if (isMobile()) {
                     if (lesson.videoid) {
-                        let mobileUrl = `https://www.youtube.com/watch?v=${lesson.videoid}`;
-                        if (lesson.listid) mobileUrl += `&list=${lesson.listid}`;
-                        if (lesson.time) mobileUrl += `&t=${lesson.time}`;
+                        let mobileUrl = `https://www.youtube.com/watch?v=${lesson.videoid}${lesson.time ? '&t='+lesson.time : ''}`;
                         window.open(mobileUrl, '_blank');
                     } else {
-                        // [수정] alert 대신 커스텀 팝업 사용
-                        const msg = lesson.pdf 
-                            ? '강의 영상은 준비 중이며,<br>현재는 교재(PDF)만 제공됩니다.' 
-                            : '해당 강의는 현재 업로드 준비 중입니다.<br>잠시만 기다려주세요!';
-                        showAlertModal(msg);
+                        showAlertModal(lesson.pdf ? '강의 영상은 준비 중이며,<br>현재는 교재(PDF)만 제공됩니다.' : '해당 강의는 현재 업로드 준비 중입니다.<br>잠시만 기다려주세요!');
                     }
                 } else {
                     openModal(lesson);
                 }
             });
         });
-
         list.appendChild(chapterEl);
     });
 }
 
-function triggerSearch() {
-  performSearch();
-}
+function triggerSearch() { performSearch(); }
 
 function performSearch() {
     const searchBox = document.getElementById('searchBox');
     const placeholder = document.getElementById('lesson-placeholder');
     const chapterList = document.getElementById('chapterList');
-
     const keyword = searchBox.value.toLowerCase().trim();
     document.querySelectorAll('.filter-btn.active').forEach(b => b.classList.remove('active'));
 
     if (!keyword) {
-        chapterList.innerHTML = "";
-        chapterList.style.display = 'none';
-        placeholder.style.display = 'block';
+        chapterList.innerHTML = ""; chapterList.style.display = 'none'; placeholder.style.display = 'block';
         placeholder.querySelector('p').innerHTML = '위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색시 띄어쓰기는 AND, 쉼표/슬래시/|는 OR 로 검색됩니다.';
         return;
     }
 
     document.querySelectorAll('.filter-btn').forEach(btn => {
-        if(btn.dataset.grade === searchBox.value.trim()) {
-            btn.classList.add('active');
-        }
+        if(btn.dataset.grade === searchBox.value.trim()) btn.classList.add('active');
     });
 
     // 1. OR 그룹 생성 (쉼표, 슬래시, 바 기호 기준)
@@ -235,83 +214,42 @@ function performSearch() {
         return orGroups.some(group => {
             // 3. 그룹 내 띄어쓰기는 모두 포함되어야 함 (AND 로직)
             const andWords = group.split(/\s+/).filter(Boolean);
-            const chapterText = `${chapter.grade} ${chapter.unit} ${chapter.chapter}`.toLowerCase();
-            const lessonsText = chapter.lessons.map(l => l.lesson).join(' ').toLowerCase();
-            const fullText = chapterText + " " + lessonsText;
-
+            const chapterText = `${chapter.grade} ${chapter.unit} ${chapter.chapter} ${chapter.lessons.map(l => l.lesson).join(' ')}`.toLowerCase();
             return andWords.every(word => fullText.includes(word));
         });
     });
     renderChapters(filtered);
-};
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const searchBtn = document.getElementById('searchBtn');
-    const searchBox = document.getElementById('searchBox');
-    const placeholder = document.getElementById('lesson-placeholder');
-    
-    const showSearchPrompt = () => {
-        placeholder.innerHTML = `
-            <svg class="placeholder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-            <p>위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색시 띄어쓰기는 AND, 쉼표/슬래시/|는 OR 로 검색됩니다.</p>
-        `;
-    };
-
-    searchBtn.addEventListener('click', performSearch);
-    searchBox.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') performSearch();
+    const searchBtn = document.getElementById('searchBtn'), searchBox = document.getElementById('searchBox'), placeholder = document.getElementById('lesson-placeholder');
+    searchBtn.onclick = performSearch;
+    searchBox.onkeydown = (e) => { if (e.key === 'Enter') performSearch(); };
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.onclick = function() { searchBox.value = this.dataset.grade; performSearch(); };
     });
-
-    document.querySelectorAll('.filter-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            searchBox.value = this.dataset.grade;
-            performSearch();
-        });
-    });
-    
-    document.getElementById('playPauseBtn').onclick = () => { if (!player || typeof player.getPlayerState !== 'function') return; player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo(); };
+    document.getElementById('playPauseBtn').onclick = () => { if (!player) return; player.getPlayerState() === YT.PlayerState.PLAYING ? player.pauseVideo() : player.playVideo(); };
     document.getElementById('skipBackwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() - 5, true);
     document.getElementById('skipForwardBtn').onclick = () => player?.seekTo(player.getCurrentTime() + 5, true);
     document.getElementById('fullscreenBtn').onclick = () => document.getElementById('lessonVideo').requestFullscreen();
     document.getElementById('endLectureBtn').onclick = () => { document.getElementById('videoModal').classList.remove('show'); player?.stopVideo(); };
-    
-    // 알림 모달 배경 클릭 시 닫기
     const alertModal = document.getElementById('customAlertModal');
-    if (alertModal) {
-        alertModal.addEventListener('click', (e) => {
-            if (e.target === alertModal) closeAlert();
-        });
-    }
+    if (alertModal) alertModal.onclick = (e) => { if (e.target === alertModal) closeAlert(); };
 
     document.getElementById('showPdfBtn').onclick = (e) => { 
-        const pc = document.getElementById('modalPdfContainer'); 
-        const vc = document.getElementById('videoContainer'); 
-        const frame = document.getElementById('modalPdfFrame'); 
-        if (pc.style.width !== '0px' && pc.style.width !== '') { 
-            pc.style.width = '0'; 
-            vc.style.width = '100%'; 
-            e.target.innerText = '교재 보기'; 
-        } else { 
-            if (frame.src.includes("about:blank")) { 
-                frame.src = getDriveLink(e.target.dataset.pdfId); 
-            } 
-            const targetW = Math.max(document.getElementById('videoContent').offsetHeight * 0.707, 600); 
-            pc.style.width = targetW + 'px'; 
-            vc.style.width = `calc(100% - ${targetW}px)`; 
-            e.target.innerText = '교재 닫기'; 
-        } 
+        const pc = document.getElementById('modalPdfContainer'), vc = document.getElementById('videoContainer'), frame = document.getElementById('modalPdfFrame');
+        if (pc.style.width !== '0px' && pc.style.width !== '') { pc.style.width = '0'; vc.style.width = '100%'; e.target.innerText = '교재 보기'; }
+        else { if (frame.src.includes("about:blank")) frame.src = getDriveLink(e.target.dataset.pdfId); 
+               const targetW = Math.max(document.getElementById('videoContent').offsetHeight * 0.707, 600); 
+               pc.style.width = targetW + 'px'; vc.style.width = `calc(100% - ${targetW}px)`; e.target.innerText = '교재 닫기'; } 
     };
     document.querySelectorAll('.speedOption').forEach(b => { b.onclick = () => player?.setPlaybackRate(parseFloat(b.dataset.speed)); });
 
     if (typeof fetchAllSheets === 'function') {
-        fetchAllSheets()
-            .then(data => {
-                allChapters = data.chapters;
-                showSearchPrompt();
-            })
-            .catch(error => {
-                console.error("데이터 로딩 실패:", error);
-                placeholder.innerHTML = `<p style="color: #f87171;">강의 목록을 불러오는 데 실패했습니다.<br>잠시 후 다시 시도해 주세요.</p>`;
-            });
+        fetchAllSheets().then(data => { 
+            allChapters = data.chapters; 
+            placeholder.innerHTML = `<svg class="placeholder-icon" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+            <p>위에서 공부하고 싶은 단원명이나 키워드를 검색하면 <br>강의 목록이 나타납니다.<br>검색시 띄어쓰기는 AND, 쉼표/슬래시/|는 OR 로 검색됩니다.</p>`;
+        });
     }
 });
