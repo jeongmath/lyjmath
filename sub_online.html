@@ -2,7 +2,7 @@
 <html class="staticrypt-html">
     <head>
         <meta charset="utf-8" />
-        <title>LYJ MATH -정수학</title>
+        <title>LYJ MATH - 정수학</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <!-- do not cache this page -->
@@ -13,179 +13,207 @@
         <meta http-equiv="pragma" content="no-cache" />
 
         <style>
-            .staticrypt-hr {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                border: 0;
-                border-top: 1px solid #eee;
+            /* === 최종 디자인: 네이비 테마 / 에러 박스 위치 조정 === */
+            :root {
+                --point-color: #1e3a8a; 
+                --point-hover: #1a306e;
+                --error-color: #e11d48;
+                --text-main: #475569;
+                --bg-gray: #f8fafc;
+                --border-color: #e2e8f0;
             }
 
-            .staticrypt-page {
-                width: 360px;
-                padding: 8% 0 0;
-                margin: auto;
-                box-sizing: border-box;
-            }
+            * { box-sizing: border-box; } 
 
-            .staticrypt-form {
-                position: relative;
-                z-index: 1;
-                background: #ffffff;
-                max-width: 360px;
-                margin: 0 auto 100px;
-                padding: 45px;
-                text-align: center;
-                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-            }
-
-            .staticrypt-form input[type="password"],
-            input[type="text"] {
-                background: inherit;
-                border: 0;
-                box-sizing: border-box; /* This ensures padding is included in the total width */
-                font-size: 14px;
-                outline: 0;
-                padding: 15px 30px 15px 15px; /* Adjust the padding to ensure there is space for the icon */
-                width: 100%;
-            }
-
-            .staticrypt-password-container {
-                position: relative;
-                outline: 0;
-                background: #f2f2f2;
-                width: 100%;
-                border: 0;
-                margin: 0 0 15px;
-                box-sizing: border-box;
-            }
-
-            .staticrypt-toggle-password-visibility {
-                cursor: pointer;
-                height: 20px;
-                opacity: 60%;
-                padding: 13px;
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 20px;
-            }
-
-            .staticrypt-form .staticrypt-decrypt-button {
-                text-transform: uppercase;
-                outline: 0;
-                background: #315f97;
-                width: 100%;
-                border: 0;
-                padding: 15px;
-                color: #ffffff;
-                font-size: 14px;
-                cursor: pointer;
-            }
-
-            .staticrypt-form .staticrypt-decrypt-button:hover,
-            .staticrypt-form .staticrypt-decrypt-button:active,
-            .staticrypt-form .staticrypt-decrypt-button:focus {
-                background: #315f97;
-                filter: brightness(92%);
-            }
-
-            .staticrypt-html {
-                height: 100%;
-            }
-
-            .staticrypt-body {
+            .staticrypt-html, .staticrypt-body {
                 height: 100%;
                 margin: 0;
+                background-color: var(--bg-gray);
+                font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
             }
 
             .staticrypt-content {
-                height: 100%;
-                margin-bottom: 1em;
-                background: #f8fafc;
-                font-family: "Arial", sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            .staticrypt-instructions {
-                margin-top: -1em;
-                margin-bottom: 1em;
-            }
-
-            .staticrypt-title {
-                font-size: 1.5em;
-            }
-
-            label.staticrypt-remember {
-                display: flex;
-                align-items: center;
-                margin-bottom: 1em;
-            }
-
-            .staticrypt-remember input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 1em;
-            }
-
-            .hidden {
-                display: none !important;
-            }
-
-            .staticrypt-spinner-container {
-                height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                min-height: 100vh;
+                padding: 20px;
             }
+
+            .staticrypt-page {
+                width: 100%;
+                max-width: 420px; 
+                animation: modalFadeUp 0.3s ease-out;
+            }
+
+            @keyframes modalFadeUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .staticrypt-form-box {
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 35px 30px;
+                box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+                border-top: 5px solid var(--point-color);
+                position: relative;
+            }
+
+            /* 상단 안내 섹션 (가운데 정렬) */
+            .header-section {
+                text-align: center;
+            }
+
+            .notice-badge {
+                display: inline-block;
+                background-color: var(--point-color);
+                color: #fff;
+                font-size: 0.7rem;
+                font-weight: 800;
+                padding: 2px 10px;
+                border-radius: 4px;
+                margin-bottom: 15px;
+                letter-spacing: 0.5px;
+            }
+
+            .staticrypt-title {
+                display: block;
+                font-size: 1.3rem;
+                color: var(--point-color);
+                font-weight: 700;
+                margin-bottom: 12px;
+            }
+
+            .staticrypt-instructions p {
+                color: var(--text-main);
+                line-height: 1.6;
+                font-size: 0.95rem;
+                margin-bottom: 0;
+            }
+
+            /* 에러 메시지 (문구 바로 아래 위치) */
+            #error-message {
+                display: none;
+                background-color: #fff1f2;
+                color: var(--error-color);
+                padding: 8px 15px;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                margin-top: 15px; /* 문구와의 간격 */
+                border: 1px solid #fecdd3;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .staticrypt-hr {
+                height: 1px;
+                background: var(--border-color);
+                border: none;
+                margin: 20px 0;
+            }
+
+            /* 입력창 영역 */
+            .staticrypt-password-container {
+                position: relative;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .staticrypt-form-box input[type="password"],
+            .staticrypt-form-box input[type="text"] {
+                width: 100%; 
+                padding: 13px 15px;
+                padding-right: 45px;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                font-size: 16px;
+                outline: none;
+                transition: 0.2s;
+                background-color: #fff;
+            }
+
+            .staticrypt-form-box input:focus {
+                border-color: var(--point-color);
+                box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+            }
+
+            .staticrypt-toggle-password-visibility {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                width: 22px;
+                height: 22px;
+                opacity: 0.4;
+            }
+
+            /* 비밀번호 기억하기 (좌측 정렬) */
+            .staticrypt-remember {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: 25px;
+                font-size: 0.85rem;
+                color: var(--text-main);
+                cursor: pointer;
+            }
+
+            .staticrypt-remember input {
+                margin-right: 8px;
+                width: 17px;
+                height: 17px;
+                accent-color: var(--point-color);
+            }
+
+            .staticrypt-decrypt-button {
+                width: 100%;
+                background: var(--point-color);
+                color: #fff;
+                border: none;
+                padding: 14px;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .staticrypt-decrypt-button:hover { background: var(--point-hover); }
 
             .staticrypt-spinner {
-                display: inline-block;
-                width: 2rem;
-                height: 2rem;
-                vertical-align: text-bottom;
-                border: 0.25em solid gray;
-                border-right-color: transparent;
+                width: 2.5rem; height: 2.5rem;
+                border: 0.25em solid var(--border-color);
+                border-right-color: var(--point-color);
                 border-radius: 50%;
-                -webkit-animation: spinner-border 0.75s linear infinite;
-                animation: spinner-border 0.75s linear infinite;
-                animation-duration: 0.75s;
-                animation-timing-function: linear;
-                animation-delay: 0s;
-                animation-iteration-count: infinite;
-                animation-direction: normal;
-                animation-fill-mode: none;
-                animation-play-state: running;
-                animation-name: spinner-border;
+                animation: spinner-border .75s linear infinite;
             }
-
-            @keyframes spinner-border {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            @media screen and (-webkit-min-device-pixel-ratio: 0) {
-                .staticrypt-form input[type="password"],
-                input[type="text"] {
-                    font-size: 16px;
-                }
-            }
+            @keyframes spinner-border { to { transform: rotate(360deg); } }
+            .hidden { display: none !important; }
         </style>
     </head>
 
     <body class="staticrypt-body">
-<br><br>
-        <div id="staticrypt_loading" class="staticrypt-spinner-container">
+
+        <div id="staticrypt_loading" class="staticrypt-spinner-container" style="height:100vh; display:flex; align-items:center; justify-content:center;">
             <div class="staticrypt-spinner"></div>
         </div>
 
         <div id="staticrypt_content" class="staticrypt-content hidden">
             <div class="staticrypt-page">
-                <div class="staticrypt-form">
-                    <div class="staticrypt-instructions">
-                        <p class="staticrypt-title">LYJ MATH - 정수학</p>
-                        <p>강의 시청을 위해<br>비밀번호를 입력해 주세요.</p>
+                <div class="staticrypt-form-box">
+                    
+                    <!-- 상단 섹션 (가운데 정렬) -->
+                    <div class="header-section">
+                        <span class="notice-badge">PRIVATE</span>
+                        <div class="staticrypt-instructions">
+                            <span class="staticrypt-title">Online 정수학</span>
+                            <p>강의 시청을 위해 비밀번호를 입력해 주세요.</p>
+                        </div>
+                        
+                        <!-- 에러 메시지 (요청하신 위치: 문구 바로 아래) -->
+                        <div id="error-message">비밀번호가 일치하지 않습니다.</div>
                     </div>
 
                     <hr class="staticrypt-hr" />
@@ -199,13 +227,7 @@
                                 placeholder="비밀번호 입력"
                                 autofocus
                             />
-
-                            <img
-                                class="staticrypt-toggle-password-visibility"
-                                alt="template_toggle_show"
-                                title="template_toggle_show"
-                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg=="
-                            />
+                            <img class="staticrypt-toggle-password-visibility" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48cGF0aCBmaWxsPSIjNDc1NTY5IiBkPSJNMzguOCA1LjFDMjguNC0zLjEgMTMuMy0xLjIgNS4xIDkuMlMtMS4yIDM0LjcgOS4yIDQyLjlsNTkyIDQ2NGMxMC40IDguMiAyNS41IDYuMyAzMy43LTQuMXM2LjMtMjUuNS00LjEtMzMuN0w1MjUuNiAzODYuN2MzOS42LTQwLjYgNjYuNC04Ni4xIDc5LjktMTE4LjRjMy4zLTcuOSAzLjMtMTYuNyAwLTI0LjZjLTE0LjktMzUuNy00Ni4yLTg3LjctOTMtMTMxLjFDNDY1LjUgNjguOCA0MDAuOCAzMiAzMjAgMzJjLTY4LjIgMC0xMjUgMjYuMy0xNjkuMyA2MC44TDM4LjggNS4xek0yMjMuMSAxNDkuNUMyNDguNiAxMjYuMiAyODIuNyAxMTIgMzIwIDExMmM3OS41IDAgMTQ0IDY0LjUgMTQ0IDE0NGMwIDI0LjktNi4zIDQ4LjMtMTcuNCA2OC43TDQwOCAyOTQuNWM4LjQtMTkuMyAxMC42LTQxLjQgNC44LTYzLjNjLTExLjEtNDEuNS00Ny44LTY5LjQtODguNi03MS4xYy01LjgtLjItOS4yIDYuMS03LjQgMTEuN2MyLjEgNi40IDMuMyAxMy4yIDMuMyAyMC4zYzAgMTAuMi0yLjQgMTkuOC02LjYgMjguM2wtOTAuMy03MC44ek0zNzMgMzg5LjljLTE2LjQgNi41LTM0LjMgMTAuMS01MyAxMC4xYy03OS41IDAtMTQ0LTY0LjUtMTQ0LTE0NGMwLTYuOSAuNS0xMy42IDEuNC0yMC4yTDgzLjEgMTYxLjVDNjAuMyAxOTEuMiA0NCAyMjAuOCAzNC41IDI0My43Yy0zLjMgNy45LTMuMyAxNi43IDAgMjQuNmMxNC45IDM1LjcgNDYuMiA4Ny43IDkzIDEzMS4xQzE3NC41IDQ0My4yIDIzOS4yIDQ4MCAzMjAgNDgwYzQ3LjggMCA4OS45LTEyLjkgMTI2LjItMzIuNUwzNzMgMzg5Ljl6Ii8+PC9zdmc+" />
                         </div>
 
                         <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
@@ -213,7 +235,7 @@
                             비밀번호 기억하기
                         </label>
 
-                        <input type="submit" class="staticrypt-decrypt-button" value="확인" />
+                        <input type="submit" class="staticrypt-decrypt-button" value="입장하기" />
                     </form>
                 </div>
             </div>
@@ -877,19 +899,34 @@ exports.init = init;
                 }
             });
 
-            // handle password form submission
-            document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
-                e.preventDefault();
+    /* --- JS 핸들러 (에러 박스 제어용으로 교체됨) --- */
+document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    
+    // 1. 에러 박스 요소를 가져옵니다.
+    const errorEl = document.getElementById("error-message");
+    
+    // 2. 일단 에러 박스를 숨깁니다. (다시 시도할 때 초기화)
+    if (errorEl) errorEl.style.display = "none"; 
 
-                const password = document.getElementById("staticrypt-password").value,
-                    isRememberChecked = document.getElementById("staticrypt-remember").checked;
+    const password = document.getElementById("staticrypt-password").value,
+        isRememberChecked = document.getElementById("staticrypt-remember").checked;
 
-                const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
+    // handleDecryptionOfPage 함수 실행
+    const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
 
-                if (!isSuccessful) {
-                    alert(templateError);
-                }
-            });
+    if (!isSuccessful) {
+        // 3. 비밀번호가 틀리면 디자인된 에러 박스를 보여줍니다.
+        if (errorEl) errorEl.style.display = "block";
+        
+        // 입력창 비우고 포커스 주기
+        const pwdInput = document.getElementById("staticrypt-password");
+        if (pwdInput) {
+            pwdInput.value = "";
+            pwdInput.focus();
+        }
+    }
+});
         </script>
     </body>
 </html>
